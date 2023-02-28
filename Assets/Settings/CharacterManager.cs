@@ -97,12 +97,12 @@ public class CharacterManager : MonoBehaviour
         //yan kontrol
         if (sideRightColliderPoint)
         {
-            Debug.Log("sag");
+            
             
         }
         else if (SideLeftColliderPoint)
         {
-            Debug.Log("sol");
+          
         }
         ///////////////////////////////////////
 
@@ -186,7 +186,6 @@ public class CharacterManager : MonoBehaviour
     void Jump()
     {
         rb.velocity = jumpForce * transform.up;
-        Debug.Log(gameObject.transform.position.y);
     }
 
     void ScaleControl()
@@ -219,7 +218,7 @@ public class CharacterManager : MonoBehaviour
        
         else if (jumpTimer > 0 && !Input.GetKey(KeyCode.Space) && (transform.rotation.z == 0.7071068f || transform.rotation.z == -0.7071068f))
         {
-            Debug.Log("kontrol");
+           
             rb.velocity += Vector2.right  * Physics2D.gravity.x * (lowJumpMultiplier - 1) * Time.deltaTime;
         }
        

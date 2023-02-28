@@ -6,7 +6,7 @@ public class inCameraSettings : MonoBehaviour
 {
     public inCameraSettings thisCamera;
     public Animator animator;
-    float rotationz = 0;
+    public float rotationz;
     public GameObject limitPoint;
     public CharacterManager character;
     private void Start()
@@ -18,12 +18,15 @@ public class inCameraSettings : MonoBehaviour
             thisCamera = this;
         }
         character = GameObject.Find("player").GetComponent<CharacterManager>();
-        //character.CharacterTurn(0, -9.8f);
-        character.sagsolcont = false;
+       
+    
     }
 
     void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.Z))
+            Debug.Log(thisCamera.gameObject.transform.rotation.z);
         GravityAndCamControl();
     }
 
@@ -35,10 +38,11 @@ public class inCameraSettings : MonoBehaviour
 
             if (this.gameObject.transform.rotation.z == 0)
             {
+                
                 cevir(9.8f, 0f);
 
             }
-            if (this.gameObject.transform.rotation.z == 0.7071068f && character.sagsolcont == false)
+            if (this.gameObject.transform.rotation.z == 0.7071068f && rotationz == 90)
             {
                 cevir( 0f, 9.8f);
                
@@ -46,14 +50,14 @@ public class inCameraSettings : MonoBehaviour
             if (this.gameObject.transform.rotation.z == 1)
             {
                 cevir(-9.8f, 0f);
-                character.sagsolcont = true;
+         
           
 
             }
-            if (this.gameObject.transform.rotation.z == 0.7071068f && character.sagsolcont == true)
+            if (this.gameObject.transform.rotation.z == 0.7071068f && rotationz == 270)
             {
                 cevir(0,-9.8f);
-                character.sagsolcont = false;
+       
                 
             }
         }
@@ -64,7 +68,7 @@ public class inCameraSettings : MonoBehaviour
         character.rb.velocity = new Vector3(0, 0, 0);
         character.CharacterTurn(acix, aciy);
         rotationz = rotationz + 90;
-        
+      
         if(rotationz> 270)
         {
             rotationz = 0;
@@ -72,36 +76,40 @@ public class inCameraSettings : MonoBehaviour
 
         character.transform.rotation = character.transform.rotation = Quaternion.Euler(0, 0, rotationz);
        
-        if (this.gameObject.transform.rotation.z == 0)
+        if (thisCamera.gameObject.transform.rotation.z == 0)
         {
-            animator.SetBool("90", true);
-            animator.SetBool("180", false);
-            animator.SetBool("270", false);
-            animator.SetBool("360", false);
+            Debug.Log("a");
+            thisCamera.animator.SetBool("90", true);
+            thisCamera.animator.SetBool("180", false);
+            thisCamera.animator.SetBool("270", false);
+            thisCamera.animator.SetBool("360", false);
 
         }
-        else if (this.gameObject.transform.rotation.z == 0.7071068f && character.sagsolcont == false)
+        else if (thisCamera.gameObject.transform.rotation.z == 0.7071068f && rotationz == 180)
         {
-            animator.SetBool("180", true);
-            animator.SetBool("90", false);
-            animator.SetBool("270", false);
-            animator.SetBool("360", false);
+            Debug.Log("b");
+            thisCamera.animator.SetBool("180", true);
+            thisCamera.animator.SetBool("90", false);
+            thisCamera.animator.SetBool("270", false);
+            thisCamera.animator.SetBool("360", false);
         }
 
-        if (this.gameObject.transform.rotation.z == 1)
+        if (thisCamera.gameObject.transform.rotation.z == 1)
         {
-            animator.SetBool("90", false);
-            animator.SetBool("180", false);
-            animator.SetBool("270", true);
-            animator.SetBool("360", false);
+            Debug.Log("c");
+            thisCamera.animator.SetBool("90", false);
+            thisCamera.animator.SetBool("180", false);
+            thisCamera.animator.SetBool("270", true);
+            thisCamera.animator.SetBool("360", false);
         }
 
-        if (this.gameObject.transform.rotation.z == 0.7071068f && character.sagsolcont == true)
+        if (thisCamera.gameObject.transform.rotation.z == 0.7071068f && rotationz == 0)
         {
-            animator.SetBool("90", false);
-            animator.SetBool("180", false);
-            animator.SetBool("270", false);
-            animator.SetBool("360", true);
+            Debug.Log("d");
+            thisCamera.animator.SetBool("90", false);
+            thisCamera.animator.SetBool("180", false);
+            thisCamera.animator.SetBool("270", false);
+            thisCamera.animator.SetBool("360", true);
         }
 
 
