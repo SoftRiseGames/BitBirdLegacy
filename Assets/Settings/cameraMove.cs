@@ -37,6 +37,7 @@ public class cameraMove : MonoBehaviour
 
     IEnumerator cameraWait()
     {
+        characterManagerCode.rb.velocity = Vector2.zero;
         characterManagerCode.canJump = false;
         characterManagerCode.canWalk = false;
         yield return new WaitForSeconds(.5f);
