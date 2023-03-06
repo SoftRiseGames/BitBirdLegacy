@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using Cinemachine;
 public class inCameraSettings : MonoBehaviour
 {
     public inCameraSettings thisCamera;
@@ -9,6 +10,7 @@ public class inCameraSettings : MonoBehaviour
     public float rotationz;
     public GameObject limitPoint;
     public CharacterManager character;
+    public GameObject[] objects;
     private void Start()
     {
        
@@ -64,11 +66,14 @@ public class inCameraSettings : MonoBehaviour
     }
     void cevir(float acix, float aciy)
     {
-        Debug.Log("0");
         character.rb.velocity = new Vector3(0, 0, 0);
         character.CharacterTurn(acix, aciy);
         rotationz = rotationz + 90;
-      
+        StartCoroutine(cameraAnimWait());
+        foreach(GameObject obj in objects)
+        {
+            obj.GetComponent<GravityObjects>().CharacterTurn(acix, aciy);
+        }
         if(rotationz> 270)
         {
             rotationz = 0;
@@ -113,5 +118,12 @@ public class inCameraSettings : MonoBehaviour
         }
 
 
+    }
+
+    IEnumerator cameraAnimWait()
+    {
+        GetComponent<CinemachineConfiner>().enabled = false;
+        yield return new WaitForSeconds(.5f);
+        GetComponent<CinemachineConfiner>().enabled = true;
     }
 }

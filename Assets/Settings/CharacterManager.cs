@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CharacterManager : MonoBehaviour
 {
+
+    public Animator animator;
   
     public Rigidbody2D rb;
     float x;
@@ -41,16 +43,18 @@ public class CharacterManager : MonoBehaviour
     public bool canJump;
     public bool canWalk;
     public bool isDash;
-    public bool dashTimeControl;
+    public bool canDash;
     public bool sagsolcont;
+    bool canCrouch;
     void Start()
     {
         trailRenderer = GetComponent<TrailRenderer>();
+        animator = GetComponent<Animator>();
         trailRenderer.enabled = false;
         rb = GetComponent<Rigidbody2D>();
         canWalk = true;
         isDash = false;
-        dashTimeControl = true;
+        canDash = true;
        
     }
 
@@ -71,6 +75,7 @@ public class CharacterManager : MonoBehaviour
         GizmoFlipSystem();
         JumpCont();
         GizmoTriggerSystem();
+        Crouch();
       
        
         if(canWalk)
@@ -80,7 +85,7 @@ public class CharacterManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && canJump && !isDash)
             Jump();
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && dashTimeControl)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
             StartCoroutine(Dash(dashTimer));
 
 
@@ -91,7 +96,27 @@ public class CharacterManager : MonoBehaviour
 
         
     }
+    void Crouch()
+    {
+        if (canCrouch)
+        {
+            if (Input.GetKey(KeyCode.S))
+            {
+                animator.SetBool("isCrouch", true);
+                canWalk = false;
+                canJump = false;
+                canDash = false;
+            }
 
+            else if (Input.GetKeyUp(KeyCode.S))
+            {
+                animator.SetBool("isCrouch", false);
+                canWalk = true;
+                canJump = true;
+                canDash = true;
+            }
+        }
+    }
     void GizmoTriggerSystem()
     {
         //yan kontrol
@@ -116,13 +141,15 @@ public class CharacterManager : MonoBehaviour
                 if (!isDash)
                     jumpTimer = jumpStartTimer;
                 isDash = false;
-                dashTimeControl = true;
+                canDash = true;
+                canCrouch = true;
             }
 
         }
         else if (!collisionPoint)
         {
             canJump = false;
+            canCrouch = false;
         }
         //////////////////////////////
     }
@@ -238,7 +265,7 @@ public class CharacterManager : MonoBehaviour
         yield return new WaitForSeconds(dashTimer);
         rb.velocity = Vector2.zero;
         trailRenderer.enabled = false;
-        dashTimeControl = false;
+        canDash = false;
         jumpTimer -= Time.deltaTime;
         rb.gravityScale = 1;
         canWalk = true;
