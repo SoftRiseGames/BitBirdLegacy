@@ -4748,7 +4748,7 @@ MonoBehaviour:
   trailRenderer: {fileID: 0}
   fallMultiplier: 6
   jumpForce: 9
-  lowJumpMultiplier: 6
+  lowJumpMultiplier: 8
   walkForce: 6
   dashForce: 20
   dashTimer: 0.2
