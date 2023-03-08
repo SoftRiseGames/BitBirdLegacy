@@ -16,8 +16,8 @@ public class CharacterManager : MonoBehaviour
     public float sideOffsetValue;
     public LayerMask groundLayerDetect;
     Collider2D collisionPoint;
-    public bool sideRightColliderPoint;
-    public bool SideLeftColliderPoint;
+    public bool sideColliderPoint;
+   
     Vector2 underoffset;
     Vector2 sideoffset;
 
@@ -62,8 +62,8 @@ public class CharacterManager : MonoBehaviour
     void Update()
     {
         collisionPoint = Physics2D.OverlapCircle((Vector2)transform.position + underoffset, collisionradius,groundLayerDetect);
-        sideRightColliderPoint = Physics2D.OverlapCircle((Vector2)transform.position + sideoffset, collisionradius, groundLayerDetect);
-        SideLeftColliderPoint = Physics2D.OverlapCircle((Vector2)transform.position - sideoffset, collisionradius, groundLayerDetect);
+        sideColliderPoint = Physics2D.OverlapCircle((Vector2)transform.position + sideoffset, collisionradius, groundLayerDetect) || Physics2D.OverlapCircle((Vector2)transform.position - sideoffset, collisionradius, groundLayerDetect);
+    
         x = Input.GetAxis("Horizontal");
         y = Input.GetAxis("Vertical");
         xRaw = Input.GetAxisRaw("Horizontal");
@@ -74,7 +74,10 @@ public class CharacterManager : MonoBehaviour
         ScaleControl();
         GizmoFlipSystem();
         JumpCont();
-        GizmoTriggerSystem();
+        /*
+        if(Input.GetKey(KeyCode.LeftControl))
+            GizmoTriggerSystem();
+        */
         Crouch();
       
        
@@ -120,15 +123,12 @@ public class CharacterManager : MonoBehaviour
     void GizmoTriggerSystem()
     {
         //yan kontrol
-        if (sideRightColliderPoint)
+        if (sideColliderPoint)
         {
-            
-            
+            canWalk = false;
+            canJump = false;
         }
-        else if (SideLeftColliderPoint)
-        {
-          
-        }
+        
         ///////////////////////////////////////
 
         //alt temas kontrolu
