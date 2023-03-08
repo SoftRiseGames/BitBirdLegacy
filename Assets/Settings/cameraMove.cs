@@ -22,6 +22,10 @@ public class cameraMove : MonoBehaviour
             StartCoroutine(cameraWait());
         }
         
+        if(collision.gameObject.tag == "gravity")
+        {
+            virtualCam.GetComponent<inCameraSettings>().objects.Add(collision.gameObject);
+        }
         
     }
 

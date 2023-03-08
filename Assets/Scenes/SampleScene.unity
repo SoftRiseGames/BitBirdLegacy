@@ -542,7 +542,7 @@ GameObject:
   - component: {fileID: 534308845}
   m_Layer: 0
   m_Name: Circle
-  m_TagString: Untagged
+  m_TagString: gravity
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1706,8 +1706,7 @@ MonoBehaviour:
   rotationz: 0
   limitPoint: {fileID: 0}
   character: {fileID: 0}
-  objects:
-  - {fileID: 534308844}
+  objects: []
 --- !u!95 &1406526442
 Animator:
   serializedVersion: 4

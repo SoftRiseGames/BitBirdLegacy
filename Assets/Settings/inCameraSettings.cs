@@ -10,7 +10,7 @@ public class inCameraSettings : MonoBehaviour
     public float rotationz;
     public GameObject limitPoint;
     public CharacterManager character;
-    public GameObject[] objects;
+    public List<GameObject> objects = new List<GameObject>();
     private void Start()
     {
        
