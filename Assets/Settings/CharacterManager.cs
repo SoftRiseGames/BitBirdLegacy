@@ -6,7 +6,7 @@ public class CharacterManager : MonoBehaviour
 {
 
     public Animator animator;
-  
+
     public Rigidbody2D rb;
     float x;
     float y;
@@ -16,12 +16,13 @@ public class CharacterManager : MonoBehaviour
     public float sideOffsetValue;
     public LayerMask groundLayerDetect;
     Collider2D collisionPoint;
-    public bool sideColliderPoint;
-   
+    public bool sideRightColliderPoint;
+    public bool SideLeftColliderPoint;
     Vector2 underoffset;
     Vector2 sideoffset;
 
-    public float collisionradius;
+    public float collisionSideradius;
+    public float collisionGroundradius;
     Vector2 movementVeriable;
     [SerializeField] float jumpTimer;
     [SerializeField] float jumpStartTimer;
@@ -30,7 +31,7 @@ public class CharacterManager : MonoBehaviour
     [SerializeField] float fallMultiplier;
     [SerializeField] float jumpForce;
     [SerializeField] float lowJumpMultiplier;
-    
+
     [Header("Walk")]
     [SerializeField] float walkForce;
 
@@ -55,15 +56,15 @@ public class CharacterManager : MonoBehaviour
         canWalk = true;
         isDash = false;
         canDash = true;
-       
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        collisionPoint = Physics2D.OverlapCircle((Vector2)transform.position + underoffset, collisionradius,groundLayerDetect);
-        sideColliderPoint = Physics2D.OverlapCircle((Vector2)transform.position + sideoffset, collisionradius, groundLayerDetect) || Physics2D.OverlapCircle((Vector2)transform.position - sideoffset, collisionradius, groundLayerDetect);
-    
+        collisionPoint = Physics2D.OverlapCircle((Vector2)transform.position + underoffset, collisionGroundradius, groundLayerDetect);
+        sideRightColliderPoint = Physics2D.OverlapCircle((Vector2)transform.position + sideoffset, collisionSideradius, groundLayerDetect);
+        SideLeftColliderPoint = Physics2D.OverlapCircle((Vector2)transform.position - sideoffset, collisionSideradius, groundLayerDetect);
         x = Input.GetAxis("Horizontal");
         y = Input.GetAxis("Vertical");
         xRaw = Input.GetAxisRaw("Horizontal");
@@ -74,17 +75,14 @@ public class CharacterManager : MonoBehaviour
         ScaleControl();
         GizmoFlipSystem();
         JumpCont();
-        /*
-        if(Input.GetKey(KeyCode.LeftControl))
-            GizmoTriggerSystem();
-        */
+        GizmoTriggerSystem();
         Crouch();
-      
-       
-        if(canWalk)
+
+
+        if (canWalk)
             Walk(movementVeriable);
 
-       
+
         if (Input.GetKeyDown(KeyCode.Space) && canJump && !isDash)
             Jump();
 
@@ -97,7 +95,7 @@ public class CharacterManager : MonoBehaviour
             jumpTimer -= Time.deltaTime;
         }
 
-        
+
     }
     void Crouch()
     {
@@ -123,12 +121,15 @@ public class CharacterManager : MonoBehaviour
     void GizmoTriggerSystem()
     {
         //yan kontrol
-        if (sideColliderPoint)
+        if (sideRightColliderPoint)
         {
-            canWalk = false;
-            canJump = false;
+
+
         }
-        
+        else if (SideLeftColliderPoint)
+        {
+
+        }
         ///////////////////////////////////////
 
         //alt temas kontrolu
@@ -153,25 +154,25 @@ public class CharacterManager : MonoBehaviour
         }
         //////////////////////////////
     }
-    
+
     void GizmoFlipSystem()
     {
-        if (transform.rotation.z == 0 )
+        if (transform.rotation.z == 0)
         {
             underoffset = new Vector2(0, underOffsetValue);
             sideoffset = new Vector2(sideOffsetValue, 0);
         }
-        else if(transform.rotation.z == -1)
+        else if (transform.rotation.z == -1)
         {
             underoffset = new Vector2(0, -underOffsetValue);
             sideoffset = new Vector2(-sideOffsetValue, 0);
         }
         else if (transform.rotation.z == 0.7071068f)
         {
-            underoffset = new Vector2(-underOffsetValue,0);
+            underoffset = new Vector2(-underOffsetValue, 0);
             sideoffset = new Vector2(0, sideOffsetValue);
         }
-        else if(transform.rotation.z == -0.7071068f)
+        else if (transform.rotation.z == -0.7071068f)
         {
             underoffset = new Vector2(underOffsetValue, 0);
             sideoffset = new Vector2(0, -sideOffsetValue);
@@ -181,12 +182,12 @@ public class CharacterManager : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere((Vector2)transform.position + underoffset, collisionradius);
+        Gizmos.DrawWireSphere((Vector2)transform.position + underoffset, collisionGroundradius);
 
         Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere((Vector2)transform.position + sideoffset, collisionradius);
+        Gizmos.DrawWireSphere((Vector2)transform.position + sideoffset, collisionSideradius);
         Gizmos.color = Color.white;
-        Gizmos.DrawWireSphere((Vector2)transform.position - sideoffset, collisionradius);
+        Gizmos.DrawWireSphere((Vector2)transform.position - sideoffset, collisionSideradius);
     }
     void Walk(Vector2 movementVeriable)
     {
@@ -219,47 +220,47 @@ public class CharacterManager : MonoBehaviour
     {
         if (x > 0 && transform.localScale.x < 0)
             this.gameObject.transform.localScale = new Vector2(this.gameObject.transform.localScale.x * -1, this.gameObject.transform.localScale.y);
-        else if(x<0 && transform.localScale.x>0)
+        else if (x < 0 && transform.localScale.x > 0)
             this.gameObject.transform.localScale = new Vector2(this.gameObject.transform.localScale.x * -1, this.gameObject.transform.localScale.y);
     }
 
 
     void JumpCont()
     {
-        if (jumpTimer<0 && (transform.rotation.z == 0 || transform.rotation.z == -1) )
+        if (jumpTimer < 0 && (transform.rotation.z == 0 || transform.rotation.z == -1))
         {
             rb.velocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
         }
 
-        else if(jumpTimer<0 && (transform.rotation.z == 0.7071068f || transform.rotation.z == -0.7071068f))
+        else if (jumpTimer < 0 && (transform.rotation.z == 0.7071068f || transform.rotation.z == -0.7071068f))
         {
             rb.velocity += Vector2.right * Physics2D.gravity.x * (fallMultiplier - 1) * Time.deltaTime;
         }
 
-        
-        if (jumpTimer>0 && !Input.GetKey(KeyCode.Space) && (transform.rotation.z == 0 || transform.rotation.z == -1))
+
+        if (jumpTimer > 0 && !Input.GetKey(KeyCode.Space) && (transform.rotation.z == 0 || transform.rotation.z == -1))
         {
             rb.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
         }
-        
-       
+
+
         else if (jumpTimer > 0 && !Input.GetKey(KeyCode.Space) && (transform.rotation.z == 0.7071068f || transform.rotation.z == -0.7071068f))
         {
-           
-            rb.velocity += Vector2.right  * Physics2D.gravity.x * (lowJumpMultiplier - 1) * Time.deltaTime;
+
+            rb.velocity += Vector2.right * Physics2D.gravity.x * (lowJumpMultiplier - 1) * Time.deltaTime;
         }
-       
-        
+
+
     }
 
     IEnumerator Dash(float dashTimer)
     {
         jumpTimer = 0;
         isDash = true;
-        canWalk = false;    
+        canWalk = false;
         trailRenderer.enabled = true;
         rb.velocity = Vector2.zero;
-      
+
         rb.gravityScale = 0;
         DashSystem();
         yield return new WaitForSeconds(dashTimer);
@@ -282,12 +283,12 @@ public class CharacterManager : MonoBehaviour
             else
                 dir = new Vector2(xRaw, yRaw);
 
-           
+
         }
         else if (gameObject.transform.rotation.z == 0.7071068f)
         {
             if (xRaw == 0 && yRaw == 0)
-                dir = new Vector2(rb.velocity.y, this.gameObject.transform.localScale.x*1);
+                dir = new Vector2(rb.velocity.y, this.gameObject.transform.localScale.x * 1);
             else
                 dir = new Vector2(-yRaw, xRaw);
         }
@@ -304,13 +305,13 @@ public class CharacterManager : MonoBehaviour
                 dir = new Vector2(rb.velocity.y, -this.gameObject.transform.localScale.x * 1);
             else
                 dir = new Vector2(yRaw, -xRaw);
-          
+
         }
         rb.velocity = dir.normalized * dashForce;
 
     }
-    public void CharacterTurn(float gravityX,float gravityY)
+    public void CharacterTurn(float gravityX, float gravityY)
     {
-         Physics2D.gravity = new Vector2(gravityX, gravityY);
+        Physics2D.gravity = new Vector2(gravityX, gravityY);
     }
 }
