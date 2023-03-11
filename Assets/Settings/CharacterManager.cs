@@ -65,8 +65,8 @@ public class CharacterManager : MonoBehaviour
         collisionPoint = Physics2D.OverlapCircle((Vector2)transform.position + underoffset, collisionGroundradius, groundLayerDetect);
         sideColliderPoint = Physics2D.OverlapCircle((Vector2)transform.position + sideoffset, collisionSideradius, groundLayerDetect) || Physics2D.OverlapCircle((Vector2)transform.position - sideoffset, collisionSideradius, groundLayerDetect);
         
-        x = Input.GetAxis("Horizontal");
-        y = Input.GetAxis("Vertical");
+        x = Input.GetAxisRaw("Horizontal");
+        y = Input.GetAxisRaw("Vertical");
         xRaw = Input.GetAxisRaw("Horizontal");
         yRaw = Input.GetAxisRaw("Vertical");
         movementVeriable = new Vector2(x, y);
@@ -189,18 +189,22 @@ public class CharacterManager : MonoBehaviour
         if (gameObject.transform.rotation.z == 0)
         {
             rb.velocity = new Vector2(movementVeriable.x * walkForce, rb.velocity.y);
+
         }
         else if (gameObject.transform.rotation.z == 0.7071068f)
         {
             rb.velocity = new Vector2(rb.velocity.x, movementVeriable.x * walkForce);
+
         }
         else if (gameObject.transform.rotation.z == -1)
         {
             rb.velocity = new Vector2(movementVeriable.x * -walkForce, rb.velocity.y);
+
         }
         else if (gameObject.transform.rotation.z == -0.7071068f)
         {
             rb.velocity = new Vector2(rb.velocity.x, movementVeriable.x * -walkForce);
+
         }
 
 
