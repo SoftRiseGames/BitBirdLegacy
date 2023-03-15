@@ -46,6 +46,7 @@ public class CharacterManager : MonoBehaviour
     public bool isDash;
     public bool canDash;
     public bool sagsolcont;
+    bool DashTimerControl;
     bool canCrouch;
     void Start()
     {
@@ -130,13 +131,11 @@ public class CharacterManager : MonoBehaviour
         //alt temas kontrolu
         if (collisionPoint)
         {
-            if (collisionPoint.gameObject.tag == "ground")
+            if (collisionPoint.gameObject.tag == "ground" && !DashTimerControl)
             {
                 canJump = true;
-
-                if (!isDash)
-                    jumpTimer = jumpStartTimer;
                 isDash = false;
+                jumpTimer = jumpStartTimer;
                 canDash = true;
                 canCrouch = true;
             }
@@ -204,7 +203,6 @@ public class CharacterManager : MonoBehaviour
         else if (gameObject.transform.rotation.z == -0.7071068f)
         {
             rb.velocity = new Vector2(rb.velocity.x, movementVeriable.x * -walkForce);
-
         }
 
 
@@ -257,13 +255,14 @@ public class CharacterManager : MonoBehaviour
         jumpTimer = 0;
         isDash = true;
         canWalk = false;
+        DashTimerControl = true;
         trailRenderer.enabled = true;
         rb.velocity = Vector2.zero;
-
         rb.gravityScale = 0;
         DashSystem();
         yield return new WaitForSeconds(dashTimer);
         rb.velocity = Vector2.zero;
+        DashTimerControl = false;
         trailRenderer.enabled = false;
         canDash = false;
         jumpTimer -= Time.deltaTime;
