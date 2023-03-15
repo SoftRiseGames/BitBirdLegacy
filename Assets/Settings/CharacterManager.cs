@@ -43,7 +43,6 @@ public class CharacterManager : MonoBehaviour
     [Header("Bools")]
     public bool canJump;
     public bool canWalk;
-   
     public bool canDash;
     public bool sagsolcont;
     bool DashTimerControl;
@@ -84,7 +83,7 @@ public class CharacterManager : MonoBehaviour
             Walk(movementVeriable);
 
 
-        if (Input.GetKeyDown(KeyCode.Space) && canJump && !DashTimerControl)
+        if (Input.GetKeyDown(KeyCode.Space) && canJump && canDash)
             Jump();
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
