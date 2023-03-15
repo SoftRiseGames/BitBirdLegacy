@@ -43,7 +43,7 @@ public class CharacterManager : MonoBehaviour
     [Header("Bools")]
     public bool canJump;
     public bool canWalk;
-    public bool isDash;
+   
     public bool canDash;
     public bool sagsolcont;
     bool DashTimerControl;
@@ -55,7 +55,7 @@ public class CharacterManager : MonoBehaviour
         trailRenderer.enabled = false;
         rb = GetComponent<Rigidbody2D>();
         canWalk = true;
-        isDash = false;
+       
         canDash = true;
 
     }
@@ -84,14 +84,14 @@ public class CharacterManager : MonoBehaviour
             Walk(movementVeriable);
 
 
-        if (Input.GetKeyDown(KeyCode.Space) && canJump && !isDash)
+        if (Input.GetKeyDown(KeyCode.Space) && canJump && !DashTimerControl)
             Jump();
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
             StartCoroutine(Dash(dashTimer));
 
 
-        if (!canJump && !isDash)
+        if (!canJump && !DashTimerControl)
         {
             jumpTimer -= Time.deltaTime;
         }
@@ -134,7 +134,6 @@ public class CharacterManager : MonoBehaviour
             if (collisionPoint.gameObject.tag == "ground" && !DashTimerControl)
             {
                 canJump = true;
-                isDash = false;
                 jumpTimer = jumpStartTimer;
                 canDash = true;
                 canCrouch = true;
@@ -177,7 +176,6 @@ public class CharacterManager : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere((Vector2)transform.position + underoffset, collisionGroundradius);
-
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere((Vector2)transform.position + sideoffset, collisionSideradius);
         Gizmos.color = Color.white;
@@ -253,7 +251,6 @@ public class CharacterManager : MonoBehaviour
     IEnumerator Dash(float dashTimer)
     {
         jumpTimer = 0;
-        isDash = true;
         canWalk = false;
         DashTimerControl = true;
         trailRenderer.enabled = true;
