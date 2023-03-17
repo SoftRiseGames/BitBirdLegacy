@@ -7265,14 +7265,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
   rb: {fileID: 0}
-  underOffsetValue: -0.51
+  underOffsetValue: -0.38
+  UnderOffsetSideValue: -0.28
   sideOffsetValue: 0.51
   groundLayerDetect:
     serializedVersion: 2
     m_Bits: 8
+  collisionPoint: 0
   sideColliderPoint: 0
+  underoffset: {x: 0, y: 0}
+  underSideOffset: {x: 0, y: 0}
+  UnderOffsetSideNegativeOffset: {x: 0, y: 0}
   collisionSideradius: 0.21
-  collisionGroundradius: 0.4
+  collisionGroundradius: 0.14
   jumpTimer: 0
   jumpStartTimer: 0.12
   trailRenderer: {fileID: 0}

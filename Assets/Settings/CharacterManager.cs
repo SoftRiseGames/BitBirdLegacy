@@ -13,12 +13,16 @@ public class CharacterManager : MonoBehaviour
     float xRaw;
     float yRaw;
     public float underOffsetValue;
+    public float UnderOffsetSideValue;
+    
     public float sideOffsetValue;
     public LayerMask groundLayerDetect;
-    Collider2D collisionPoint;
+    public bool collisionPoint;
     public bool sideColliderPoint;
 
-    Vector2 underoffset;
+    public Vector2 underoffset;
+    public Vector2 underSideOffset;
+    public Vector2 UnderOffsetSideNegativeOffset;
     Vector2 sideoffset;
 
     public float collisionSideradius;
@@ -62,7 +66,7 @@ public class CharacterManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        collisionPoint = Physics2D.OverlapCircle((Vector2)transform.position + underoffset, collisionGroundradius, groundLayerDetect);
+        collisionPoint = Physics2D.OverlapCircle((Vector2)transform.position + underoffset, collisionGroundradius, groundLayerDetect) || Physics2D.OverlapCircle((Vector2)transform.position + underSideOffset, collisionGroundradius, groundLayerDetect) || Physics2D.OverlapCircle((Vector2)transform.position + UnderOffsetSideNegativeOffset, collisionGroundradius, groundLayerDetect);
         sideColliderPoint = Physics2D.OverlapCircle((Vector2)transform.position + sideoffset, collisionSideradius, groundLayerDetect) || Physics2D.OverlapCircle((Vector2)transform.position - sideoffset, collisionSideradius, groundLayerDetect);
         
         x = Input.GetAxisRaw("Horizontal");
@@ -129,14 +133,12 @@ public class CharacterManager : MonoBehaviour
 
         //alt temas kontrolu
         if (collisionPoint)
-        {
-            if (collisionPoint.gameObject.tag == "ground" && !DashTimerControl)
-            {
-                canJump = true;
-                jumpTimer = jumpStartTimer;
-                canDash = true;
-                canCrouch = true;
-            }
+        {  
+            canJump = true;
+            jumpTimer = jumpStartTimer;
+            canDash = true;
+            canCrouch = true;
+            
 
         }
         else if (!collisionPoint)
@@ -152,21 +154,29 @@ public class CharacterManager : MonoBehaviour
         if (transform.rotation.z == 0)
         {
             underoffset = new Vector2(0, underOffsetValue);
+            underSideOffset = new Vector2(UnderOffsetSideValue, underOffsetValue);
+            UnderOffsetSideNegativeOffset = new Vector2(-UnderOffsetSideValue, underOffsetValue);
             sideoffset = new Vector2(sideOffsetValue, 0);
         }
         else if (transform.rotation.z == -1)
         {
             underoffset = new Vector2(0, -underOffsetValue);
+            underSideOffset = new Vector2(-UnderOffsetSideValue, -underOffsetValue);
+            UnderOffsetSideNegativeOffset = new Vector2(UnderOffsetSideValue, -underOffsetValue);
             sideoffset = new Vector2(-sideOffsetValue, 0);
         }
         else if (transform.rotation.z == 0.7071068f)
         {
             underoffset = new Vector2(-underOffsetValue, 0);
+            underSideOffset = new Vector2(-underOffsetValue, UnderOffsetSideValue);
+            UnderOffsetSideNegativeOffset = new Vector2(-underOffsetValue, -UnderOffsetSideValue);
             sideoffset = new Vector2(0, sideOffsetValue);
         }
         else if (transform.rotation.z == -0.7071068f)
         {
             underoffset = new Vector2(underOffsetValue, 0);
+            underSideOffset = new Vector2(underOffsetValue, -UnderOffsetSideValue);
+            UnderOffsetSideNegativeOffset = new Vector2(underOffsetValue, UnderOffsetSideValue);
             sideoffset = new Vector2(0, -sideOffsetValue);
         }
     }
@@ -175,6 +185,8 @@ public class CharacterManager : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere((Vector2)transform.position + underoffset, collisionGroundradius);
+        Gizmos.DrawWireSphere((Vector2)transform.position + underSideOffset , collisionGroundradius);
+        Gizmos.DrawWireSphere((Vector2)transform.position +UnderOffsetSideNegativeOffset, collisionGroundradius);
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere((Vector2)transform.position + sideoffset, collisionSideradius);
         Gizmos.color = Color.white;
