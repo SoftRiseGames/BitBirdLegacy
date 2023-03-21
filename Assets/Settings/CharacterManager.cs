@@ -46,6 +46,7 @@ public class CharacterManager : MonoBehaviour
 
     [Header("Bools")]
     public bool canJump;
+    public bool secondJump;
     public bool canWalk;
     public bool canDash;
     public bool sagsolcont;
@@ -58,7 +59,6 @@ public class CharacterManager : MonoBehaviour
         trailRenderer.enabled = false;
         rb = GetComponent<Rigidbody2D>();
         canWalk = true;
-       
         canDash = true;
 
     }
@@ -90,6 +90,14 @@ public class CharacterManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && canJump && canDash)
             Jump();
 
+        if (Input.GetKeyUp(KeyCode.Space) && !canJump && canDash)
+        {
+            secondJump = true;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space) && secondJump && canDash)
+            DoubleJump();
+
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
             StartCoroutine(Dash(dashTimer));
 
@@ -98,6 +106,8 @@ public class CharacterManager : MonoBehaviour
         {
             jumpTimer -= Time.deltaTime;
         }
+
+        
 
 
     }
@@ -135,9 +145,14 @@ public class CharacterManager : MonoBehaviour
         if (collisionPoint)
         {  
             canJump = true;
-            jumpTimer = jumpStartTimer;
+            if (!DashTimerControl)
+            {
+                jumpTimer = jumpStartTimer;
+            }
+            
             canDash = true;
             canCrouch = true;
+            secondJump = false;
             
 
         }
@@ -221,7 +236,15 @@ public class CharacterManager : MonoBehaviour
     {
         rb.velocity = jumpForce * transform.up;
     }
-
+    void DoubleJump()
+    {
+        if (secondJump)
+        {
+            jumpTimer = jumpStartTimer;
+            rb.velocity = jumpForce * transform.up;
+            secondJump = false; 
+        }
+    }
     void ScaleControl()
     {
         if (x > 0 && transform.localScale.x < 0)
@@ -261,19 +284,21 @@ public class CharacterManager : MonoBehaviour
 
     IEnumerator Dash(float dashTimer)
     {
-        jumpTimer = 0;
+       
         canWalk = false;
+        
         DashTimerControl = true;
         trailRenderer.enabled = true;
         rb.velocity = Vector2.zero;
         rb.gravityScale = 0;
+        jumpTimer = 0;
         DashSystem();
         yield return new WaitForSeconds(dashTimer);
         rb.velocity = Vector2.zero;
         DashTimerControl = false;
+        
         trailRenderer.enabled = false;
         canDash = false;
-        jumpTimer -= Time.deltaTime;
         rb.gravityScale = 1;
         canWalk = true;
     }
