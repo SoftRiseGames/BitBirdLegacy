@@ -52,6 +52,7 @@ public class CharacterManager : MonoBehaviour
     public bool sagsolcont;
     bool DashTimerControl;
     bool canCrouch;
+    bool FallTimerControl;
     void Start()
     {
         trailRenderer = GetComponent<TrailRenderer>();
@@ -60,6 +61,7 @@ public class CharacterManager : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         canWalk = true;
         canDash = true;
+        FallTimerControl = true;
 
     }
 
@@ -101,14 +103,13 @@ public class CharacterManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
             StartCoroutine(Dash(dashTimer));
 
-
-        if (!canJump && !DashTimerControl)
+        if (FallTimerControl)
         {
-            jumpTimer -= Time.deltaTime;
+            if (!canJump && !DashTimerControl)
+            {
+                jumpTimer -= Time.deltaTime;
+            }
         }
-
-        
-
 
     }
     void Crouch()
@@ -240,10 +241,18 @@ public class CharacterManager : MonoBehaviour
     {
         if (secondJump)
         {
-            jumpTimer = jumpStartTimer;
+            StartCoroutine(DoubleJumpWait());
             rb.velocity = jumpForce * transform.up;
             secondJump = false; 
         }
+    }
+
+    IEnumerator DoubleJumpWait()
+    {
+        FallTimerControl = false;
+        jumpTimer = jumpStartTimer;
+        yield return new WaitForSeconds(.1f);
+        FallTimerControl = true;
     }
     void ScaleControl()
     {
