@@ -52,7 +52,7 @@ public class CharacterManager : MonoBehaviour
     public bool sagsolcont;
     bool DashTimerControl;
     bool canCrouch;
-    bool secondJumpControl;
+   
     bool FallTimerControl;
     void Start()
     {
@@ -62,7 +62,7 @@ public class CharacterManager : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         canWalk = true;
         canDash = true;
-        secondJumpControl = false;
+      
         FallTimerControl = true;
 
     }
@@ -94,12 +94,7 @@ public class CharacterManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && canJump && canDash)
             Jump();
 
-        if (Input.GetKeyUp(KeyCode.Space) && !canJump && !secondJumpControl)
-        {
-            secondJump = true;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space) && secondJump && canDash)
+        if (Input.GetKeyDown(KeyCode.Space) && secondJump && !canJump && canDash)
             DoubleJump();
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
@@ -152,11 +147,11 @@ public class CharacterManager : MonoBehaviour
             {
                 jumpTimer = jumpStartTimer;
             }
-            secondJumpControl = false;
+            
             canDash = true;
             canCrouch = true;
-            secondJump = false;
-            
+            secondJump = true;
+
 
         }
         else if (!collisionPoint)
@@ -251,11 +246,18 @@ public class CharacterManager : MonoBehaviour
 
     IEnumerator DoubleJumpWait()
     {
+       
         FallTimerControl = false;
         jumpTimer = jumpStartTimer;
         yield return new WaitForSeconds(.1f);
         FallTimerControl = true;
-        secondJumpControl = true;
+        if (canDash)
+        {
+            canDash = false;
+            yield return new WaitForSeconds(0.01f);
+            canDash = true;
+        }
+
     }
     void ScaleControl()
     {
