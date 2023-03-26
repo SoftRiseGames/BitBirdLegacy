@@ -52,6 +52,7 @@ public class CharacterManager : MonoBehaviour
     public bool sagsolcont;
     bool DashTimerControl;
     bool canCrouch;
+    bool secondJumpControl;
     bool FallTimerControl;
     void Start()
     {
@@ -61,6 +62,7 @@ public class CharacterManager : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         canWalk = true;
         canDash = true;
+        secondJumpControl = false;
         FallTimerControl = true;
 
     }
@@ -92,7 +94,7 @@ public class CharacterManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && canJump && canDash)
             Jump();
 
-        if (Input.GetKeyUp(KeyCode.Space) && !canJump && canDash)
+        if (Input.GetKeyUp(KeyCode.Space) && !canJump && !secondJumpControl)
         {
             secondJump = true;
         }
@@ -150,7 +152,7 @@ public class CharacterManager : MonoBehaviour
             {
                 jumpTimer = jumpStartTimer;
             }
-            
+            secondJumpControl = false;
             canDash = true;
             canCrouch = true;
             secondJump = false;
@@ -253,6 +255,7 @@ public class CharacterManager : MonoBehaviour
         jumpTimer = jumpStartTimer;
         yield return new WaitForSeconds(.1f);
         FallTimerControl = true;
+        secondJumpControl = true;
     }
     void ScaleControl()
     {
