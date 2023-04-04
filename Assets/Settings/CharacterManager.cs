@@ -91,7 +91,7 @@ public class CharacterManager : MonoBehaviour
             Walk(movementVeriable);
 
 
-        if (Input.GetKeyDown(KeyCode.Space) && canJump && canDash)
+        if (Input.GetKeyDown(KeyCode.Space) && canJump && canDash && !DashTimerControl)
             Jump();
 
         if (Input.GetKeyDown(KeyCode.Space) && secondJump && !canJump && canDash)
@@ -306,6 +306,7 @@ public class CharacterManager : MonoBehaviour
         rb.velocity = Vector2.zero;
         rb.gravityScale = 0;
         jumpTimer = 0;
+        
         DashSystem();
         yield return new WaitForSeconds(dashTimer);
         rb.velocity = Vector2.zero;
@@ -313,6 +314,7 @@ public class CharacterManager : MonoBehaviour
         
         trailRenderer.enabled = false;
         canDash = false;
+        
         rb.gravityScale = 1;
         canWalk = true;
     }
