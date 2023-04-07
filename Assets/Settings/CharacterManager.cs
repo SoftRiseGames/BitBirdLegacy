@@ -17,6 +17,7 @@ public class CharacterManager : MonoBehaviour
     
     public float sideOffsetValue;
     public LayerMask groundLayerDetect;
+    public LayerMask sideLayerDedect;
     public bool collisionPoint;
     public bool sideColliderPoint;
 
@@ -71,7 +72,7 @@ public class CharacterManager : MonoBehaviour
     void Update()
     {
         collisionPoint = Physics2D.OverlapCircle((Vector2)transform.position + underoffset, collisionGroundradius, groundLayerDetect) || Physics2D.OverlapCircle((Vector2)transform.position + underSideOffset, collisionGroundradius, groundLayerDetect) || Physics2D.OverlapCircle((Vector2)transform.position + UnderOffsetSideNegativeOffset, collisionGroundradius, groundLayerDetect);
-        sideColliderPoint = Physics2D.OverlapCircle((Vector2)transform.position + sideoffset, collisionSideradius, groundLayerDetect) || Physics2D.OverlapCircle((Vector2)transform.position - sideoffset, collisionSideradius, groundLayerDetect);
+        sideColliderPoint = Physics2D.OverlapCircle((Vector2)transform.position + sideoffset, collisionSideradius, sideLayerDedect);
         
         x = Input.GetAxisRaw("Horizontal");
         y = Input.GetAxisRaw("Vertical");
@@ -135,7 +136,18 @@ public class CharacterManager : MonoBehaviour
         //yan kontrol
         if (sideColliderPoint)
         {
-
+            if (transform.rotation.z == 0 || transform.rotation.z == -1)
+            {
+                if (rb.velocity.x < 0 || rb.velocity.x > 0)
+                    Debug.Log("ittirme");
+            }
+           
+            else if (transform.rotation.z == 0.7071068f || transform.rotation.z == -0.7071068f)
+            {
+                if (rb.velocity.y < 0 || rb.velocity.y > 0)
+                    Debug.Log("ittirme");
+            }
+           
         }
         ///////////////////////////////////////
 
@@ -164,6 +176,7 @@ public class CharacterManager : MonoBehaviour
 
     void GizmoFlipSystem()
     {
+        
         if (transform.rotation.z == 0)
         {
             underoffset = new Vector2(0, underOffsetValue);
@@ -192,6 +205,17 @@ public class CharacterManager : MonoBehaviour
             UnderOffsetSideNegativeOffset = new Vector2(underOffsetValue, UnderOffsetSideValue);
             sideoffset = new Vector2(0, -sideOffsetValue);
         }
+
+        if (this.gameObject.transform.localScale.x > 0 && sideOffsetValue < 0)
+        {
+            sideoffset = sideoffset * -1;
+        }
+        else if (this.gameObject.transform.localScale.x < 0 && sideOffsetValue > 0)
+        {
+            sideoffset = sideoffset * -1;
+        }
+
+
     }
 
     private void OnDrawGizmos()
@@ -200,10 +224,10 @@ public class CharacterManager : MonoBehaviour
         Gizmos.DrawWireSphere((Vector2)transform.position + underoffset, collisionGroundradius);
         Gizmos.DrawWireSphere((Vector2)transform.position + underSideOffset , collisionGroundradius);
         Gizmos.DrawWireSphere((Vector2)transform.position +UnderOffsetSideNegativeOffset, collisionGroundradius);
+      
+       
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere((Vector2)transform.position + sideoffset, collisionSideradius);
-        Gizmos.color = Color.white;
-        Gizmos.DrawWireSphere((Vector2)transform.position - sideoffset, collisionSideradius);
     }
     void Walk(Vector2 movementVeriable)
     {
