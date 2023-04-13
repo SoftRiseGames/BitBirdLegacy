@@ -292,7 +292,7 @@ GameObject:
   - component: {fileID: 315008429}
   - component: {fileID: 315008428}
   - component: {fileID: 315008427}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Circle (1)
   m_TagString: gravity
   m_Icon: {fileID: 0}
