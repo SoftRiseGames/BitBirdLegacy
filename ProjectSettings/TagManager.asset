@@ -7,6 +7,7 @@ TagManager:
   - ground
   - gravity
   - camlimit
+  - killer
   layers:
   - Default
   - TransparentFX
