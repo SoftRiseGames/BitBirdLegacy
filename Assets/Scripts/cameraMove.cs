@@ -11,9 +11,9 @@ public class cameraMove : MonoBehaviour
     private void Start()
     {
         characterManagerCode = GameObject.Find("player").GetComponent<CharacterManager>();
-        
+      
     }
-
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.name == "player")
@@ -26,6 +26,7 @@ public class cameraMove : MonoBehaviour
         {
             virtualCam.GetComponent<inCameraSettings>().objects.Add(collision.gameObject);
         }
+       
         
     }
 

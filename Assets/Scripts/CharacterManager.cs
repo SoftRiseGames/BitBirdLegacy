@@ -101,7 +101,7 @@ public class CharacterManager : MonoBehaviour
         JumpCont();
         GizmoTriggerSystem();
         Crouch();
-
+        
         ManageWalk();
 
         if (canWalk)
@@ -198,19 +198,7 @@ public class CharacterManager : MonoBehaviour
         //////////////////////////////
     }
 
-    void jumpEffect()
-    {
-        if (gameObject.transform.localScale.x > 0)
-        {
-            transform.DOScale(new Vector2(7.2f, 19.2f), 0.1f).OnComplete(() => transform.DOScale(new Vector2(12f, 12f), 0.1f));
-        }
-        else if (gameObject.transform.localScale.x < 0)
-        {
-            transform.DOScale(new Vector2(-7.2f, 19.2f), 0.1f).OnComplete(() => transform.DOScale(new Vector2(-12f, 12f), 0.1f));
-        }
-        
-        cameraShake.shake(ziplamaamplitude, ziplamaduration);
-    }
+  
     void DashEffect()
     {
         if (gameObject.transform.localScale.x > 0)
@@ -392,14 +380,38 @@ public class CharacterManager : MonoBehaviour
             secondJump = false; 
         }
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+
+  
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "camlimit")
+        {
+            Debug.Log("a");
+            cameraShake = null;
+        }
+    }
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "camlimit")
         {
-            Debug.Log("a");
+            Debug.Log(collision.name);
             cameraShake = collision.gameObject.transform.GetChild(0).GetComponent<inCameraSettings>();
+            
         }
 
+    }
+    void jumpEffect()
+    {
+        if (gameObject.transform.localScale.x > 0)
+        {
+            transform.DOScale(new Vector2(7.2f, 19.2f), 0.1f).OnComplete(() => transform.DOScale(new Vector2(12f, 12f), 0.1f));
+        }
+        else if (gameObject.transform.localScale.x < 0)
+        {
+            transform.DOScale(new Vector2(-7.2f, 19.2f), 0.1f).OnComplete(() => transform.DOScale(new Vector2(-12f, 12f), 0.1f));
+        }
+
+        cameraShake.shake(ziplamaamplitude, ziplamaduration);
     }
     IEnumerator DoubleJumpWait()
     {
