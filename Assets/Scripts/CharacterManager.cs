@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class CharacterManager : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class CharacterManager : MonoBehaviour
     float xRaw;
     float yRaw;
     public float underOffsetValue;
-    public float UnderOffsetSideValue;
+  
     
     public float sideOffsetValue;
     public LayerMask groundLayerDetect;
@@ -23,7 +24,7 @@ public class CharacterManager : MonoBehaviour
 
     public Vector2 underoffset;
     public Vector2 underSideOffset;
-    public Vector2 UnderOffsetSideNegativeOffset;
+    public inCameraSettings cameraShake;
     Vector2 sideoffset;
 
     public float collisionSideradius;
@@ -39,11 +40,20 @@ public class CharacterManager : MonoBehaviour
 
     [Header("Walk")]
     [SerializeField] float walkForce;
+    [SerializeField] float walkcarpan;
+    [SerializeField] float durmacarpan;
+    [SerializeField] float aktifhiz;
 
     [Header("Dash")]
     [SerializeField] float dashForce;
     [SerializeField] float dashTimer;
+    
 
+    [Header("Titresim")]
+    public float yurumeamplitude;
+    public float ziplamaamplitude;
+    public float yurumeduration;
+    public float ziplamaduration;
 
     [Header("Bools")]
     public bool canJump;
@@ -53,7 +63,8 @@ public class CharacterManager : MonoBehaviour
     public bool sagsolcont;
     bool DashTimerControl;
     bool canCrouch;
-   
+    
+
     bool FallTimerControl;
     void Start()
     {
@@ -65,13 +76,13 @@ public class CharacterManager : MonoBehaviour
         canDash = true;
       
         FallTimerControl = true;
-
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        collisionPoint = Physics2D.OverlapCircle((Vector2)transform.position + underoffset, collisionGroundradius, groundLayerDetect) || Physics2D.OverlapCircle((Vector2)transform.position + underSideOffset, collisionGroundradius, groundLayerDetect) || Physics2D.OverlapCircle((Vector2)transform.position + UnderOffsetSideNegativeOffset, collisionGroundradius, groundLayerDetect);
+        collisionPoint = Physics2D.OverlapCircle((Vector2)transform.position + underoffset, collisionGroundradius, groundLayerDetect);
         sideColliderPoint = Physics2D.OverlapCircle((Vector2)transform.position + sideoffset, collisionSideradius, sideLayerDedect);
         
         x = Input.GetAxisRaw("Horizontal");
@@ -80,26 +91,35 @@ public class CharacterManager : MonoBehaviour
         yRaw = Input.GetAxisRaw("Vertical");
         movementVeriable = new Vector2(x, y);
 
-
+        anims();
         ScaleControl();
         GizmoFlipSystem();
         JumpCont();
         GizmoTriggerSystem();
         Crouch();
 
+        ManageWalk();
 
         if (canWalk)
             Walk(movementVeriable);
 
 
         if (Input.GetKeyDown(KeyCode.Space) && canJump && canDash && !DashTimerControl)
+        {
             Jump();
+            jumpEffect();
+        }
+            
 
         if (Input.GetKeyDown(KeyCode.Space) && secondJump && !canJump && canDash)
             DoubleJump();
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
+        {
             StartCoroutine(Dash(dashTimer));
+            DashEffect();
+        }
+            
 
         if (FallTimerControl)
         {
@@ -174,35 +194,103 @@ public class CharacterManager : MonoBehaviour
         //////////////////////////////
     }
 
+    void jumpEffect()
+    {
+        if (gameObject.transform.localScale.x > 0)
+        {
+            transform.DOScale(new Vector2(7.2f, 19.2f), 0.1f).OnComplete(() => transform.DOScale(new Vector2(12f, 12f), 0.1f));
+        }
+        else if (gameObject.transform.localScale.x < 0)
+        {
+            transform.DOScale(new Vector2(-7.2f, 19.2f), 0.1f).OnComplete(() => transform.DOScale(new Vector2(-12f, 12f), 0.1f));
+        }
+        
+        cameraShake.shake(ziplamaamplitude, ziplamaduration);
+    }
+    void DashEffect()
+    {
+        if (gameObject.transform.localScale.x > 0)
+        {
+            transform.DOScale(new Vector2(19.2f, 7.2f), 0.1f).OnComplete(() => transform.DOScale(new Vector2(12f, 12f), 0.1f));
+        }
+        else if (gameObject.transform.localScale.x < 0)
+        {
+            transform.DOScale(new Vector2(-19.2f, 7f), 0.1f).OnComplete(() => transform.DOScale(new Vector2(-12f, 12f), 0.1f));
+        }
+
+        cameraShake.shake(ziplamaamplitude, ziplamaduration);
+    }
+
+
+    void anims()
+    {
+        if (transform.rotation.z == 0 || transform.rotation.z == -1)
+        {
+            if((x>0 || x<0) && collisionPoint)
+            {
+                animator.SetBool("isWalk", true);
+            }
+            
+            else
+            {
+                animator.SetBool("isWalk", false);
+            }
+            
+            if((rb.velocity.y>0 || rb.velocity.y<0) && !collisionPoint)
+            {
+                animator.SetBool("isJump", true);
+            }
+            else
+            {
+                animator.SetBool("isJump", false);
+            }
+        }
+       
+        else if (transform.rotation.z == 0.7071068f || transform.rotation.z == -0.7071068f)
+        {
+
+            if ((x > 0 || x < 0) && collisionPoint)
+            {
+                animator.SetBool("isWalk", true);
+            }
+
+            else
+            {
+                animator.SetBool("isWalk", false);
+            }
+
+            if ((rb.velocity.x > 0 || rb.velocity.x < 0) && !collisionPoint)
+            {
+                animator.SetBool("isJump", true);
+            }
+            else
+            {
+                animator.SetBool("isJump", false);
+            }
+        }
+        
+    }
     void GizmoFlipSystem()
     {
         
         if (transform.rotation.z == 0)
         {
             underoffset = new Vector2(0, underOffsetValue);
-            underSideOffset = new Vector2(UnderOffsetSideValue, underOffsetValue);
-            UnderOffsetSideNegativeOffset = new Vector2(-UnderOffsetSideValue, underOffsetValue);
             sideoffset = new Vector2(sideOffsetValue, 0);
         }
         else if (transform.rotation.z == -1)
         {
             underoffset = new Vector2(0, -underOffsetValue);
-            underSideOffset = new Vector2(-UnderOffsetSideValue, -underOffsetValue);
-            UnderOffsetSideNegativeOffset = new Vector2(UnderOffsetSideValue, -underOffsetValue);
             sideoffset = new Vector2(-sideOffsetValue, 0);
         }
         else if (transform.rotation.z == 0.7071068f)
         {
             underoffset = new Vector2(-underOffsetValue, 0);
-            underSideOffset = new Vector2(-underOffsetValue, UnderOffsetSideValue);
-            UnderOffsetSideNegativeOffset = new Vector2(-underOffsetValue, -UnderOffsetSideValue);
             sideoffset = new Vector2(0, sideOffsetValue);
         }
         else if (transform.rotation.z == -0.7071068f)
         {
             underoffset = new Vector2(underOffsetValue, 0);
-            underSideOffset = new Vector2(underOffsetValue, -UnderOffsetSideValue);
-            UnderOffsetSideNegativeOffset = new Vector2(underOffsetValue, UnderOffsetSideValue);
             sideoffset = new Vector2(0, -sideOffsetValue);
         }
 
@@ -218,12 +306,12 @@ public class CharacterManager : MonoBehaviour
 
     }
 
+   
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere((Vector2)transform.position + underoffset, collisionGroundradius);
-        Gizmos.DrawWireSphere((Vector2)transform.position + underSideOffset , collisionGroundradius);
-        Gizmos.DrawWireSphere((Vector2)transform.position +UnderOffsetSideNegativeOffset, collisionGroundradius);
+       
       
        
         Gizmos.color = Color.green;
@@ -233,26 +321,51 @@ public class CharacterManager : MonoBehaviour
     {
         if (gameObject.transform.rotation.z == 0)
         {
-            rb.velocity = new Vector2(movementVeriable.x * walkForce, rb.velocity.y);
+            rb.velocity = new Vector2(movementVeriable.x * aktifhiz, rb.velocity.y);
 
         }
         else if (gameObject.transform.rotation.z == 0.7071068f)
         {
-            rb.velocity = new Vector2(rb.velocity.x, movementVeriable.x * walkForce);
+            rb.velocity = new Vector2(rb.velocity.x, movementVeriable.x * aktifhiz);
 
         }
         else if (gameObject.transform.rotation.z == -1)
         {
-            rb.velocity = new Vector2(movementVeriable.x * -walkForce, rb.velocity.y);
+            rb.velocity = new Vector2(movementVeriable.x * -aktifhiz, rb.velocity.y);
 
         }
         else if (gameObject.transform.rotation.z == -0.7071068f)
         {
-            rb.velocity = new Vector2(rb.velocity.x, movementVeriable.x * -walkForce);
+            rb.velocity = new Vector2(rb.velocity.x, movementVeriable.x * -aktifhiz);
         }
-
-
+        /*
+        if (x > 0 || x<0 && collisionPoint)
+        {
+            walking = true;
+        }
+        else
+        {
+            walking = false;
+        }
+        */
     }
+
+    void ManageWalk()
+    {
+        if((rb.velocity.x>0 && x> 0) || (rb.velocity.x<0 && x<0))
+        {
+            aktifhiz = Mathf.Lerp(aktifhiz, walkForce, walkcarpan * Time.deltaTime);
+        }
+        else if(x != 0)
+        {
+            aktifhiz = Mathf.Lerp(aktifhiz, walkForce, durmacarpan * Time.deltaTime);
+        }
+        else
+        {
+            aktifhiz = Mathf.Lerp(aktifhiz, 0, durmacarpan * Time.deltaTime);
+        }
+    }
+
 
     void Jump()
     {
@@ -267,7 +380,15 @@ public class CharacterManager : MonoBehaviour
             secondJump = false; 
         }
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "camlimit")
+        {
+            Debug.Log("a");
+            cameraShake = collision.gameObject.transform.GetChild(0).GetComponent<inCameraSettings>();
+        }
 
+    }
     IEnumerator DoubleJumpWait()
     {
        
@@ -291,8 +412,7 @@ public class CharacterManager : MonoBehaviour
             this.gameObject.transform.localScale = new Vector2(this.gameObject.transform.localScale.x * -1, this.gameObject.transform.localScale.y);
         
     }
-
-
+    
     void JumpCont()
     {
         if (jumpTimer < 0 && (transform.rotation.z == 0 || transform.rotation.z == -1))
