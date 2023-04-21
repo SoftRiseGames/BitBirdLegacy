@@ -47,6 +47,7 @@ public class CharacterManager : MonoBehaviour
     [Header("Dash")]
     [SerializeField] float dashForce;
     [SerializeField] float dashTimer;
+
     
 
     [Header("Titresim")]
@@ -63,7 +64,10 @@ public class CharacterManager : MonoBehaviour
     public bool sagsolcont;
     bool DashTimerControl;
     bool canCrouch;
-    
+
+    [Header("ControlBools")]
+    public bool doubleJumpControl;
+    public bool dashControl;
 
     bool FallTimerControl;
     void Start()
@@ -111,10 +115,10 @@ public class CharacterManager : MonoBehaviour
         }
             
 
-        if (Input.GetKeyDown(KeyCode.Space) && secondJump && !canJump && canDash)
+        if (Input.GetKeyDown(KeyCode.Space) && secondJump && !canJump && canDash &&doubleJumpControl)
             DoubleJump();
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && dashControl)
         {
             StartCoroutine(Dash(dashTimer));
             DashEffect();
