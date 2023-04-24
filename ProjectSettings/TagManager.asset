@@ -8,6 +8,9 @@ TagManager:
   - gravity
   - camlimit
   - killer
+  - camrotate
+  - player
+  - kapi
   layers:
   - Default
   - TransparentFX
@@ -16,7 +19,7 @@ TagManager:
   - Water
   - UI
   - WallAndElevator
-  - 
+  - Obstacle
   - 
   - 
   - 

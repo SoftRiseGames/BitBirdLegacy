@@ -16,10 +16,14 @@ public class inCameraSettings : MonoBehaviour
     public float dususshakeAmplitude;
     public float yukselikduration;
     public float delay;
-
+    public CharacterManager characterManager;
+    
     private void Start()
     {
-        
+        if(characterManager == null)
+        {
+            characterManager = GameObject.Find("player").GetComponent<CharacterManager>();
+        }
 
         if (thisCamera == null)
         {
@@ -39,33 +43,27 @@ public class inCameraSettings : MonoBehaviour
 
     void GravityAndCamControl()
     {
-
-        if (Input.GetKeyDown(KeyCode.X))
+        if (characterManager.camrotate)
         {
-
-            if (this.gameObject.transform.rotation.z == 0)
+            if (Input.GetKeyDown(KeyCode.X))
             {
                 
-                cevir(9.8f, 0f);
-
-            }
-            if (this.gameObject.transform.rotation.z == 0.7071068f && rotationz == 90)
-            {
-                cevir( 0f, 9.8f);
-               
-            }
-            if (this.gameObject.transform.rotation.z == 1)
-            {
-                cevir(-9.8f, 0f);
-         
-          
-
-            }
-            if (this.gameObject.transform.rotation.z == 0.7071068f && rotationz == 270)
-            {
-                cevir(0,-9.8f);
-       
-                
+                if (this.gameObject.transform.rotation.z == 0)
+                {
+                    cevir(9.8f, 0f);
+                }
+                if (this.gameObject.transform.rotation.z == 0.7071068f && rotationz == 90)
+                {
+                    cevir(0f, 9.8f);
+                }
+                if (this.gameObject.transform.rotation.z == 1)
+                {
+                    cevir(-9.8f, 0f);
+                }
+                if (this.gameObject.transform.rotation.z == 0.7071068f && rotationz == 270)
+                {
+                    cevir(0, -9.8f);
+                }
             }
         }
     }

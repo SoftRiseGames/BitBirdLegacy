@@ -62,13 +62,15 @@ public class CharacterManager : MonoBehaviour
     public bool canWalk;
     public bool canDash;
     public bool sagsolcont;
+    public bool camrotate = false;
     bool DashTimerControl;
     bool canCrouch;
+    public bool isFollow;
 
     [Header("ControlBools")]
     public bool doubleJumpControl;
     public bool dashControl;
-
+  
     bool FallTimerControl;
     void Start()
     {
@@ -348,7 +350,10 @@ public class CharacterManager : MonoBehaviour
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
+      
     }
+    
+
 
     void ManageWalk()
     {
@@ -380,21 +385,23 @@ public class CharacterManager : MonoBehaviour
             secondJump = false; 
         }
     }
+    
+    
 
-  
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "camlimit")
         {
-            Debug.Log("a");
             cameraShake = null;
         }
+       
+       
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "camlimit")
         {
-            Debug.Log(collision.name);
+           
             cameraShake = collision.gameObject.transform.GetChild(0).GetComponent<inCameraSettings>();
             
         }
@@ -530,4 +537,5 @@ public class CharacterManager : MonoBehaviour
     {
         Physics2D.gravity = new Vector2(gravityX, gravityY);
     }
+
 }
