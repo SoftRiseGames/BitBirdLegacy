@@ -6,7 +6,7 @@ public class CamRotation : MonoBehaviour
 {
     public Animator animator;
     public CharacterManager character;
-
+    public bool collideDedection;
    
     void Start()
     {
@@ -17,7 +17,7 @@ public class CamRotation : MonoBehaviour
     {
         if (collision.gameObject.tag == "player")
         {
-            character.camrotate = true;
+            collideDedection = true;
         }
     }
     private void Update()
@@ -26,9 +26,11 @@ public class CamRotation : MonoBehaviour
     }
     void TriggerSystem()
     {
-        if(character.camrotate ==true && Input.GetKey(KeyCode.X))
+
+      
+        if(collideDedection ==  true && Input.GetKey(KeyCode.X))
         {
-            Debug.Log("a");
+            character.camrotate = true;
             animator.SetBool("triggeractivate", true);
             StartCoroutine(animtimer());
         }
@@ -37,6 +39,7 @@ public class CamRotation : MonoBehaviour
     {
         if (collision.gameObject.tag == "player")
         {
+            collideDedection = false;
             character.camrotate = false;
         }
     }

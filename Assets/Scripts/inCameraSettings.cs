@@ -44,10 +44,7 @@ public class inCameraSettings : MonoBehaviour
     void GravityAndCamControl()
     {
         if (characterManager.camrotate)
-        {
-            if (Input.GetKeyDown(KeyCode.X))
-            {
-                
+        {  
                 if (this.gameObject.transform.rotation.z == 0)
                 {
                     cevir(9.8f, 0f);
@@ -64,7 +61,7 @@ public class inCameraSettings : MonoBehaviour
                 {
                     cevir(0, -9.8f);
                 }
-            }
+            
         }
     }
 

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6575975240940501015}
   - component: {fileID: 6575975240940501014}
-  - component: {fileID: 6575975240940501001}
+  - component: {fileID: 3647121093370491668}
   - component: {fileID: 6575975240940501000}
   - component: {fileID: 6575975240940501012}
   m_Layer: 0
@@ -87,7 +87,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6575975240940501001
+--- !u!114 &3647121093370491668
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -96,10 +96,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6575975240940501003}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0dde97178d8e9149a17bd66176fcad8, type: 3}
+  m_Script: {fileID: 11500000, guid: 249f2ffa839452d4b8197cd8720c25ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
+  animator: {fileID: 6575975240940501000}
   character: {fileID: 0}
 --- !u!95 &6575975240940501000
 Animator:
@@ -111,7 +111,7 @@ Animator:
   m_GameObject: {fileID: 6575975240940501003}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0c9d0bce365d8eb4a86bcebf5285c1c1, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
