@@ -18,10 +18,12 @@ public class CharacterManager : MonoBehaviour
     
     public float sideOffsetValue;
     public LayerMask groundLayerDetect;
-    public LayerMask sideLayerDedect;
-    public bool collisionPoint;
-    public bool sideColliderPoint;
 
+    public LayerMask sideLayerDedect;
+    public Collider2D collisionPoint;
+
+    public bool sideColliderPoint;
+    public GameObject platforms;
     public Vector2 underoffset;
     public Vector2 underSideOffset;
     public inCameraSettings cameraShake;
@@ -89,6 +91,7 @@ public class CharacterManager : MonoBehaviour
     void Update()
     {
         collisionPoint = Physics2D.OverlapCircle((Vector2)transform.position + underoffset, collisionGroundradius, groundLayerDetect);
+        
         sideColliderPoint = Physics2D.OverlapCircle((Vector2)transform.position + sideoffset, collisionSideradius, sideLayerDedect);
         
         x = Input.GetAxisRaw("Horizontal");
@@ -103,7 +106,7 @@ public class CharacterManager : MonoBehaviour
         JumpCont();
         GizmoTriggerSystem();
         Crouch();
-        
+       
         ManageWalk();
 
         if (canWalk)
@@ -136,6 +139,7 @@ public class CharacterManager : MonoBehaviour
         }
 
     }
+   
     void Crouch()
     {
         if (canCrouch)
@@ -185,25 +189,30 @@ public class CharacterManager : MonoBehaviour
             {
                 jumpTimer = jumpStartTimer;
             }
-            
+          
             canDash = true;
             canCrouch = true;
             secondJump = true;
 
-
+            this.gameObject.transform.parent = collisionPoint.transform;
         }
         else if (!collisionPoint)
         {
+       
             canJump = false;
             canCrouch = false;
+            this.gameObject.transform.parent = null;
         }
+
+        
         //////////////////////////////
     }
 
   
     void DashEffect()
     {
-        if (gameObject.transform.localScale.x > 0)
+
+        if (gameObject.transform.localScale.x >= 0)
         {
             transform.DOScale(new Vector2(19.2f, 7.2f), 0.1f).OnComplete(() => transform.DOScale(new Vector2(12f, 12f), 0.1f));
         }
@@ -350,11 +359,11 @@ public class CharacterManager : MonoBehaviour
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
-      
+       
     }
-    
+   
 
-
+  
     void ManageWalk()
     {
         if((rb.velocity.x>0 && x> 0) || (rb.velocity.x<0 && x<0))
@@ -374,6 +383,7 @@ public class CharacterManager : MonoBehaviour
 
     void Jump()
     {
+        rb.velocity = Vector2.zero;
         rb.velocity = jumpForce * transform.up;
     }
     void DoubleJump()
@@ -409,15 +419,18 @@ public class CharacterManager : MonoBehaviour
     }
     void jumpEffect()
     {
+        
         if (gameObject.transform.localScale.x > 0)
         {
+           
             transform.DOScale(new Vector2(7.2f, 19.2f), 0.1f).OnComplete(() => transform.DOScale(new Vector2(12f, 12f), 0.1f));
         }
         else if (gameObject.transform.localScale.x < 0)
         {
+           
             transform.DOScale(new Vector2(-7.2f, 19.2f), 0.1f).OnComplete(() => transform.DOScale(new Vector2(-12f, 12f), 0.1f));
         }
-
+      
         cameraShake.shake(ziplamaamplitude, ziplamaduration);
     }
     IEnumerator DoubleJumpWait()

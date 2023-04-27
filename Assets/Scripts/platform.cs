@@ -24,6 +24,10 @@ public class platform : MonoBehaviour
 
 
     }
-    
-    
+
+    private void FixedUpdate()
+    {
+        
+    }
+  
 }

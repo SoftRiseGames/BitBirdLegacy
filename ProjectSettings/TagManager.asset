@@ -11,6 +11,7 @@ TagManager:
   - camrotate
   - player
   - kapi
+  - platform
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - UI
   - WallAndElevator
   - Obstacle
-  - 
+  - platform
   - 
   - 
   - 
