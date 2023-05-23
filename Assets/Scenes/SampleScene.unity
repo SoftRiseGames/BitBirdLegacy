@@ -227,7 +227,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 26131447}
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 32, y: 8.2, z: 0}
+  m_LocalPosition: {x: -4.79, y: 8.2, z: 0}
   m_LocalScale: {x: 80.555115, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1251,7 +1251,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 756571367}
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -28.1, y: 8.2, z: 0}
+  m_LocalPosition: {x: -18.03, y: 8.2, z: 0}
   m_LocalScale: {x: 80.555115, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1605,7 +1605,6 @@ MonoBehaviour:
   animator: {fileID: 0}
   rb: {fileID: 0}
   underOffsetValue: -0.38
-  UnderOffsetSideValue: -0.28
   sideOffsetValue: 0.51
   groundLayerDetect:
     serializedVersion: 2
@@ -1613,13 +1612,15 @@ MonoBehaviour:
   sideLayerDedect:
     serializedVersion: 2
     m_Bits: 0
-  collisionPoint: 0
+  collisionPoint: {fileID: 0}
   sideColliderPoint: 0
+  platforms: {fileID: 0}
   underoffset: {x: 0, y: 0}
   underSideOffset: {x: 0, y: 0}
-  UnderOffsetSideNegativeOffset: {x: 0, y: 0}
+  cameraShake: {fileID: 0}
   collisionSideradius: 0.21
   collisionGroundradius: 0.14
+  movementVeriable: {x: 0, y: 0}
   jumpTimer: 0
   jumpStartTimer: 0.12
   trailRenderer: {fileID: 0}
@@ -1627,13 +1628,25 @@ MonoBehaviour:
   jumpForce: 9
   lowJumpMultiplier: 8
   walkForce: 6
+  walkcarpan: 0
+  durmacarpan: 0
+  aktifhiz: 0
   dashForce: 20
   dashTimer: 0.2
+  yurumeamplitude: 0
+  ziplamaamplitude: 0
+  yurumeduration: 0
+  ziplamaduration: 0
   canJump: 1
   secondJump: 0
   canWalk: 0
   canDash: 1
   sagsolcont: 0
+  camrotate: 0
+  DashTimerControl: 0
+  isFollow: 0
+  doubleJumpControl: 0
+  dashControl: 0
 --- !u!61 &973101582
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1915,7 +1928,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1249650041}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.8764, y: 6.7, z: 0}
+  m_LocalPosition: {x: 11.8764, y: 2.45, z: 0}
   m_LocalScale: {x: 80.555115, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2336,6 +2349,12 @@ MonoBehaviour:
   limitPoint: {fileID: 0}
   character: {fileID: 0}
   objects: []
+  camShake: {fileID: 0}
+  yukselishakeAmplitude: 0
+  dususshakeAmplitude: 0
+  yukselikduration: 0
+  delay: 0
+  characterManager: {fileID: 0}
 --- !u!95 &1406526442
 Animator:
   serializedVersion: 4
@@ -2731,7 +2750,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1741694548}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.8764, y: -19.8, z: 0}
+  m_LocalPosition: {x: 11.8764, y: -4.35, z: 0}
   m_LocalScale: {x: 80.555115, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2970,6 +2989,12 @@ MonoBehaviour:
   limitPoint: {fileID: 0}
   character: {fileID: 0}
   objects: []
+  camShake: {fileID: 0}
+  yukselishakeAmplitude: 0
+  dususshakeAmplitude: 0
+  yukselikduration: 0
+  delay: 0
+  characterManager: {fileID: 0}
 --- !u!1 &2092555214
 GameObject:
   m_ObjectHideFlags: 3

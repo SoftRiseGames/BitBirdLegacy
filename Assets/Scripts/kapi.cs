@@ -26,7 +26,7 @@ public class kapi : MonoBehaviour
     {
         if (iscollide)
         {
-            Debug.Log("a");
+          
             if (character.isFollow && Input.GetKey(KeyCode.E))
             {
                 character.isFollow = false;
@@ -34,7 +34,7 @@ public class kapi : MonoBehaviour
                 this.gameObject.transform.DOMove(dotweengidisPoint.transform.position, gidis).SetEase(Ease.Linear);
             }
         }
-
+        
 
     }
    

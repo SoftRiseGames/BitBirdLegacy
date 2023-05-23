@@ -12,6 +12,7 @@ TagManager:
   - player
   - kapi
   - platform
+  - playermanager
   layers:
   - Default
   - TransparentFX

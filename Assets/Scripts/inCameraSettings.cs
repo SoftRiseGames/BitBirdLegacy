@@ -17,10 +17,10 @@ public class inCameraSettings : MonoBehaviour
     public float yukselikduration;
     public float delay;
     public CharacterManager characterManager;
-    
+
     private void Start()
     {
-        if(characterManager == null)
+        if (characterManager == null)
         {
             characterManager = GameObject.Find("player").GetComponent<CharacterManager>();
         }
@@ -35,7 +35,7 @@ public class inCameraSettings : MonoBehaviour
 
     void Update()
     {
-        
+
         if (Input.GetKeyDown(KeyCode.Z))
             Debug.Log(thisCamera.gameObject.transform.rotation.z);
         GravityAndCamControl();
@@ -44,63 +44,63 @@ public class inCameraSettings : MonoBehaviour
     void GravityAndCamControl()
     {
         if (characterManager.camrotate)
-        {  
-                if (this.gameObject.transform.rotation.z == 0)
-                {
-                    cevir(9.8f, 0f);
-                }
-                if (this.gameObject.transform.rotation.z == 0.7071068f && rotationz == 90)
-                {
-                    cevir(0f, 9.8f);
-                }
-                if (this.gameObject.transform.rotation.z == 1)
-                {
-                    cevir(-9.8f, 0f);
-                }
-                if (this.gameObject.transform.rotation.z == 0.7071068f && rotationz == 270)
-                {
-                    cevir(0, -9.8f);
-                }
-            
+        {
+            if (this.gameObject.transform.rotation.z == 0)
+            {
+                cevir(9.8f, 0f);
+            }
+            if (this.gameObject.transform.rotation.z == 0.7071068f && rotationz == 90)
+            {
+                cevir(0f, 9.8f);
+            }
+            if (this.gameObject.transform.rotation.z == 1)
+            {
+                cevir(-9.8f, 0f);
+            }
+            if (this.gameObject.transform.rotation.z == 0.7071068f && rotationz == 270)
+            {
+                cevir(0, -9.8f);
+            }
+
         }
     }
 
     public void shake(float amplitude, float dur)
     {
-        SetShake(amplitude, dur*.15f).OnComplete(() => SetShake(0,dur*.15f).SetDelay(dur*.7f));
+        SetShake(amplitude, dur * .15f).OnComplete(() => SetShake(0, dur * .15f).SetDelay(dur * .7f));
     }
 
     public DG.Tweening.Core.TweenerCore<float, float, DG.Tweening.Plugins.Options.FloatOptions> SetShake(float amplitude, float dur)
     {
-       return DOTween.To(
-            () => camShake.m_AmplitudeGain,
-            val => camShake.m_AmplitudeGain = val,
-            amplitude,
-            dur
-        );
+        return DOTween.To(
+             () => camShake.m_AmplitudeGain,
+             val => camShake.m_AmplitudeGain = val,
+             amplitude,
+             dur
+         );
     }
     void cevir(float acix, float aciy)
     {
         character.rb.velocity = new Vector3(0, 0, 0);
         character.CharacterTurn(acix, aciy);
         rotationz = rotationz + 90;
-        
+
         StartCoroutine(cameraAnimWait());
-        foreach(GameObject obj in objects)
+        foreach (GameObject obj in objects)
         {
             obj.GetComponent<GravityObjects>().CharacterTurn(acix, aciy);
         }
-        if(rotationz> 270)
+        if (rotationz > 270)
         {
             rotationz = 0;
         }
 
         character.transform.rotation = Quaternion.Euler(0, 0, rotationz);
-      
+
 
         if (thisCamera.gameObject.transform.rotation.z == 0)
         {
-            
+
             thisCamera.animator.SetBool("90", true);
             thisCamera.animator.SetBool("180", false);
             thisCamera.animator.SetBool("270", false);
@@ -109,7 +109,7 @@ public class inCameraSettings : MonoBehaviour
         }
         else if (thisCamera.gameObject.transform.rotation.z == 0.7071068f && rotationz == 180)
         {
-          
+
             thisCamera.animator.SetBool("180", true);
             thisCamera.animator.SetBool("90", false);
             thisCamera.animator.SetBool("270", false);
@@ -118,7 +118,7 @@ public class inCameraSettings : MonoBehaviour
 
         if (thisCamera.gameObject.transform.rotation.z == 1)
         {
-        
+
             thisCamera.animator.SetBool("90", false);
             thisCamera.animator.SetBool("180", false);
             thisCamera.animator.SetBool("270", true);
@@ -127,7 +127,7 @@ public class inCameraSettings : MonoBehaviour
 
         if (thisCamera.gameObject.transform.rotation.z == 0.7071068f && rotationz == 0)
         {
-          
+
             thisCamera.animator.SetBool("90", false);
             thisCamera.animator.SetBool("180", false);
             thisCamera.animator.SetBool("270", false);

@@ -31,7 +31,7 @@ public class CharacterManager : MonoBehaviour
 
     public float collisionSideradius;
     public float collisionGroundradius;
-    Vector2 movementVeriable;
+    public Vector2 movementVeriable;
     [SerializeField] float jumpTimer;
     [SerializeField] float jumpStartTimer;
     [SerializeField] TrailRenderer trailRenderer;
@@ -48,7 +48,7 @@ public class CharacterManager : MonoBehaviour
 
     [Header("Dash")]
     [SerializeField] float dashForce;
-    [SerializeField] float dashTimer;
+    public float dashTimer;
 
     
 
@@ -65,19 +65,23 @@ public class CharacterManager : MonoBehaviour
     public bool canDash;
     public bool sagsolcont;
     public bool camrotate = false;
-    bool DashTimerControl;
+    public bool DashTimerControl;
     bool canCrouch;
     public bool isFollow;
-
+    public bool RotationDedection;
     [Header("ControlBools")]
     public bool doubleJumpControl;
     public bool dashControl;
   
     bool FallTimerControl;
+
+
+   
     void Start()
     {
         trailRenderer = GetComponent<TrailRenderer>();
         animator = GetComponent<Animator>();
+        
         trailRenderer.enabled = false;
         rb = GetComponent<Rigidbody2D>();
         canWalk = true;
@@ -106,9 +110,9 @@ public class CharacterManager : MonoBehaviour
         JumpCont();
         GizmoTriggerSystem();
         Crouch();
-       
+        //gravity();
         ManageWalk();
-
+  
         if (canWalk)
             Walk(movementVeriable);
 
@@ -129,7 +133,7 @@ public class CharacterManager : MonoBehaviour
             DashEffect();
         }
             
-
+    
         if (FallTimerControl)
         {
             if (!canJump && !DashTimerControl)
@@ -209,7 +213,7 @@ public class CharacterManager : MonoBehaviour
     }
 
   
-    void DashEffect()
+    public void DashEffect()
     {
 
         if (gameObject.transform.localScale.x >= 0)
@@ -320,7 +324,7 @@ public class CharacterManager : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere((Vector2)transform.position + sideoffset, collisionSideradius);
     }
-    void Walk(Vector2 movementVeriable)
+    public void Walk(Vector2 movementVeriable)
     {
         if (gameObject.transform.rotation.z == 0)
         {
@@ -381,12 +385,12 @@ public class CharacterManager : MonoBehaviour
     }
 
 
-    void Jump()
+    public void Jump()
     {
         rb.velocity = Vector2.zero;
         rb.velocity = jumpForce * transform.up;
     }
-    void DoubleJump()
+    public void DoubleJump()
     {
         if (secondJump)
         {
@@ -417,22 +421,33 @@ public class CharacterManager : MonoBehaviour
         }
 
     }
-    void jumpEffect()
+    public void jumpEffect()
     {
         
-        if (gameObject.transform.localScale.x > 0)
+        //StartCoroutine(jumpEffectwait());
+        /*
+        if (collisionPoint)
         {
+            SpriteRenderer sprites = GetComponent<SpriteRenderer>();
+            if (gameObject.transform.localScale.x > 0)
+            {
+                
+                transform.DOScale(new Vector2(7.2f, 19.2f), 0.1f).OnComplete(() =>  transform.DOScale(new Vector2(12f, 12f), 0.1f));
+
+            }
+            else if (gameObject.transform.localScale.x < 0)
+            {
+
+                transform.DOScale(new Vector2(-7.2f, 19.2f), 0.1f).OnComplete(() => transform.transform.DOScale(new Vector2(-12f, 12f), 0.1f));
+            }
            
-            transform.DOScale(new Vector2(7.2f, 19.2f), 0.1f).OnComplete(() => transform.DOScale(new Vector2(12f, 12f), 0.1f));
         }
-        else if (gameObject.transform.localScale.x < 0)
-        {
-           
-            transform.DOScale(new Vector2(-7.2f, 19.2f), 0.1f).OnComplete(() => transform.DOScale(new Vector2(-12f, 12f), 0.1f));
-        }
-      
-        cameraShake.shake(ziplamaamplitude, ziplamaduration);
+        */
+        
+        //cameraShake.shake(ziplamaamplitude, ziplamaduration);
     }
+
+  
     IEnumerator DoubleJumpWait()
     {
        
@@ -485,7 +500,7 @@ public class CharacterManager : MonoBehaviour
 
     }
 
-    IEnumerator Dash(float dashTimer)
+   public IEnumerator Dash(float dashTimer)
     {
        
         canWalk = false;
@@ -545,6 +560,26 @@ public class CharacterManager : MonoBehaviour
         }
         rb.velocity = dir.normalized * dashForce;
 
+    }
+
+    void gravity()
+    {
+        if (gameObject.transform.rotation.z == 0)
+        {
+            CharacterTurn(0, -9.8f);
+        }
+        else if (gameObject.transform.rotation.z == 0.7071068f)
+        {
+            CharacterTurn(9.8f,0);
+        }
+        else if (gameObject.transform.rotation.z == -1)
+        {
+            CharacterTurn(0, 9.8f);
+        }
+        else if (gameObject.transform.rotation.z == -0.7071068f)
+        {
+            CharacterTurn(-9.8f, 0);
+        }
     }
     public void CharacterTurn(float gravityX, float gravityY)
     {

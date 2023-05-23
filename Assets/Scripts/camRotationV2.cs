@@ -15,9 +15,9 @@ public class camRotationV2 : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "player")
+        if (collision.gameObject.name == "player")
         {
-            Debug.Log("deðdi");
+           
             character.camrotate = true;
            
         }
@@ -28,17 +28,18 @@ public class camRotationV2 : MonoBehaviour
     }
     void TriggerSystem()
     {
+        
+
         if (character.camrotate == true )
         {
-            Debug.Log("a");
+           
             animator.SetBool("triggeractivate", true);
             StartCoroutine(animtimer());
-
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "player")
+        if (collision.gameObject.name == "player")
         {
             character.camrotate = false;
         }
@@ -46,7 +47,7 @@ public class camRotationV2 : MonoBehaviour
 
     IEnumerator animtimer()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(.1f);
         animator.SetBool("triggeractivate", false);
     }
 

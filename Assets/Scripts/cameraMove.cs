@@ -12,6 +12,7 @@ public class cameraMove : MonoBehaviour
     {
         characterManagerCode = GameObject.Find("player").GetComponent<CharacterManager>();
       
+      
     }
     
     private void OnTriggerEnter2D(Collider2D collision)
@@ -22,7 +23,7 @@ public class cameraMove : MonoBehaviour
             StartCoroutine(cameraWait());
         }
         
-        if(collision.gameObject.tag == "gravity")
+        if(collision.gameObject.tag == "gravitycontroller")
         {
             virtualCam.GetComponent<inCameraSettings>().objects.Add(collision.gameObject);
         }
