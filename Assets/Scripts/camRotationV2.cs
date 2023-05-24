@@ -6,6 +6,7 @@ public class camRotationV2 : MonoBehaviour
 {
     public Animator animator;
     public CharacterManager character;
+    
 
 
     void Start()
