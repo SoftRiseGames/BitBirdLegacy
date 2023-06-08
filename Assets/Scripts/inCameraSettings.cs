@@ -85,7 +85,7 @@ public class inCameraSettings : MonoBehaviour
         character.CharacterTurn(acix, aciy);
         rotationz = rotationz + 90;
 
-        StartCoroutine(cameraAnimWait());
+      
         foreach (GameObject obj in objects)
         {
             obj.GetComponent<GravityObjects>().CharacterTurn(acix, aciy);
@@ -137,10 +137,5 @@ public class inCameraSettings : MonoBehaviour
 
     }
 
-    IEnumerator cameraAnimWait()
-    {
-        GetComponent<CinemachineConfiner>().enabled = false;
-        yield return new WaitForSeconds(.5f);
-        GetComponent<CinemachineConfiner>().enabled = true;
-    }
+   
 }
