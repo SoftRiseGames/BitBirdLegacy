@@ -94,8 +94,13 @@ public class CharacterManager : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         canWalk = true;
         canDash = true;
-
-        if(PlayerPrefs.HasKey("GravityX") && PlayerPrefs.HasKey("GravityY"))
+        FallTimerControl = true;
+       
+        StartPrefs();
+    }
+    void StartPrefs()
+    {
+        if (PlayerPrefs.HasKey("GravityX") && PlayerPrefs.HasKey("GravityY"))
         {
             Physics2D.gravity = new Vector2(PlayerPrefs.GetFloat("GravityX"), PlayerPrefs.GetFloat("GravityY"));
         }
@@ -103,7 +108,7 @@ public class CharacterManager : MonoBehaviour
         {
             Physics2D.gravity = new Vector2(0, -9.8f);
         }
-        
+
         if (PlayerPrefs.HasKey("rotation"))
         {
             this.gameObject.transform.rotation = Quaternion.Euler(0, 0, PlayerPrefs.GetFloat("rotation"));
@@ -113,7 +118,7 @@ public class CharacterManager : MonoBehaviour
             this.gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
         }
 
-        if(PlayerPrefs.HasKey("positionX") && PlayerPrefs.HasKey("positionY"))
+        if (PlayerPrefs.HasKey("positionX") && PlayerPrefs.HasKey("positionY"))
         {
             this.gameObject.transform.position = new Vector2(PlayerPrefs.GetFloat("positionX"), PlayerPrefs.GetFloat("positionY"));
         }
@@ -121,10 +126,7 @@ public class CharacterManager : MonoBehaviour
         {
             this.gameObject.transform.position = new Vector2(this.gameObject.transform.position.x, this.gameObject.transform.position.y);
         }
-        FallTimerControl = true;
-        
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -146,18 +148,12 @@ public class CharacterManager : MonoBehaviour
         //Crouch();
         //gravity();
         ManageWalk();
+        coyoteAndFall();
   
         if (canWalk)
             Walk(movementVeriable);
 
-        if (canJump)
-        {
-            coyoteTimeCounter = coyoteTime;
-        }
-        else
-        {
-            coyoteTimeCounter -= Time.deltaTime;
-        }
+       
 
         if (Input.GetKeyDown(KeyCode.Space) && coyoteTimeCounter>0f && canDash && !DashTimerControl)
         {
@@ -176,6 +172,20 @@ public class CharacterManager : MonoBehaviour
         }
             
     
+        
+
+    }
+    void coyoteAndFall()
+    {
+        if (canJump)
+        {
+            coyoteTimeCounter = coyoteTime;
+        }
+        else
+        {
+            coyoteTimeCounter -= Time.deltaTime;
+        }
+
         if (FallTimerControl)
         {
             if (!canJump && !DashTimerControl)
@@ -183,9 +193,7 @@ public class CharacterManager : MonoBehaviour
                 jumpTimer -= Time.deltaTime;
             }
         }
-
     }
-   
     void Crouch()
     {
         if (canCrouch)
