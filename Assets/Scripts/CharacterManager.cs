@@ -49,7 +49,8 @@ public class CharacterManager : MonoBehaviour
     [Header("Dash")]
     [SerializeField] float dashForce;
     public float dashTimer;
-
+    private float coyoteTimeCounter;
+    [SerializeField] float coyoteTime;
     
 
     [Header("Titresim")]
@@ -86,7 +87,7 @@ public class CharacterManager : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         canWalk = true;
         canDash = true;
-      
+        CharacterTurn(0, -9.8f);
         FallTimerControl = true;
         
     }
@@ -109,15 +110,23 @@ public class CharacterManager : MonoBehaviour
         GizmoFlipSystem();
         JumpCont();
         GizmoTriggerSystem();
-        Crouch();
+        //Crouch();
         //gravity();
         ManageWalk();
   
         if (canWalk)
             Walk(movementVeriable);
 
+        if (canJump)
+        {
+            coyoteTimeCounter = coyoteTime;
+        }
+        else
+        {
+            coyoteTimeCounter -= Time.deltaTime;
+        }
 
-        if (Input.GetKeyDown(KeyCode.Space) && canJump && canDash && !DashTimerControl)
+        if (Input.GetKeyDown(KeyCode.Space) && coyoteTimeCounter>0f && canDash && !DashTimerControl)
         {
             Jump();
             jumpEffect();
