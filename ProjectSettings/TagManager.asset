@@ -13,6 +13,7 @@ TagManager:
   - kapi
   - platform
   - playermanager
+  - savepoint
   layers:
   - Default
   - TransparentFX

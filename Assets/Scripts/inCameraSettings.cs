@@ -7,7 +7,7 @@ public class inCameraSettings : MonoBehaviour
 {
     public inCameraSettings thisCamera;
     public Animator animator;
-    public float rotationz;
+    
     public GameObject limitPoint;
     public CharacterManager character;
     public List<GameObject> objects = new List<GameObject>();
@@ -47,21 +47,29 @@ public class inCameraSettings : MonoBehaviour
         {
             if (this.gameObject.transform.rotation.z == 0)
             {
-                cevir(9.8f, 0f);
+                character.beginningGravityX = 9.8f;
+                character.beginningGravityy = 0;
+               
             }
-            if (this.gameObject.transform.rotation.z == 0.7071068f && rotationz == 90)
+            if (this.gameObject.transform.rotation.z == 0.7071068f && character.rotationz == 90)
             {
-                cevir(0f, 9.8f);
+                character.beginningGravityX = 0;
+                character.beginningGravityy = 9.8f;
+               
             }
             if (this.gameObject.transform.rotation.z == 1)
             {
-                cevir(-9.8f, 0f);
+                character.beginningGravityX = -9.8f;
+                character.beginningGravityy = 0;
+               
             }
-            if (this.gameObject.transform.rotation.z == 0.7071068f && rotationz == 270)
+            if (this.gameObject.transform.rotation.z == 0.7071068f && character.rotationz == 270)
             {
-                cevir(0, -9.8f);
+                character.beginningGravityX = 0;
+                character.beginningGravityy = -9.8f;
+              
             }
-
+            cevir(character.beginningGravityX, character.beginningGravityy); 
         }
     }
 
@@ -83,19 +91,19 @@ public class inCameraSettings : MonoBehaviour
     {
         character.rb.velocity = new Vector3(0, 0, 0);
         character.CharacterTurn(acix, aciy);
-        rotationz = rotationz + 90;
+        character.rotationz = character.rotationz + 90;
 
       
         foreach (GameObject obj in objects)
         {
             obj.GetComponent<GravityObjects>().CharacterTurn(acix, aciy);
         }
-        if (rotationz > 270)
+        if (character.rotationz > 270)
         {
-            rotationz = 0;
+            character.rotationz = 0;
         }
 
-        character.transform.rotation = Quaternion.Euler(0, 0, rotationz);
+        character.transform.rotation = Quaternion.Euler(0, 0, character.rotationz);
 
 
         if (thisCamera.gameObject.transform.rotation.z == 0)
@@ -107,7 +115,7 @@ public class inCameraSettings : MonoBehaviour
             thisCamera.animator.SetBool("360", false);
 
         }
-        else if (thisCamera.gameObject.transform.rotation.z == 0.7071068f && rotationz == 180)
+        else if (thisCamera.gameObject.transform.rotation.z == 0.7071068f && character.rotationz == 180)
         {
 
             thisCamera.animator.SetBool("180", true);
@@ -125,7 +133,7 @@ public class inCameraSettings : MonoBehaviour
             thisCamera.animator.SetBool("360", false);
         }
 
-        if (thisCamera.gameObject.transform.rotation.z == 0.7071068f && rotationz == 0)
+        if (thisCamera.gameObject.transform.rotation.z == 0.7071068f && character.rotationz == 0)
         {
 
             thisCamera.animator.SetBool("90", false);

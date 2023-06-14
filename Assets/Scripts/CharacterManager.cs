@@ -14,8 +14,8 @@ public class CharacterManager : MonoBehaviour
     float xRaw;
     float yRaw;
     public float underOffsetValue;
-  
-    
+    public float rotationz;
+
     public float sideOffsetValue;
     public LayerMask groundLayerDetect;
 
@@ -75,8 +75,15 @@ public class CharacterManager : MonoBehaviour
     public bool dashControl;
   
     bool FallTimerControl;
+    [Header("BeginningGravities")]
+    public float beginningGravityX;
+    public float beginningGravityy;
 
+    [Header("BeginningPosition")]
 
+    float begininngPositionX;
+    float beginningPositionY;
+    
    
     void Start()
     {
@@ -87,7 +94,33 @@ public class CharacterManager : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         canWalk = true;
         canDash = true;
-        CharacterTurn(0, -9.8f);
+
+        if(PlayerPrefs.HasKey("GravityX") && PlayerPrefs.HasKey("GravityY"))
+        {
+            Physics2D.gravity = new Vector2(PlayerPrefs.GetFloat("GravityX"), PlayerPrefs.GetFloat("GravityY"));
+        }
+        else
+        {
+            Physics2D.gravity = new Vector2(0, -9.8f);
+        }
+        
+        if (PlayerPrefs.HasKey("rotation"))
+        {
+            this.gameObject.transform.rotation = Quaternion.Euler(0, 0, PlayerPrefs.GetFloat("rotation"));
+        }
+        else
+        {
+            this.gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+
+        if(PlayerPrefs.HasKey("positionX") && PlayerPrefs.HasKey("positionY"))
+        {
+            this.gameObject.transform.position = new Vector2(PlayerPrefs.GetFloat("positionX"), PlayerPrefs.GetFloat("positionY"));
+        }
+        else
+        {
+            this.gameObject.transform.position = new Vector2(this.gameObject.transform.position.x, this.gameObject.transform.position.y);
+        }
         FallTimerControl = true;
         
     }
@@ -207,7 +240,10 @@ public class CharacterManager : MonoBehaviour
             canCrouch = true;
             secondJump = true;
 
-            this.gameObject.transform.parent = collisionPoint.transform;
+            if(collisionPoint.gameObject.tag == "platform")
+                this.gameObject.transform.parent = collisionPoint.transform;
+
+
         }
         else if (!collisionPoint)
         {
@@ -372,11 +408,26 @@ public class CharacterManager : MonoBehaviour
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
-       
-    }
-   
 
-  
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "savepoint")
+        {
+            Debug.Log("a");
+            PlayerPrefs.SetFloat("gravityX", beginningGravityX);
+            PlayerPrefs.SetFloat("gravityY", beginningGravityy);
+            PlayerPrefs.SetFloat("rotation", rotationz);
+
+            begininngPositionX = collision.gameObject.transform.position.x;
+            beginningPositionY = collision.gameObject.transform.position.y;
+
+            PlayerPrefs.SetFloat("positionX", begininngPositionX);
+            PlayerPrefs.SetFloat("positionY", beginningPositionY);
+        }
+    }
+
+
     void ManageWalk()
     {
         if((rb.velocity.x>0 && x> 0) || (rb.velocity.x<0 && x<0))
@@ -519,7 +570,6 @@ public class CharacterManager : MonoBehaviour
         rb.velocity = Vector2.zero;
         rb.gravityScale = 0;
         jumpTimer = 0;
-        
         DashSystem();
         yield return new WaitForSeconds(dashTimer);
         rb.velocity = Vector2.zero;
@@ -571,7 +621,8 @@ public class CharacterManager : MonoBehaviour
 
     }
 
-    void gravity()
+   
+   void gravity()
     {
         if (gameObject.transform.rotation.z == 0)
         {

@@ -12,22 +12,8 @@ public class platform : MonoBehaviour
     
     void Start()
     {
-
         DOTween.Sequence()
               .Append(this.gameObject.transform.DOMove(dotweengidisPoint.transform.position, gidis).SetEase(Ease.Linear).SetLoops(-1, LoopType.Yoyo));
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-
-
-    }
-
-    private void FixedUpdate()
-    {
-        
-    }
-  
 }
