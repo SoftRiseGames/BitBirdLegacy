@@ -100,18 +100,23 @@ public class CharacterManager : MonoBehaviour
     }
     void StartPrefs()
     {
-        if (PlayerPrefs.HasKey("GravityX") && PlayerPrefs.HasKey("GravityY"))
+        if (PlayerPrefs.HasKey("gravityX") && PlayerPrefs.HasKey("gravityY"))
         {
-            Physics2D.gravity = new Vector2(PlayerPrefs.GetFloat("GravityX"), PlayerPrefs.GetFloat("GravityY"));
+            beginningGravityX = PlayerPrefs.GetFloat("gravityX");
+            beginningGravityy = PlayerPrefs.GetFloat("gravityY");
+            Physics2D.gravity = new Vector2(beginningGravityX, beginningGravityy);
         }
         else
         {
-            Physics2D.gravity = new Vector2(0, -9.8f);
+            beginningGravityX = 0;
+            beginningGravityy = -9.8f;
+            Physics2D.gravity = new Vector2(beginningGravityX, beginningGravityy);
         }
 
         if (PlayerPrefs.HasKey("rotation"))
         {
-            this.gameObject.transform.rotation = Quaternion.Euler(0, 0, PlayerPrefs.GetFloat("rotation"));
+            rotationz = PlayerPrefs.GetFloat("rotation");
+            this.gameObject.transform.rotation = Quaternion.Euler(0, 0, rotationz);
         }
         else
         {
