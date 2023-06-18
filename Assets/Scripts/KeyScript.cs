@@ -24,31 +24,10 @@ public class KeyScript : MonoBehaviour
         
         if (player.GetComponent<CharacterManager>().isFollow && isTouch == true)
         {
-            if(player.gameObject.transform.rotation.z == 1 || player.gameObject.transform.rotation.z == -1 || player.gameObject.transform.rotation.z == 0)
-            {
-               
-                this.gameObject.transform.parent = player.transform;
-                if (player.gameObject.transform.localScale.x > 0)
-                {
-                    thisObject.transform.DOMove(new Vector2(player.transform.position.x - 2, player.transform.position.y + 1), 0.1f);
-                }
-                else if (player.gameObject.transform.localScale.x < 0)
-                {
-                    thisObject.transform.DOMove(new Vector2(player.transform.position.x + 2, player.transform.position.y + 1), 0.1f);
-                }
-            }
-            else if(player.gameObject.transform.rotation.z == 0.7071068f || player.gameObject.transform.rotation.z == -0.7071068f)
-            {
-                if (player.gameObject.transform.localScale.y > 0)
-                {
-                    thisObject.transform.DOMove(new Vector2(player.transform.position.x - 1, player.transform.position.y -2), 0.1f);
-                }
-                else if (player.gameObject.transform.localScale.x < 0)
-                {
-                    thisObject.transform.DOMove(new Vector2(player.transform.position.x -1, player.transform.position.y + 2), 0.1f);
-                }
-               
-            }
+            thisObject.gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
+            thisObject.gameObject.transform.position = player.transform.GetChild(0).transform.position;
+            thisObject.gameObject.transform.rotation = player.transform.GetChild(0).transform.rotation;
+            thisObject.transform.parent = player.transform;
         }
        
 
