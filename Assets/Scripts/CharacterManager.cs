@@ -446,15 +446,19 @@ public class CharacterManager : MonoBehaviour
         if((rb.velocity.x>0 && x> 0) || (rb.velocity.x<0 && x<0))
         {
             aktifhiz = Mathf.Lerp(aktifhiz, walkForce, walkcarpan * Time.deltaTime);
+            
         }
         else if(x != 0)
         {
             aktifhiz = Mathf.Lerp(aktifhiz, walkForce, durmacarpan * Time.deltaTime);
+
         }
         else
         {
             aktifhiz = Mathf.Lerp(aktifhiz, 0, durmacarpan * Time.deltaTime);
         }
+        
+
     }
 
 
@@ -569,7 +573,7 @@ public class CharacterManager : MonoBehaviour
 
             rb.velocity += Vector2.right * Physics2D.gravity.x * (lowJumpMultiplier - 1) * Time.deltaTime;
         }
-
+      
 
     }
 
@@ -631,6 +635,7 @@ public class CharacterManager : MonoBehaviour
 
         }
         rb.velocity = dir.normalized * dashForce;
+        
 
     }
 
