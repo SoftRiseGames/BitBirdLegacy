@@ -7,11 +7,29 @@ public class cameraMove : MonoBehaviour
 {
     public GameObject virtualCam;
     public CharacterManager characterManagerCode;
-
+    public float rotationStart;
+    public float rotationControl;
+    public float startPrefs;
+    public cameraMove thiscollider;
     private void Start()
     {
+        if(thiscollider == null)
+        {
+            thiscollider = this;
+        }
+
         characterManagerCode = GameObject.Find("player").GetComponent<CharacterManager>();
-      
+        if (PlayerPrefs.HasKey("virtualrecord"))
+        {
+            this.startPrefs = PlayerPrefs.GetFloat("virtualrecord");
+            virtualCam.gameObject.transform.rotation = Quaternion.Euler(virtualCam.gameObject.transform.rotation.x, virtualCam.gameObject.transform.rotation.y, 270);
+           
+        }
+        else
+        {
+            virtualCam.gameObject.transform.rotation = Quaternion.Euler(virtualCam.gameObject.transform.rotation.x, virtualCam.gameObject.transform.rotation.y, virtualCam.gameObject.transform.rotation.z);
+        }
+        
       
     }
     
@@ -35,6 +53,7 @@ public class cameraMove : MonoBehaviour
     {
         if (collision.gameObject.name == "player")
         {
+            PlayerPrefs.SetFloat("virtualrecord", virtualCam.gameObject.transform.rotation.z);
             virtualCam.gameObject.SetActive(false);
         }
     }
