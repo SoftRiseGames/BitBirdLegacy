@@ -95,6 +95,11 @@ public class CharacterManager : MonoBehaviour
         canWalk = true;
         canDash = true;
         FallTimerControl = true;
+
+        if (PlayerPrefs.HasKey("rotationz"))
+        {
+            rotationz = PlayerPrefs.GetFloat("rotationz");
+        }
        
         StartPrefs();
     }

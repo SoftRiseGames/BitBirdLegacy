@@ -145,7 +145,8 @@ public class inCameraSettings : MonoBehaviour
             thisCamera.animator.SetBool("270", false);
             thisCamera.animator.SetBool("360", true);
         }
-
+        PlayerPrefs.SetFloat("rotationz", character.rotationz);
+      
 
     }
 

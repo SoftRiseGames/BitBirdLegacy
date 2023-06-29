@@ -11,6 +11,8 @@ public class cameraMove : MonoBehaviour
     public float rotationControl;
     public float startPrefs;
     public cameraMove thiscollider;
+    public string playerPrefsKey;
+    public float savedRotation;
     private void Start()
     {
         if(thiscollider == null)
@@ -19,18 +21,48 @@ public class cameraMove : MonoBehaviour
         }
 
         characterManagerCode = GameObject.Find("player").GetComponent<CharacterManager>();
+        /*
         if (PlayerPrefs.HasKey("virtualrecord"))
         {
-            this.startPrefs = PlayerPrefs.GetFloat("virtualrecord");
-            virtualCam.gameObject.transform.rotation = Quaternion.Euler(virtualCam.gameObject.transform.rotation.x, virtualCam.gameObject.transform.rotation.y, 270);
+            thiscollider.startPrefs = PlayerPrefs.GetFloat("virtualrecord");
+            virtualCam.gameObject.transform.rotation = Quaternion.Euler(virtualCam.gameObject.transform.rotation.x, virtualCam.gameObject.transform.rotation.y, thiscollider.startPrefs);
            
         }
         else
         {
             virtualCam.gameObject.transform.rotation = Quaternion.Euler(virtualCam.gameObject.transform.rotation.x, virtualCam.gameObject.transform.rotation.y, virtualCam.gameObject.transform.rotation.z);
         }
-        
-      
+        */
+
+        playerPrefsKey = "virtualrecord_" + virtualCam.name;
+
+        // PlayerPrefs'te rotasyon deðeri varsa, kameranýn rotasyonu bu deðerle ayarlanýr
+        if (PlayerPrefs.HasKey(playerPrefsKey))
+        {
+            savedRotation = PlayerPrefs.GetFloat(playerPrefsKey);
+            if(savedRotation == 0)
+            {
+                Debug.Log("0");
+                virtualCam.transform.rotation = Quaternion.Euler(virtualCam.transform.rotation.x, virtualCam.transform.rotation.y, 0);
+            }
+            else if(savedRotation == 0.7071068f && characterManagerCode.rotationz == 90)
+            {
+                Debug.Log("0.7071068");
+                virtualCam.transform.rotation = Quaternion.Euler(virtualCam.transform.rotation.x, virtualCam.transform.rotation.y, 90);
+            }
+            else if (savedRotation == 1)
+            {
+                Debug.Log("1");
+                virtualCam.transform.rotation = Quaternion.Euler(virtualCam.transform.rotation.x, virtualCam.transform.rotation.y, 180);
+            }
+            else if (savedRotation == 0.7071068f && characterManagerCode.rotationz == 270)
+            {
+                Debug.Log("rotate");
+                virtualCam.transform.rotation = Quaternion.Euler(virtualCam.transform.rotation.x, virtualCam.transform.rotation.y, 270);
+            }
+
+        }
+
     }
     
     private void OnTriggerEnter2D(Collider2D collision)
@@ -53,8 +85,9 @@ public class cameraMove : MonoBehaviour
     {
         if (collision.gameObject.name == "player")
         {
-            PlayerPrefs.SetFloat("virtualrecord", virtualCam.gameObject.transform.rotation.z);
-            virtualCam.gameObject.SetActive(false);
+            float currentRotation = virtualCam.transform.rotation.z;
+            PlayerPrefs.SetFloat(playerPrefsKey, currentRotation);
+            virtualCam.SetActive(false);
         }
     }
 
