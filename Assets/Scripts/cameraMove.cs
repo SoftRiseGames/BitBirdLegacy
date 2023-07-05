@@ -13,6 +13,7 @@ public class cameraMove : MonoBehaviour
     public cameraMove thiscollider;
     public string playerPrefsKey;
     public float savedRotation;
+    public bool istourEnd;
     private void Start()
     {
         if(thiscollider == null)
@@ -35,28 +36,33 @@ public class cameraMove : MonoBehaviour
         */
 
         playerPrefsKey = "virtualrecord_" + virtualCam.name;
-
+        
         // PlayerPrefs'te rotasyon deðeri varsa, kameranýn rotasyonu bu deðerle ayarlanýr
         if (PlayerPrefs.HasKey(playerPrefsKey))
         {
             savedRotation = PlayerPrefs.GetFloat(playerPrefsKey);
+            Debug.Log(savedRotation);
             if(savedRotation == 0)
             {
+               
                 Debug.Log("0");
                 virtualCam.transform.rotation = Quaternion.Euler(virtualCam.transform.rotation.x, virtualCam.transform.rotation.y, 0);
             }
-            else if(savedRotation == 0.7071068f && characterManagerCode.rotationz == 90)
+            else if(savedRotation == 0.7071068f && !istourEnd )
             {
+               
                 Debug.Log("0.7071068");
-                virtualCam.transform.rotation = Quaternion.Euler(virtualCam.transform.rotation.x, virtualCam.transform.rotation.y, 90);
+                virtualCam.transform.rotation = Quaternion.Euler(virtualCam.transform.rotation.x, virtualCam.transform.rotation.y, 270);
             }
             else if (savedRotation == 1)
             {
+             
                 Debug.Log("1");
                 virtualCam.transform.rotation = Quaternion.Euler(virtualCam.transform.rotation.x, virtualCam.transform.rotation.y, 180);
             }
-            else if (savedRotation == 0.7071068f && characterManagerCode.rotationz == 270)
+            else if (savedRotation == 0.7071068f && istourEnd)
             {
+               
                 Debug.Log("rotate");
                 virtualCam.transform.rotation = Quaternion.Euler(virtualCam.transform.rotation.x, virtualCam.transform.rotation.y, 270);
             }
@@ -64,7 +70,18 @@ public class cameraMove : MonoBehaviour
         }
 
     }
-    
+    private void Update()
+    {
+        if(virtualCam.gameObject.transform.rotation.z>=0 && virtualCam.gameObject.transform.rotation.z < 90)
+        {
+            istourEnd = false;
+        }
+        else
+        {
+            istourEnd = true;
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.name == "player")

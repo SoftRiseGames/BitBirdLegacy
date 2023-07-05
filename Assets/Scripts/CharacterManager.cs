@@ -96,10 +96,7 @@ public class CharacterManager : MonoBehaviour
         canDash = true;
         FallTimerControl = true;
 
-        if (PlayerPrefs.HasKey("rotationz"))
-        {
-            rotationz = PlayerPrefs.GetFloat("rotationz");
-        }
+       
        
         StartPrefs();
     }
@@ -432,7 +429,7 @@ public class CharacterManager : MonoBehaviour
     {
         if (collision.gameObject.tag == "savepoint")
         {
-            Debug.Log("a");
+           
             PlayerPrefs.SetFloat("gravityX", beginningGravityX);
             PlayerPrefs.SetFloat("gravityY", beginningGravityy);
             PlayerPrefs.SetFloat("rotation", rotationz);
