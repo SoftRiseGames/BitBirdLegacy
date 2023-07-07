@@ -14,6 +14,8 @@ TagManager:
   - platform
   - playermanager
   - savepoint
+  - bosspatternfall
+  - bosspatternvertical
   layers:
   - Default
   - TransparentFX

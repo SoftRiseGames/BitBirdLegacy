@@ -7,9 +7,10 @@ public class BossManagement : MonoBehaviour
     public bool isOne;
     public bool isTwo;
     public bool isThree;
-    public float randomRange;
+    public int randomRange;
     public GameObject[] template;
     public bool retry;
+    public Transform getback;
     void Start()
     {
         
@@ -20,11 +21,19 @@ public class BossManagement : MonoBehaviour
     {
         if (retry == true)
         {
-            randomRange = Random.Range(1, 4);
+            randomRange = Random.Range(1, 3);
+            Instantiate(template[randomRange-1]);
             retry = false;
             StartCoroutine(AttackPoint());
         }
        
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "player")
+        {
+            collision.gameObject.transform.position = getback.gameObject.transform.position;
+        }
     }
 
     IEnumerator AttackPoint()
