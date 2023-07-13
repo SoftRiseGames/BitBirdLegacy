@@ -74,7 +74,7 @@ public class cameraMove : MonoBehaviour
     {
         if(virtualCam.gameObject.transform.rotation.z>=0 && virtualCam.gameObject.transform.rotation.z < 90)
         {
-            istourEnd = false;
+           istourEnd = false;
         }
         else
         {
