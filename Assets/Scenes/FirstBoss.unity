@@ -821,7 +821,7 @@ MonoBehaviour:
   jumpStartTimer: 0.12
   trailRenderer: {fileID: 0}
   fallMultiplier: 6
-  jumpForce: 10
+  jumpForce: 12
   lowJumpMultiplier: 8
   walkForce: 8
   walkcarpan: 4

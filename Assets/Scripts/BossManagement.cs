@@ -9,24 +9,33 @@ public class BossManagement : MonoBehaviour
     public bool isThree;
     public int randomRange;
     public GameObject[] template;
-    public bool retry;
+    public bool retryOne;
+    public bool retryTwo;
     public Transform getback;
+    public int start;
     void Start()
     {
-        
+        StartCoroutine(AttackPointRetryOne());
+        StartCoroutine(AttackPointRetryTwo());
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (retry == true)
+      
+        if (retryOne)
         {
-            randomRange = Random.Range(1, 3);
-            Instantiate(template[randomRange-1]);
-            retry = false;
-            StartCoroutine(AttackPoint());
+            Instantiate(template[0]);
+            retryOne = false;
+            StartCoroutine(AttackPointRetryOne());
         }
-       
+        if (retryTwo)
+        {
+            Instantiate(template[1]);
+            retryTwo = false;
+            StartCoroutine(AttackPointRetryTwo());
+        }
+
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -36,10 +45,15 @@ public class BossManagement : MonoBehaviour
         }
     }
 
-    IEnumerator AttackPoint()
+    IEnumerator AttackPointRetryOne()
     {
-        yield return new WaitForSeconds(1f);
-        retry = true;
+        yield return new WaitForSeconds(3f);
+        retryOne = true;
+    }
+    IEnumerator AttackPointRetryTwo()
+    {
+        yield return new WaitForSeconds(2f);
+        retryTwo = true;
     }
     
 }
