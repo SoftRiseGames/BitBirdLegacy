@@ -95,6 +95,8 @@ public class CharacterManager : MonoBehaviour
         canWalk = true;
         canDash = true;
         FallTimerControl = true;
+
+       
        
         StartPrefs();
     }
@@ -427,7 +429,7 @@ public class CharacterManager : MonoBehaviour
     {
         if (collision.gameObject.tag == "savepoint")
         {
-            Debug.Log("a");
+           
             PlayerPrefs.SetFloat("gravityX", beginningGravityX);
             PlayerPrefs.SetFloat("gravityY", beginningGravityy);
             PlayerPrefs.SetFloat("rotation", rotationz);

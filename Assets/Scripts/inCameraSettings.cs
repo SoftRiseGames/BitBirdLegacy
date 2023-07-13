@@ -17,6 +17,7 @@ public class inCameraSettings : MonoBehaviour
     public float yukselikduration;
     public float delay;
     public CharacterManager characterManager;
+    public float startPrefs;
 
     private void Start()
     {
@@ -24,18 +25,19 @@ public class inCameraSettings : MonoBehaviour
         {
             characterManager = GameObject.Find("player").GetComponent<CharacterManager>();
         }
-
+      
         if (thisCamera == null)
         {
             thisCamera = this;
         }
         character = GameObject.Find("player").GetComponent<CharacterManager>();
         camShake = FindObjectOfType<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        
     }
 
     void Update()
     {
-
+       
         if (Input.GetKeyDown(KeyCode.Z))
             Debug.Log(thisCamera.gameObject.transform.rotation.z);
         GravityAndCamControl();
@@ -69,7 +71,9 @@ public class inCameraSettings : MonoBehaviour
                 character.beginningGravityy = -9.8f;
               
             }
-            cevir(character.beginningGravityX, character.beginningGravityy); 
+            cevir(character.beginningGravityX, character.beginningGravityy);
+           
+
         }
     }
 
@@ -141,7 +145,8 @@ public class inCameraSettings : MonoBehaviour
             thisCamera.animator.SetBool("270", false);
             thisCamera.animator.SetBool("360", true);
         }
-
+        PlayerPrefs.SetFloat("rotationz", character.rotationz);
+      
 
     }
 
