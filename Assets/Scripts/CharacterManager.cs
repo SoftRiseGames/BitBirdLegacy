@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
+using EZCameraShake;
 public class CharacterManager : MonoBehaviour
 {
 
     public Animator animator;
-
+    public ParticleSystem dust;
     public Rigidbody2D rb;
     float x;
     float y;
@@ -138,7 +139,7 @@ public class CharacterManager : MonoBehaviour
     void Update()
     {
         collisionPoint = Physics2D.OverlapCircle((Vector2)transform.position + underoffset, collisionGroundradius, groundLayerDetect);
-        
+     
         sideColliderPoint = Physics2D.OverlapCircle((Vector2)transform.position + sideoffset, collisionSideradius, sideLayerDedect);
         
         x = Input.GetAxisRaw("Horizontal");
@@ -386,6 +387,7 @@ public class CharacterManager : MonoBehaviour
     }
     public void Walk(Vector2 movementVeriable)
     {
+ 
         if (gameObject.transform.rotation.z == 0)
         {
             rb.velocity = new Vector2(movementVeriable.x * aktifhiz, rb.velocity.y);
@@ -421,7 +423,10 @@ public class CharacterManager : MonoBehaviour
     {
         if(collision.gameObject.tag == "killer")
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            rb.velocity = Vector2.zero;
+            canWalk = false;
+            animator.SetBool("isDeath", true);
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
     }
@@ -467,6 +472,7 @@ public class CharacterManager : MonoBehaviour
     public void Jump()
     {
         rb.velocity = Vector2.zero;
+        createdust();
         rb.velocity = jumpForce * transform.up;
     }
     public void DoubleJump()
@@ -502,7 +508,7 @@ public class CharacterManager : MonoBehaviour
     }
     public void jumpEffect()
     {
-        
+
         //StartCoroutine(jumpEffectwait());
         /*
         if (collisionPoint)
@@ -522,8 +528,8 @@ public class CharacterManager : MonoBehaviour
            
         }
         */
-        
-        //cameraShake.shake(ziplamaamplitude, ziplamaduration);
+
+        cameraShake.shake(ziplamaamplitude, ziplamaduration);
     }
 
   
@@ -545,9 +551,16 @@ public class CharacterManager : MonoBehaviour
     void ScaleControl()
     {
         if (x > 0 && transform.localScale.x < 0)
+        {
+            createdust();
             this.gameObject.transform.localScale = new Vector2(this.gameObject.transform.localScale.x * -1, this.gameObject.transform.localScale.y);
+        }
         else if (x < 0 && transform.localScale.x > 0)
+        {
+            createdust();
             this.gameObject.transform.localScale = new Vector2(this.gameObject.transform.localScale.x * -1, this.gameObject.transform.localScale.y);
+        }
+          
         
     }
     
@@ -664,6 +677,13 @@ public class CharacterManager : MonoBehaviour
     public void CharacterTurn(float gravityX, float gravityY)
     {
         Physics2D.gravity = new Vector2(gravityX, gravityY);
+    }
+
+    void createdust()
+    {
+        dust.Play();
+        Debug.Log("dust");
+      
     }
 
 }

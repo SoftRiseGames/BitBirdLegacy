@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using Cinemachine;
+
 public class inCameraSettings : MonoBehaviour
 {
+    
     public inCameraSettings thisCamera;
     public Animator animator;
-    
+       
     public GameObject limitPoint;
     public CharacterManager character;
     public List<GameObject> objects = new List<GameObject>();
@@ -37,10 +39,11 @@ public class inCameraSettings : MonoBehaviour
 
     void Update()
     {
-       
+        
         if (Input.GetKeyDown(KeyCode.Z))
             Debug.Log(thisCamera.gameObject.transform.rotation.z);
         GravityAndCamControl();
+        
     }
 
     void GravityAndCamControl()
@@ -149,6 +152,6 @@ public class inCameraSettings : MonoBehaviour
       
 
     }
-
+  
    
 }

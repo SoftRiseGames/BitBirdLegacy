@@ -36,7 +36,7 @@ public class kapi : MonoBehaviour
             if (character.isFollow && Input.GetKey(KeyCode.E))
             {
                 character.isFollow = false;
-                character.transform.GetChild(1).GetComponent<KeyScript>().Suicide();
+                character.transform.GetChild(2).GetComponent<KeyScript>().Suicide();
                 instance.gameObject.transform.DOMove(dotweengidisPoint.transform.position, gidis).SetEase(Ease.Linear);
             }
         }
