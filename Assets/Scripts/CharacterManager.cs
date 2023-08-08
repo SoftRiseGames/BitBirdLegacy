@@ -157,6 +157,7 @@ public class CharacterManager : MonoBehaviour
         //gravity();
         ManageWalk();
         coyoteAndFall();
+        coyoteControl();
   
         if (canWalk)
             Walk(movementVeriable);
@@ -182,6 +183,19 @@ public class CharacterManager : MonoBehaviour
     
         
 
+    }
+
+    void coyoteControl()
+    {
+        if(coyoteTimeCounter > 0f)
+        {
+            canJump = true;
+        }
+        else
+        {
+            canJump = false;
+        }
+       
     }
     void coyoteAndFall()
     {
@@ -685,9 +699,12 @@ public class CharacterManager : MonoBehaviour
 
     void createdust()
     {
-        dust.Play();
-        Debug.Log("dust");
-      
+        if (!isDead)
+        {
+            dust.Play();
+            Debug.Log("dust");
+
+        }
     }
 
 }
