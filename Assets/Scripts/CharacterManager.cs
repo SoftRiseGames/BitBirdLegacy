@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 using EZCameraShake;
 public class CharacterManager : MonoBehaviour
 {
-
+    bool isDead;
     public Animator animator;
     public ParticleSystem dust;
     public Rigidbody2D rb;
@@ -163,7 +163,7 @@ public class CharacterManager : MonoBehaviour
 
        
 
-        if (Input.GetKeyDown(KeyCode.Space) && coyoteTimeCounter>0f && canDash && !DashTimerControl)
+        if (Input.GetKeyDown(KeyCode.Space) && coyoteTimeCounter>0f && canDash && !DashTimerControl && canJump)
         {
             Jump();
             jumpEffect();
@@ -196,7 +196,7 @@ public class CharacterManager : MonoBehaviour
 
         if (FallTimerControl)
         {
-            if (!canJump && !DashTimerControl)
+            if (!canJump && !DashTimerControl && !isDead)
             {
                 jumpTimer -= Time.deltaTime;
             }
@@ -244,7 +244,7 @@ public class CharacterManager : MonoBehaviour
         ///////////////////////////////////////
 
         //alt temas kontrolu
-        if (collisionPoint)
+        if (collisionPoint && !isDead)
         {  
             canJump = true;
             if (!DashTimerControl)
@@ -261,7 +261,7 @@ public class CharacterManager : MonoBehaviour
 
 
         }
-        else if (!collisionPoint)
+        else if (!collisionPoint && !isDead)
         {
        
             canJump = false;
@@ -423,7 +423,11 @@ public class CharacterManager : MonoBehaviour
     {
         if(collision.gameObject.tag == "killer")
         {
+            isDead = true;
             rb.velocity = Vector2.zero;
+            rb.gravityScale = 0;
+            canJump = false;
+            jumpTimer = 0;
             canWalk = false;
             animator.SetBool("isDeath", true);
             //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
