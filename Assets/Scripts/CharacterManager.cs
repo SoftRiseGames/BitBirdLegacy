@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
-using EZCameraShake;
+
 public class CharacterManager : MonoBehaviour
 {
     bool isDead;
