@@ -8,14 +8,36 @@ public class KeyScript : MonoBehaviour
     public GameObject player;
     public KeyScript thisObject;
     public bool isTouch;
-   
-    void Start()
+    public int controlValue;
+
+    private void Awake()
     {
-        if(thisObject == null)
+        if (thisObject == null)
         {
             thisObject = this;
         }
         player = GameObject.Find("player");
+        
+        if (PlayerPrefs.HasKey(thisObject.name))
+        {
+            thisObject.controlValue = 1;
+        }
+        else
+        {
+            thisObject.controlValue = 0;
+        }
+    }
+    void Start()
+    {
+        if(thisObject.controlValue == 1)
+        {
+            thisObject.gameObject.SetActive(false);
+        }
+        else if(thisObject.controlValue == 0)
+        {
+            thisObject.gameObject.SetActive(true);
+        }
+        
     }
 
     
@@ -34,7 +56,9 @@ public class KeyScript : MonoBehaviour
     }
     public void Suicide()
     {
-        Destroy(this.gameObject);
+        controlValue = 1;
+        PlayerPrefs.SetInt(thisObject.name, controlValue);
+        Destroy(thisObject.gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
