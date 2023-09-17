@@ -435,12 +435,14 @@ public class CharacterManager : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        
         if(collision.gameObject.tag == "killer")
         {
             isDead = true;
             rb.velocity = Vector2.zero;
             rb.gravityScale = 0;
             canJump = false;
+            
             jumpTimer = 0;
             canWalk = false;
             animator.SetBool("isDeath", true);
