@@ -669,7 +669,7 @@ public class CharacterManager : MonoBehaviour
                 dir = new Vector2(yRaw, -xRaw);
 
         }
-        rb.velocity = dir.normalized * dashForce;
+        rb.velocity = dir.normalized * dashForce*Time.deltaTime;
         
 
     }
