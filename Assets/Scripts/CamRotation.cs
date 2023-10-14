@@ -20,6 +20,14 @@ public class CamRotation : MonoBehaviour
             collideDedection = true;
         }
     }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "player")
+        {
+            collideDedection = false;
+            character.camrotate = false;
+        }
+    }
     private void Update()
     {
         TriggerSystem();
@@ -35,14 +43,7 @@ public class CamRotation : MonoBehaviour
             StartCoroutine(animtimer());
         }
     }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "player")
-        {
-            collideDedection = false;
-            character.camrotate = false;
-        }
-    }
+ 
 
     IEnumerator animtimer()
     {

@@ -614,22 +614,23 @@ public class CharacterManager : MonoBehaviour
 
    public IEnumerator Dash(float dashTimer)
     {
-       
+
         canWalk = false;
-        
+
         DashTimerControl = true;
         trailRenderer.enabled = true;
         rb.velocity = Vector2.zero;
         rb.gravityScale = 0;
         jumpTimer = 0;
+
         DashSystem();
         yield return new WaitForSeconds(dashTimer);
         rb.velocity = Vector2.zero;
         DashTimerControl = false;
-        
+
         trailRenderer.enabled = false;
         canDash = false;
-        
+
         rb.gravityScale = 1;
         canWalk = true;
     }
@@ -669,7 +670,7 @@ public class CharacterManager : MonoBehaviour
                 dir = new Vector2(yRaw, -xRaw);
 
         }
-        rb.velocity = dir.normalized * dashForce*Time.deltaTime;
+        rb.velocity = dir.normalized * dashForce*Time.fixedDeltaTime;
         
 
     }
