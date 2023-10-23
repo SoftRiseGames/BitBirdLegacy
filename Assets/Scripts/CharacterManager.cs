@@ -311,20 +311,27 @@ public class CharacterManager : MonoBehaviour
             if((x>0 || x<0) && collisionPoint)
             {
                 animator.SetBool("isWalk", true);
+                animator.SetBool("isfall", false);
             }
-            
             else
             {
                 animator.SetBool("isWalk", false);
             }
-            
-            if((rb.velocity.y>0 || rb.velocity.y<0) && !collisionPoint)
+            if((rb.velocity.y<0 ) && !collisionPoint)
+            {
+                Debug.Log("a");
+                animator.SetBool("isJump", false);
+                animator.SetBool("isfall", true);
+            }
+            else if(rb.velocity.y > 0 && !collisionPoint)
             {
                 animator.SetBool("isJump", true);
+                animator.SetBool("isfall", false);
             }
             else
             {
                 animator.SetBool("isJump", false);
+                animator.SetBool("isfall", false);
             }
         }
        
@@ -334,6 +341,7 @@ public class CharacterManager : MonoBehaviour
             if ((x > 0 || x < 0) && collisionPoint)
             {
                 animator.SetBool("isWalk", true);
+                animator.SetBool("isfall", false);
             }
 
             else
@@ -341,14 +349,22 @@ public class CharacterManager : MonoBehaviour
                 animator.SetBool("isWalk", false);
             }
 
-            if ((rb.velocity.x > 0 || rb.velocity.x < 0) && !collisionPoint)
+            if ((rb.velocity.x > 0) && !collisionPoint)
+            {
+                animator.SetBool("isJump", false);
+                animator.SetBool("isfall", true);
+            }
+            else if(rb.velocity.x<0 && !collisionPoint)
             {
                 animator.SetBool("isJump", true);
+                animator.SetBool("isfall", false);
             }
             else
             {
                 animator.SetBool("isJump", false);
+                animator.SetBool("isfall", false);
             }
+            
         }
         
     }

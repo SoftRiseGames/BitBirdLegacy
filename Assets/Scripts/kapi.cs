@@ -9,6 +9,8 @@ public class kapi : MonoBehaviour
     [SerializeField] float gelis;
     [SerializeField] CharacterManager character;
     [SerializeField] int saverinteger;
+   // [SerializeField] GameObject emptykapi;
+    [SerializeField] GameObject fullkapi;
     bool iscollide;
     public kapi instance;
     private void Awake()
@@ -61,7 +63,27 @@ public class kapi : MonoBehaviour
                 
             }
         }
-        
+        if (Vector2.Distance(character.transform.position, gameObject.transform.position) < 3)
+        {
+            instance.fullkapi.SetActive(true);
+            /*
+            if (character.isFollow)
+            {
+                instance.emptykapi.SetActive(false);
+                instance.fullkapi.SetActive(true);
+            }
+            else if (!character.isFollow)
+            {
+                instance.emptykapi.SetActive(true);
+                instance.fullkapi.SetActive(false);
+            }
+            */
+        }
+        else
+        {
+            //instance.emptykapi.SetActive(false);
+            instance.fullkapi.SetActive(false);
+        }
 
     }
    
