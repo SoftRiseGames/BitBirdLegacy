@@ -34,8 +34,6 @@ public class CamRotation : MonoBehaviour
     }
     void TriggerSystem()
     {
-
-      
         if(collideDedection ==  true && Input.GetKey(KeyCode.X))
         {
             character.camrotate = true;
