@@ -328,6 +328,7 @@ public class CharacterManager : MonoBehaviour
                 animator.SetBool("isJump", true);
                 animator.SetBool("isfall", false);
             }
+           
             else
             {
                 animator.SetBool("isJump", false);
