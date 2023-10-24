@@ -306,12 +306,12 @@ public class CharacterManager : MonoBehaviour
 
     void anims()
     {
-        if (transform.rotation.z == 0 || transform.rotation.z == -1)
+        if (transform.rotation.z == 0 )
         {
             if((x>0 || x<0) && collisionPoint)
             {
                 animator.SetBool("isWalk", true);
-                animator.SetBool("isfall", false);
+                //animator.SetBool("isfall", false);
             }
             else
             {
@@ -335,14 +335,45 @@ public class CharacterManager : MonoBehaviour
                 animator.SetBool("isfall", false);
             }
         }
-       
-        else if (transform.rotation.z == 0.7071068f || transform.rotation.z == -0.7071068f)
+        if (transform.rotation.z == -1)
+        {
+            if ((x > 0 || x < 0) && collisionPoint)
+            {
+                animator.SetBool("isWalk", true);
+                //animator.SetBool("isfall", false);
+            }
+            else
+            {
+                animator.SetBool("isWalk", false);
+            }
+            if ((rb.velocity.y < 0) && !collisionPoint)
+            {
+                Debug.Log("a");
+                animator.SetBool("isJump", true);
+                animator.SetBool("isfall", false);
+            }
+            else if (rb.velocity.y > 0 && !collisionPoint)
+            {
+                animator.SetBool("isJump", false);
+                animator.SetBool("isfall", true);
+            }
+
+            else
+            {
+                animator.SetBool("isJump", false);
+                animator.SetBool("isfall", false);
+            }
+        }
+
+
+
+        else if (transform.rotation.z == 0.7071068f )
         {
 
             if ((x > 0 || x < 0) && collisionPoint)
             {
                 animator.SetBool("isWalk", true);
-                animator.SetBool("isfall", false);
+               // animator.SetBool("isfall", false);
             }
 
             else
@@ -366,6 +397,35 @@ public class CharacterManager : MonoBehaviour
                 animator.SetBool("isfall", false);
             }
             
+        }
+        else if (transform.rotation.z == -0.7071068f)
+        {
+            if ((x > 0 || x < 0) && collisionPoint)
+            {
+                animator.SetBool("isWalk", true);
+                // animator.SetBool("isfall", false);
+            }
+
+            else
+            {
+                animator.SetBool("isWalk", false);
+            }
+
+            if ((rb.velocity.x > 0) && !collisionPoint)
+            {
+                animator.SetBool("isJump", true);
+                animator.SetBool("isfall", false);
+            }
+            else if (rb.velocity.x < 0 && !collisionPoint)
+            {
+                animator.SetBool("isJump", false);
+                animator.SetBool("isfall", true);
+            }
+            else
+            {
+                animator.SetBool("isJump", false);
+                animator.SetBool("isfall", false);
+            }
         }
         
     }
