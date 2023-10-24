@@ -3,7 +3,7 @@ guid: dd25d64aa0b239547a3d615584145d08
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -63,6 +63,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -153,8 +154,8 @@ TextureImporter:
       outline: []
       physicsShape:
       - - {x: -4, y: 4}
-        - {x: -4, y: -4}
-        - {x: 1, y: -4}
+        - {x: -4, y: -3}
+        - {x: 1, y: -3}
         - {x: 1, y: -1}
         - {x: 1, y: 3}
         - {x: 1, y: 4}
@@ -179,8 +180,8 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape:
-      - - {x: -4, y: 4}
-        - {x: -4, y: -1}
+      - - {x: -3, y: 4}
+        - {x: -3, y: -1}
         - {x: -1, y: -1}
         - {x: 3, y: -1}
         - {x: 4, y: -1}
@@ -209,8 +210,8 @@ TextureImporter:
       - - {x: -2, y: 1}
         - {x: -4, y: 1}
         - {x: -4, y: -4}
-        - {x: 4, y: -4}
-        - {x: 4, y: 1}
+        - {x: 3, y: -4}
+        - {x: 3, y: 1}
         - {x: 2, y: 1}
       tessellationDetail: 0
       bones: []
@@ -233,12 +234,12 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape:
-      - - {x: -1, y: 4}
+      - - {x: -1, y: 3}
         - {x: -1, y: 1}
         - {x: -1, y: -2}
         - {x: -1, y: -4}
         - {x: 4, y: -4}
-        - {x: 4, y: 4}
+        - {x: 4, y: 3}
       tessellationDetail: 0
       bones: []
       spriteID: db09df04cba4e964080adb41ba80a13b
