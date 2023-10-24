@@ -137,7 +137,6 @@ GameObject:
   - component: {fileID: 45674771}
   - component: {fileID: 45674770}
   - component: {fileID: 45674769}
-  - component: {fileID: 45674768}
   m_Layer: 0
   m_Name: player
   m_TagString: player
@@ -145,69 +144,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &45674768
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 45674767}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44ec63fcb8940ee4e866e81d35f074af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 0}
-  dust: {fileID: 0}
-  rb: {fileID: 0}
-  underOffsetValue: -0.52
-  rotationz: 0
-  sideOffsetValue: 0.51
-  groundLayerDetect:
-    serializedVersion: 2
-    m_Bits: 264
-  sideLayerDedect:
-    serializedVersion: 2
-    m_Bits: 0
-  collisionPoint: {fileID: 0}
-  sideColliderPoint: 0
-  platforms: {fileID: 0}
-  underoffset: {x: 0, y: 0}
-  underSideOffset: {x: 0, y: 0}
-  cameraShake: {fileID: 0}
-  collisionSideradius: 0.21
-  collisionGroundradius: 0.15
-  movementVeriable: {x: 0, y: 0}
-  jumpTimer: 0
-  jumpStartTimer: 0.12
-  trailRenderer: {fileID: 0}
-  fallMultiplier: 6
-  jumpForce: 10
-  lowJumpMultiplier: 8
-  walkForce: 8
-  walkcarpan: 4
-  durmacarpan: 5
-  aktifhiz: 3
-  dashForce: 2000
-  dashTimer: 0.2
-  coyoteTime: 0.1
-  yurumeamplitude: 1
-  ziplamaamplitude: 0.3
-  yurumeduration: 0.2
-  ziplamaduration: 0.1
-  canJump: 1
-  secondJump: 0
-  canWalk: 0
-  canDash: 1
-  sagsolcont: 0
-  camrotate: 0
-  DashTimerControl: 0
-  isFollow: 0
-  RotationDedection: 0
-  doubleJumpControl: 0
-  dashControl: 0
-  beginningGravityX: 0
-  beginningGravityy: 0
 --- !u!95 &45674769
 Animator:
   serializedVersion: 4
@@ -64714,24 +64650,28 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 45674774}
     - target: {fileID: 6208440788310470193, guid: 2424bc0dfb0b39a4dac7e033f8940022, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6208440788310470193, guid: 2424bc0dfb0b39a4dac7e033f8940022, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[0].x
-      value: 13.034106
+      value: 13.612765
       objectReference: {fileID: 0}
     - target: {fileID: 6208440788310470193, guid: 2424bc0dfb0b39a4dac7e033f8940022, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[0].y
-      value: 9.914011
+      value: 9.721125
       objectReference: {fileID: 0}
     - target: {fileID: 6208440788310470193, guid: 2424bc0dfb0b39a4dac7e033f8940022, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[1].x
-      value: -19.397064
+      value: -20.361496
       objectReference: {fileID: 0}
     - target: {fileID: 6208440788310470193, guid: 2424bc0dfb0b39a4dac7e033f8940022, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[1].y
-      value: 9.377579
+      value: 10.149124
       objectReference: {fileID: 0}
     - target: {fileID: 6208440788310470193, guid: 2424bc0dfb0b39a4dac7e033f8940022, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[2].x
-      value: -18.093521
+      value: -20.02238
       objectReference: {fileID: 0}
     - target: {fileID: 6208440788310470193, guid: 2424bc0dfb0b39a4dac7e033f8940022, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[2].y
@@ -64739,11 +64679,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6208440788310470193, guid: 2424bc0dfb0b39a4dac7e033f8940022, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[3].x
-      value: 13.600981
+      value: -18.093521
       objectReference: {fileID: 0}
     - target: {fileID: 6208440788310470193, guid: 2424bc0dfb0b39a4dac7e033f8940022, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[3].y
-      value: -51.303185
+      value: -51.648693
+      objectReference: {fileID: 0}
+    - target: {fileID: 6208440788310470193, guid: 2424bc0dfb0b39a4dac7e033f8940022, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[4].x
+      value: 14.951183
+      objectReference: {fileID: 0}
+    - target: {fileID: 6208440788310470193, guid: 2424bc0dfb0b39a4dac7e033f8940022, type: 3}
+      propertyPath: m_Points.m_Paths.Array.data[0].Array.data[4].y
+      value: -51.49607
       objectReference: {fileID: 0}
     - target: {fileID: 6208440788310470194, guid: 2424bc0dfb0b39a4dac7e033f8940022, type: 3}
       propertyPath: m_RootOrder
