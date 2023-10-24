@@ -6,45 +6,44 @@ public class camRotationV2 : MonoBehaviour
 {
     public Animator animator;
     public CharacterManager character;
-    
-
+    public bool collideDedection;
 
     void Start()
     {
-        animator = GetComponent<Animator>();
+        animator =GetComponent<Animator>();
         character = GameObject.Find("player").GetComponent<CharacterManager>();
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.name == "player")
         {
-           
-            character.camrotate = true;
-           
+            collideDedection = true;
         }
     }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "player")
+        {
+            collideDedection = false;
+            character.camrotate = false;
+        }
+    }
+    
+
     private void Update()
     {
         TriggerSystem();
     }
     void TriggerSystem()
     {
-        
-
-        if (character.camrotate == true )
+        if (collideDedection == true )
         {
-           
+            character.camrotate = true;
             animator.SetBool("triggeractivate", true);
             StartCoroutine(animtimer());
         }
     }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.name == "player")
-        {
-            character.camrotate = false;
-        }
-    }
+ 
 
     IEnumerator animtimer()
     {
