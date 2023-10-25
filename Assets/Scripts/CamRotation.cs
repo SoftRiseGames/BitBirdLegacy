@@ -34,19 +34,20 @@ public class CamRotation : MonoBehaviour
     }
     void TriggerSystem()
     {
-        if(collideDedection ==  true && Input.GetKey(KeyCode.X))
+        if(collideDedection ==  true && Input.GetButton("interactivity"))
         {
             character.camrotate = true;
             animator.SetBool("triggeractivate", true);
-            StartCoroutine(animtimer());
+            //StartCoroutine(animtimer());
         }
     }
  
-
+    /*
     IEnumerator animtimer()
     {
         yield return new WaitForSeconds(1f);
         animator.SetBool("triggeractivate", false);
     }
+    */
   
 }

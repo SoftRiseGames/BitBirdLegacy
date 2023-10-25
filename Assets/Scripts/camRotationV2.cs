@@ -7,7 +7,12 @@ public class camRotationV2 : MonoBehaviour
     public Animator animator;
     public CharacterManager character;
     public bool collideDedection;
-
+    public camRotationV2 instance;
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+    }
     void Start()
     {
         animator =GetComponent<Animator>();
@@ -17,14 +22,14 @@ public class camRotationV2 : MonoBehaviour
     {
         if (collision.gameObject.name == "player")
         {
-            collideDedection = true;
+            instance.collideDedection = true;
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "player")
         {
-            collideDedection = false;
+            instance.collideDedection = false;
             character.camrotate = false;
         }
     }
@@ -39,16 +44,16 @@ public class camRotationV2 : MonoBehaviour
         if (collideDedection == true )
         {
             character.camrotate = true;
-            animator.SetBool("triggeractivate", true);
-            StartCoroutine(animtimer());
+            instance.animator.SetBool("triggeractivate", true);
+            //StartCoroutine(animtimer());
         }
     }
  
-
+    /*
     IEnumerator animtimer()
     {
         yield return new WaitForSeconds(.1f);
         animator.SetBool("triggeractivate", false);
-    }
+    }*/
 
 }
