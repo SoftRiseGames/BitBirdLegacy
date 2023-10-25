@@ -5,13 +5,20 @@ using UnityEngine;
 public class TriggerWallSystem : MonoBehaviour
 {
     [SerializeField] GameObject floor;
+    [SerializeField] Animator animator;
+
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
     private void OnTriggerStay2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "player")
         {
-            if (Input.GetKey(KeyCode.E))
+            if (Input.GetButton("interactivity"))
             {
-                Destroy(floor);
+                animator.SetBool("isBreak",true);
+                floor.GetComponent<Animator>().SetBool("isBreak", true);
             }
         }
        
