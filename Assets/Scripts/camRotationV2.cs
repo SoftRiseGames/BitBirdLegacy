@@ -8,6 +8,7 @@ public class camRotationV2 : MonoBehaviour
     public CharacterManager character;
     public bool collideDedection;
     public camRotationV2 instance;
+    [SerializeField] bool isReply;
     private void Awake()
     {
         if (instance == null)
@@ -18,6 +19,25 @@ public class camRotationV2 : MonoBehaviour
         animator =GetComponent<Animator>();
         character = GameObject.Find("player").GetComponent<CharacterManager>();
     }
+    
+
+    private void Update()
+    {
+        TriggerSystem();
+    }
+    void TriggerSystem()
+    {
+        if (instance.collideDedection == true )
+        {
+            character.camrotate = true;
+            instance.animator.SetBool("triggeractivate", true);
+        }
+        else if(instance.collideDedection == false && instance.isReply)
+        {
+            instance.animator.SetBool("triggeractivate", false);
+        }
+    }
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.name == "player")
@@ -33,27 +53,12 @@ public class camRotationV2 : MonoBehaviour
             character.camrotate = false;
         }
     }
-    
-
-    private void Update()
-    {
-        TriggerSystem();
-    }
-    void TriggerSystem()
-    {
-        if (collideDedection == true )
-        {
-            character.camrotate = true;
-            instance.animator.SetBool("triggeractivate", true);
-            //StartCoroutine(animtimer());
-        }
-    }
- 
     /*
     IEnumerator animtimer()
     {
-        yield return new WaitForSeconds(.1f);
-        animator.SetBool("triggeractivate", false);
-    }*/
+        yield return new WaitForSeconds(1f);
+        this.gameObject.GetComponent<BoxCollider2D>().enabled = true;
+    }
+    */
 
 }
