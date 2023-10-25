@@ -27,7 +27,7 @@ public class kapi : MonoBehaviour
             instance = this;
         }
 
-        if (PlayerPrefs.HasKey("isOpen"))
+        if (PlayerPrefs.HasKey(gameObject.transform.name))
         {
             instance.saverinteger = 1;
         }
@@ -80,7 +80,7 @@ public class kapi : MonoBehaviour
     {
         instance.gameObject.transform.DOMove(objectStartTransform, gidis).SetEase(Ease.Linear);
         instance.saverinteger = 1;
-        PlayerPrefs.SetInt("isOpen", instance.saverinteger);
+        PlayerPrefs.SetInt(gameObject.transform.name, instance.saverinteger);
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
