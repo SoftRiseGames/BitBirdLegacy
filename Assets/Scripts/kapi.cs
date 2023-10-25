@@ -8,13 +8,16 @@ public class kapi : MonoBehaviour
     [SerializeField] float gidis;
     [SerializeField] float gelis;
     [SerializeField] CharacterManager character;
-    [SerializeField] int saverinteger;
-   // [SerializeField] GameObject emptykapi;
+    public int saverinteger;
     [SerializeField] GameObject fullkapi;
+    public bool isPass;
     bool iscollide;
+    //kapalý kapý sistemi
+    Vector2 objectStartTransform;
     public kapi instance;
     private void Awake()
     {
+        objectStartTransform = this.gameObject.transform.position;
         if (character == null)
         {
             character = GameObject.Find("player").GetComponent<CharacterManager>();
@@ -23,7 +26,8 @@ public class kapi : MonoBehaviour
         {
             instance = this;
         }
-        if (PlayerPrefs.HasKey(this.gameObject.name))
+
+        if (PlayerPrefs.HasKey("isOpen"))
         {
             instance.saverinteger = 1;
         }
@@ -36,6 +40,7 @@ public class kapi : MonoBehaviour
     }
     void Start()
     {
+        /*
         if (instance.saverinteger == 0)
         {
             instance.gameObject.transform.position = new Vector2(this.gameObject.transform.position.x, this.gameObject.transform.position.y);
@@ -44,6 +49,7 @@ public class kapi : MonoBehaviour
         {
             instance.gameObject.transform.position = new Vector2(dotweengidisPoint.transform.position.x, dotweengidisPoint.transform.position.y);
         }
+        */
     }
 
     // Update is called once per frame
@@ -53,47 +59,41 @@ public class kapi : MonoBehaviour
         if (iscollide && saverinteger == 0)
         {
           
-            if (character.isFollow && Input.GetKey(KeyCode.E))
+            if (character.isFollow && Input.GetButton("interactivity"))
             {
                 character.isFollow = false;
                 character.transform.GetChild(2).GetComponent<KeyScript>().Suicide();
                 instance.gameObject.transform.DOMove(dotweengidisPoint.transform.position, gidis).SetEase(Ease.Linear);
-                instance.saverinteger = 1;
-                PlayerPrefs.SetInt(this.gameObject.name, instance.saverinteger);
-                
             }
         }
-        if (Vector2.Distance(character.transform.position, gameObject.transform.position) < 3)
+        if (Vector2.Distance(character.transform.position, gameObject.transform.position) < 3 &&instance.saverinteger == 0)
         {
             instance.fullkapi.SetActive(true);
-            /*
-            if (character.isFollow)
-            {
-                instance.emptykapi.SetActive(false);
-                instance.fullkapi.SetActive(true);
-            }
-            else if (!character.isFollow)
-            {
-                instance.emptykapi.SetActive(true);
-                instance.fullkapi.SetActive(false);
-            }
-            */
         }
         else
         {
             //instance.emptykapi.SetActive(false);
             instance.fullkapi.SetActive(false);
         }
-
     }
-   
+    public void isPassControl()
+    {
+        instance.gameObject.transform.DOMove(objectStartTransform, gidis).SetEase(Ease.Linear);
+        instance.saverinteger = 1;
+        PlayerPrefs.SetInt("isOpen", instance.saverinteger);
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "player")
+        if (collision.gameObject.tag == "player" &&instance.saverinteger==0)
         {
             instance.iscollide = true;
         }
+        else
+        {
+            instance.iscollide = false;
+        }
     }
+    /*
     private void OnCollisionExit2D(Collision2D collision)
     {
         if(collision.gameObject.tag == "player")
@@ -101,5 +101,5 @@ public class kapi : MonoBehaviour
             instance.iscollide = false;
         }
     }
-
+    */
 }

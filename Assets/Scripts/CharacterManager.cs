@@ -164,7 +164,7 @@ public class CharacterManager : MonoBehaviour
 
        
 
-        if (Input.GetKeyDown(KeyCode.Space) && coyoteTimeCounter>0f && canDash && !DashTimerControl && canJump)
+        if (Input.GetButtonDown("jump") && coyoteTimeCounter>0f && canDash && !DashTimerControl && canJump)
         {
             Jump();
             jumpEffect();
@@ -674,13 +674,13 @@ public class CharacterManager : MonoBehaviour
         }
 
 
-        if (jumpTimer > 0 && !Input.GetKey(KeyCode.Space) && (transform.rotation.z == 0 || transform.rotation.z == -1))
+        if (jumpTimer > 0 && !Input.GetButton("jump") && (transform.rotation.z == 0 || transform.rotation.z == -1))
         {
             rb.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
         }
 
 
-        else if (jumpTimer > 0 && !Input.GetKey(KeyCode.Space) && (transform.rotation.z == 0.7071068f || transform.rotation.z == -0.7071068f))
+        else if (jumpTimer > 0 && !Input.GetButton("jump") && (transform.rotation.z == 0.7071068f || transform.rotation.z == -0.7071068f))
         {
 
             rb.velocity += Vector2.right * Physics2D.gravity.x * (lowJumpMultiplier - 1) * Time.deltaTime;
