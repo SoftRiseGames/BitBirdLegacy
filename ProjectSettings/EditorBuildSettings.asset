@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/blackOne.unity
     guid: 832ffb824bd23254fa8bd67db3d32956
+  - enabled: 1
+    path: Assets/Scenes/DemoEnding.unity
+    guid: e389de5f63db4ae4e8a2cb2f78f4b7ef
   m_configObjects: {}

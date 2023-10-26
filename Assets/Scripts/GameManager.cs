@@ -14,5 +14,20 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
-    
+    //demodan sonra silinecek
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.R))
+        {
+            PlayerPrefs.DeleteAll();
+            SceneManager.LoadScene(0);
+        }
+        /*
+        if (SceneManager.GetActiveScene().buildIndex == 2)
+        {
+            
+        }
+        */
+    }
+
 }

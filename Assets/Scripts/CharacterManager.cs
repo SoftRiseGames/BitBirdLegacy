@@ -525,6 +525,8 @@ public class CharacterManager : MonoBehaviour
             animator.SetBool("isDeath", true);
             //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
+        //Ogem demo sonrasý deðiþecek,silinecek
+      
 
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -542,6 +544,8 @@ public class CharacterManager : MonoBehaviour
             PlayerPrefs.SetFloat("positionX", begininngPositionX);
             PlayerPrefs.SetFloat("positionY", beginningPositionY);
         }
+        if (collision.gameObject.name == "DemoTrigger")
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
 
