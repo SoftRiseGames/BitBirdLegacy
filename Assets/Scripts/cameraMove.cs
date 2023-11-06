@@ -52,7 +52,7 @@ public class cameraMove : MonoBehaviour
             {
                
                 Debug.Log("0.7071068");
-                virtualCam.transform.rotation = Quaternion.Euler(virtualCam.transform.rotation.x, virtualCam.transform.rotation.y, 90);
+                virtualCam.transform.rotation = Quaternion.Euler(virtualCam.transform.rotation.x, virtualCam.transform.rotation.y, 270);
             }
             else if (savedRotation == 1)
             {
@@ -64,7 +64,7 @@ public class cameraMove : MonoBehaviour
             {
                
                 Debug.Log("rotate");
-                virtualCam.transform.rotation = Quaternion.Euler(virtualCam.transform.rotation.x, virtualCam.transform.rotation.y, 270);
+                virtualCam.transform.rotation = Quaternion.Euler(virtualCam.transform.rotation.x, virtualCam.transform.rotation.y, 90);
             }
 
         }
@@ -72,6 +72,7 @@ public class cameraMove : MonoBehaviour
     }
     private void Update()
     {
+        /*
         if(virtualCam.gameObject.transform.rotation.z>=0 && virtualCam.gameObject.transform.rotation.z < 90)
         {
            istourEnd = false;
@@ -80,6 +81,7 @@ public class cameraMove : MonoBehaviour
         {
             istourEnd = true;
         }
+        */
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

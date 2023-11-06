@@ -11,7 +11,7 @@ public class kapi : MonoBehaviour
     public int saverinteger;
     [SerializeField] GameObject fullkapi;
     public bool isPass;
-    bool iscollide;
+    public bool iscollide;
     //kapalý kapý sistemi
     Vector2 objectStartTransform;
     public kapi instance;
@@ -88,7 +88,11 @@ public class kapi : MonoBehaviour
         {
             instance.iscollide = true;
         }
-        else
+       
+    }
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "player" && instance.saverinteger == 0)
         {
             instance.iscollide = false;
         }

@@ -270,8 +270,8 @@ public class CharacterManager : MonoBehaviour
             canCrouch = true;
             secondJump = true;
 
-            if(collisionPoint.gameObject.tag == "platform")
-                this.gameObject.transform.parent = collisionPoint.transform;
+            if (collisionPoint.gameObject.tag == "platform")
+                this.gameObject.transform.SetParent(collisionPoint.transform,true); 
 
 
         }
@@ -280,10 +280,9 @@ public class CharacterManager : MonoBehaviour
        
             canJump = false;
             canCrouch = false;
-            this.gameObject.transform.parent = null;
+            this.gameObject.transform.SetParent(null);
         }
 
-        
         //////////////////////////////
     }
 
@@ -319,7 +318,6 @@ public class CharacterManager : MonoBehaviour
             }
             if((rb.velocity.y<0 ) && !collisionPoint)
             {
-                Debug.Log("a");
                 animator.SetBool("isJump", false);
                 animator.SetBool("isfall", true);
             }
@@ -498,16 +496,7 @@ public class CharacterManager : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, movementVeriable.x * -aktifhiz);
         }
-        /*
-        if (x > 0 || x<0 && collisionPoint)
-        {
-            walking = true;
-        }
-        else
-        {
-            walking = false;
-        }
-        */
+       
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -525,7 +514,7 @@ public class CharacterManager : MonoBehaviour
             animator.SetBool("isDeath", true);
             //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
-        //Ogem demo sonrasý deðiþecek,silinecek
+        
       
 
     }
@@ -544,8 +533,13 @@ public class CharacterManager : MonoBehaviour
             PlayerPrefs.SetFloat("positionX", begininngPositionX);
             PlayerPrefs.SetFloat("positionY", beginningPositionY);
         }
+        //Ogem demo sonrasý deðiþecek,silinecek
         if (collision.gameObject.name == "DemoTrigger")
+        {
+            PlayerPrefs.DeleteAll();
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
+            
     }
 
 
@@ -630,7 +624,7 @@ public class CharacterManager : MonoBehaviour
         }
         */
 
-        cameraShake.shake(ziplamaamplitude, ziplamaduration);
+        //cameraShake.shake(ziplamaamplitude, ziplamaduration);
     }
 
   
@@ -786,8 +780,6 @@ public class CharacterManager : MonoBehaviour
         if (!isDead)
         {
             dust.Play();
-            Debug.Log("dust");
-
         }
     }
 

@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     //demodan sonra silinecek
     private void Update()
     {
-        if (Input.GetKey(KeyCode.R))
+        if (Input.GetButton("reset"))
         {
             PlayerPrefs.DeleteAll();
             SceneManager.LoadScene(0);

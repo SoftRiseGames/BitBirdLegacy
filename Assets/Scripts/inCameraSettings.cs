@@ -9,7 +9,7 @@ public class inCameraSettings : MonoBehaviour
     
     public inCameraSettings thisCamera;
     public Animator animator;
-       
+    public cameraMove CameraMove;
     public GameObject limitPoint;
     public CharacterManager character;
     public List<GameObject> objects = new List<GameObject>();
@@ -32,6 +32,11 @@ public class inCameraSettings : MonoBehaviour
         {
             thisCamera = this;
         }
+
+        if(CameraMove == null)
+        {
+            CameraMove = thisCamera.gameObject.transform.parent.GetComponent<cameraMove>();
+        }
         character = GameObject.Find("player").GetComponent<CharacterManager>();
         camShake = FindObjectOfType<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
         
@@ -52,24 +57,28 @@ public class inCameraSettings : MonoBehaviour
         {
             if (this.gameObject.transform.rotation.z == 0)
             {
+                CameraMove.istourEnd = false;
                 character.beginningGravityX = 9.8f;
                 character.beginningGravityy = 0;
                
             }
             if (this.gameObject.transform.rotation.z == 0.7071068f && character.rotationz == 90)
             {
+                CameraMove.istourEnd = true;
                 character.beginningGravityX = 0;
                 character.beginningGravityy = 9.8f;
                
             }
             if (this.gameObject.transform.rotation.z == 1)
             {
+                CameraMove.istourEnd = true;
                 character.beginningGravityX = -9.8f;
                 character.beginningGravityy = 0;
                
             }
             if (this.gameObject.transform.rotation.z == 0.7071068f && character.rotationz == 270)
             {
+                CameraMove.istourEnd = false;
                 character.beginningGravityX = 0;
                 character.beginningGravityy = -9.8f;
               
