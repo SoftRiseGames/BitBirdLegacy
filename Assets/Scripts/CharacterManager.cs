@@ -3,88 +3,131 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
-
+using Sirenix.OdinInspector;
 public class CharacterManager : MonoBehaviour
 {
-    bool isDead;
-    public Animator animator;
-    public ParticleSystem dust;
-    public Rigidbody2D rb;
+    [TabGroup("Layers")]
+    public LayerMask groundLayerDetect;
+    [TabGroup("Layers")]
+    public LayerMask sideLayerDedect;
+
+    [TabGroup("CollisionSetup")]
+    public Collider2D collisionPoint;
+    [TabGroup("CollisionSetup")]
+    public float collisionSideradius;
+    [TabGroup("CollisionSetup")]
+    public float collisionGroundradius;
+    [TabGroup("CollisionSetup")]
+    public Vector2 underoffset;
+    
+    [TabGroup("CollisionSetup")]
+    public float underOffsetValue;
+    [TabGroup("CollisionSetup")]
+    Vector2 sideoffset;
+    [TabGroup("CollisionSetup")]
+    public float sideOffsetValue;
+    [TabGroup("CollisionSetup")]
+    public bool sideColliderPoint;
+
+    [TabGroup("jump")]
+    [SerializeField] float fallMultiplier;
+    [TabGroup("jump")]
+    [SerializeField] float jumpForce;
+    [TabGroup("jump")]
+    [SerializeField] float lowJumpMultiplier;
+    [TabGroup("jump")]
+    [SerializeField] float jumpTimer;
+    [TabGroup("jump")]
+    [SerializeField] float jumpStartTimer;
+    [TabGroup("jump")]
+    [SerializeField] float coyoteTime;
+    [TabGroup("jump")]
+    private float coyoteTimeCounter;
+
+    [TabGroup("Walk")]
+    public Vector2 movementVeriable;
+    [TabGroup("Walk")]
+    [SerializeField] float walkForce;
+    [TabGroup("Walk")]
+    [SerializeField] float walkcarpan;
+    [TabGroup("Walk")]
+    [SerializeField] float durmacarpan;
+    [TabGroup("Walk")]
+    [SerializeField] float aktifhiz;
     float x;
     float y;
+
+    [TabGroup("Dash")]
+    [SerializeField] float dashForce;
+    [TabGroup("Dash")]
+    public float dashTimer;
     float xRaw;
     float yRaw;
-    public float underOffsetValue;
-    public float rotationz;
 
-    public float sideOffsetValue;
-    public LayerMask groundLayerDetect;
-
-    public LayerMask sideLayerDedect;
-    public Collider2D collisionPoint;
-
-    public bool sideColliderPoint;
-    public GameObject platforms;
-    public Vector2 underoffset;
-    public Vector2 underSideOffset;
-    public inCameraSettings cameraShake;
-    Vector2 sideoffset;
-
-    public float collisionSideradius;
-    public float collisionGroundradius;
-    public Vector2 movementVeriable;
-    [SerializeField] float jumpTimer;
-    [SerializeField] float jumpStartTimer;
-    [SerializeField] TrailRenderer trailRenderer;
-    [Header("jump")]
-    [SerializeField] float fallMultiplier;
-    [SerializeField] float jumpForce;
-    [SerializeField] float lowJumpMultiplier;
-
-    [Header("Walk")]
-    [SerializeField] float walkForce;
-    [SerializeField] float walkcarpan;
-    [SerializeField] float durmacarpan;
-    [SerializeField] float aktifhiz;
-
-    [Header("Dash")]
-    [SerializeField] float dashForce;
-    public float dashTimer;
-    private float coyoteTimeCounter;
-    [SerializeField] float coyoteTime;
-    
-
-    [Header("Titresim")]
+    [TabGroup("Feels")]
     public float yurumeamplitude;
+    [TabGroup("Feels")]
     public float ziplamaamplitude;
+    [TabGroup("Feels")]
     public float yurumeduration;
+    [TabGroup("Feels")]
     public float ziplamaduration;
+    [TabGroup("Feels")]
+    public inCameraSettings cameraShake;
 
-    [Header("Bools")]
+    [TabGroup("Bools")]
     public bool canJump;
+    [TabGroup("Bools")]
     public bool secondJump;
+    [TabGroup("Bools")]
     public bool canWalk;
+    [TabGroup("Bools")]
     public bool canDash;
+    [TabGroup("Bools")]
     public bool sagsolcont;
+    [TabGroup("Bools")]
     public bool camrotate = false;
+    [TabGroup("Bools")]
     public bool DashTimerControl;
+    [TabGroup("Bools")]
     bool canCrouch;
+    [TabGroup("Bools")]
     public bool isFollow;
+    [TabGroup("Bools")]
     public bool RotationDedection;
-    [Header("ControlBools")]
+    [TabGroup("Bools")]
+    bool isDead;
+
+    [TabGroup("ControlBools")]
     public bool doubleJumpControl;
+    [TabGroup("ControlBools")]
     public bool dashControl;
-  
+    [TabGroup("ControlBools")]
     bool FallTimerControl;
-    [Header("BeginningGravities")]
+
+
+    [TabGroup("SavedGravities")]
     public float beginningGravityX;
+    [TabGroup("SavedGravities")]
     public float beginningGravityy;
 
-    [Header("BeginningPosition")]
-
+    [TabGroup("SavedPosition")]
     float begininngPositionX;
+    [TabGroup("SavedPosition")]
     float beginningPositionY;
     
+    [TabGroup("Other")]
+    public Animator animator;
+    [TabGroup("Other")]
+    public ParticleSystem dust;
+    [TabGroup("Other")]
+    public Rigidbody2D rb;
+    [TabGroup("Other")]
+    public float rotationz;
+    [TabGroup("Other")]
+    public GameObject platforms;
+    [TabGroup("Other")]
+    [SerializeField] TrailRenderer trailRenderer;
    
     void Start()
     {
