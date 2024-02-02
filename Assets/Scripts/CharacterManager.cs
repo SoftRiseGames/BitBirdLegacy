@@ -201,7 +201,7 @@ public class CharacterManager : MonoBehaviour
         ManageWalk();
         coyoteAndFall();
         coyoteControl();
-  
+        JumpGravity();
         if (canWalk)
             Walk(movementVeriable);
 
@@ -279,6 +279,13 @@ public class CharacterManager : MonoBehaviour
                 canDash = true;
             }
         }
+    }
+    void JumpGravity()
+    {
+        if (canJump)
+            rb.gravityScale = 1;
+        else
+            rb.gravityScale =3;
     }
     void GizmoTriggerSystem()
     {
