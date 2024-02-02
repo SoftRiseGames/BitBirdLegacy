@@ -97,6 +97,8 @@ public class CharacterManager : MonoBehaviour
     public bool RotationDedection;
     [TabGroup("Bools")]
     bool isDead;
+    [TabGroup("Bools")]
+    public bool NormalGravity;
 
     [TabGroup("ControlBools")]
     public bool doubleJumpControl;
@@ -201,11 +203,11 @@ public class CharacterManager : MonoBehaviour
         ManageWalk();
         coyoteAndFall();
         coyoteControl();
-        JumpGravity();
+       
         if (canWalk)
             Walk(movementVeriable);
-
-       
+        if(NormalGravity)
+            JumpGravity();
 
         if (Input.GetButtonDown("jump") && coyoteTimeCounter>0f && canDash && !DashTimerControl && canJump)
         {
@@ -282,10 +284,12 @@ public class CharacterManager : MonoBehaviour
     }
     void JumpGravity()
     {
+        
         if (canJump)
             rb.gravityScale = 1;
         else
             rb.gravityScale =3;
+        
     }
     void GizmoTriggerSystem()
     {
