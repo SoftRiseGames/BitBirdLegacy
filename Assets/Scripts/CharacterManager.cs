@@ -197,7 +197,7 @@ public class CharacterManager : MonoBehaviour
         JumpCont();
         GizmoTriggerSystem();
         //Crouch();
-        //gravity();
+        gravity();
         ManageWalk();
         coyoteAndFall();
         coyoteControl();

@@ -106,7 +106,7 @@ public class inCameraSettings : MonoBehaviour
     void cevir(float acix, float aciy)
     {
         character.rb.velocity = new Vector3(0, 0, 0);
-        character.CharacterTurn(acix, aciy);
+        //character.CharacterTurn(acix, aciy);
         character.rotationz = character.rotationz + 90;
 
       
@@ -122,40 +122,49 @@ public class inCameraSettings : MonoBehaviour
         character.transform.rotation = Quaternion.Euler(0, 0, character.rotationz);
 
 
-        if (thisCamera.gameObject.transform.rotation.z == 0)
+        if (thisCamera.GetComponent<CinemachineVirtualCamera>().m_Lens.Dutch == 0)
         {
-
+            /*
             thisCamera.animator.SetBool("90", true);
             thisCamera.animator.SetBool("180", false);
             thisCamera.animator.SetBool("270", false);
             thisCamera.animator.SetBool("360", false);
+            */
+            DOTween.To(x => thisCamera.GetComponent<CinemachineVirtualCamera>().m_Lens.Dutch = x, thisCamera.GetComponent<CinemachineVirtualCamera>().m_Lens.Dutch, 90, .5f);
 
         }
-        else if (thisCamera.gameObject.transform.rotation.z == 0.7071068f && character.rotationz == 180)
+        else if (thisCamera.GetComponent<CinemachineVirtualCamera>().m_Lens.Dutch ==90 && character.rotationz == 180)
         {
-
+            /*
             thisCamera.animator.SetBool("180", true);
             thisCamera.animator.SetBool("90", false);
             thisCamera.animator.SetBool("270", false);
             thisCamera.animator.SetBool("360", false);
+            */
+            DOTween.To(x => thisCamera.GetComponent<CinemachineVirtualCamera>().m_Lens.Dutch = x, thisCamera.GetComponent<CinemachineVirtualCamera>().m_Lens.Dutch, 180, .5f);
         }
 
-        if (thisCamera.gameObject.transform.rotation.z == 1)
+        if (thisCamera.GetComponent<CinemachineVirtualCamera>().m_Lens.Dutch == 180)
         {
-
+            thisCamera.GetComponent<CinemachineVirtualCamera>().m_Lens.Dutch = -180;
+            /*
             thisCamera.animator.SetBool("90", false);
             thisCamera.animator.SetBool("180", false);
             thisCamera.animator.SetBool("270", true);
             thisCamera.animator.SetBool("360", false);
+            */
+            DOTween.To(x => thisCamera.GetComponent<CinemachineVirtualCamera>().m_Lens.Dutch = x, thisCamera.GetComponent<CinemachineVirtualCamera>().m_Lens.Dutch, -90, .5f);
         }
 
-        if (thisCamera.gameObject.transform.rotation.z == 0.7071068f && character.rotationz == 0)
+        if (thisCamera.GetComponent<CinemachineVirtualCamera>().m_Lens.Dutch ==-90 && character.rotationz == 0)
         {
-
+            /*
             thisCamera.animator.SetBool("90", false);
             thisCamera.animator.SetBool("180", false);
             thisCamera.animator.SetBool("270", false);
             thisCamera.animator.SetBool("360", true);
+            */
+            DOTween.To(x => thisCamera.GetComponent<CinemachineVirtualCamera>().m_Lens.Dutch = x, thisCamera.GetComponent<CinemachineVirtualCamera>().m_Lens.Dutch, 0, .5f);
         }
         PlayerPrefs.SetFloat("rotationz", character.rotationz);
       
