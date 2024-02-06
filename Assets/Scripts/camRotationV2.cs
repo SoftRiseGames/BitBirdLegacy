@@ -30,6 +30,7 @@ public class camRotationV2 : MonoBehaviour
         if (instance.collideDedection == true )
         {
             character.camrotate = true;
+            character.right90 = true;
             instance.animator.SetBool("triggeractivate", true);
         }
         else if(instance.collideDedection == false && instance.isReply)

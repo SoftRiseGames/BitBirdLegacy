@@ -100,12 +100,13 @@ public class CharacterManager : MonoBehaviour
     [TabGroup("Bools")]
     public bool NormalGravity;
 
+
     [TabGroup("ControlBools")]
     public bool doubleJumpControl;
     [TabGroup("ControlBools")]
     public bool dashControl;
     [TabGroup("ControlBools")]
-    bool FallTimerControl;
+    public bool FallTimerControl;
 
 
     [TabGroup("SavedGravities")]
@@ -130,7 +131,12 @@ public class CharacterManager : MonoBehaviour
     public GameObject platforms;
     [TabGroup("Other")]
     [SerializeField] TrailRenderer trailRenderer;
-   
+
+
+    public bool left90;
+    public bool left180;
+    public bool right90;
+    public bool right180;
     void Start()
     {
         trailRenderer = GetComponent<TrailRenderer>();
@@ -196,7 +202,7 @@ public class CharacterManager : MonoBehaviour
         anims();
         ScaleControl();
         GizmoFlipSystem();
-        JumpCont();
+       
         GizmoTriggerSystem();
         //Crouch();
         gravity();
@@ -206,8 +212,12 @@ public class CharacterManager : MonoBehaviour
        
         if (canWalk)
             Walk(movementVeriable);
-        if(NormalGravity)
+        if (NormalGravity)
+        {
             JumpGravity();
+            JumpCont();
+        }
+            
 
         if (Input.GetButtonDown("jump") && coyoteTimeCounter>0f && canDash && !DashTimerControl && canJump)
         {
@@ -353,7 +363,7 @@ public class CharacterManager : MonoBehaviour
             transform.DOScale(new Vector2(-19.2f, 7f), 0.1f).OnComplete(() => transform.DOScale(new Vector2(-12f, 12f), 0.1f));
         }
 
-        cameraShake.shake(ziplamaamplitude, ziplamaduration);
+       
     }
 
 
