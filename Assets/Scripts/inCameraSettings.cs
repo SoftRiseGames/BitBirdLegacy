@@ -94,9 +94,7 @@ public class inCameraSettings : MonoBehaviour
     void cevir(float acix, float aciy)
     {
         character.rb.velocity = new Vector3(0, 0, 0);
-        character.rotationz = character.rotationz + 90;
-
-      
+        rotationTimer();
         foreach (GameObject obj in objects)
         {
             obj.GetComponent<GravityObjects>().CharacterTurn(acix, aciy);
@@ -105,11 +103,10 @@ public class inCameraSettings : MonoBehaviour
         {
             character.rotationz = 0;
         }
-        
+       
         character.transform.rotation = Quaternion.Euler(0, 0, character.rotationz);
-        rotationTimer();
         PlayerPrefs.SetFloat("rotationz", character.rotationz);
-      
+        Debug.Log(character.rotationz);
 
     }
     public async void rotationTimer()
@@ -117,6 +114,7 @@ public class inCameraSettings : MonoBehaviour
         if (character.right90)
         {
             thisCamera.animator.SetBool("90", true);
+            character.rotationz = character.rotationz + 90;
             character.right90 = false;
             await Task.Delay(500);
             thisCamera.animator.SetBool("90", false);
@@ -124,6 +122,7 @@ public class inCameraSettings : MonoBehaviour
         else if (character.right180)
         {
             thisCamera.animator.SetBool("180", true);
+            character.rotationz = character.rotationz + 180;
             character.right180 = false;
             await Task.Delay(500);
             thisCamera.animator.SetBool("180", false);
@@ -131,6 +130,7 @@ public class inCameraSettings : MonoBehaviour
         else if (character.left90)
         {
             thisCamera.animator.SetBool("-90", true);
+            character.rotationz = character.rotationz + -90;
             character.left90 = false;
             await Task.Delay(500);
             thisCamera.animator.SetBool("-90", false);
@@ -138,12 +138,14 @@ public class inCameraSettings : MonoBehaviour
         else if (character.left180)
         {
             thisCamera.animator.SetBool("-180", true);
+            character.rotationz = character.rotationz + -180;
             character.left180 = false;
             await Task.Delay(500);
             thisCamera.animator.SetBool("-180", false);
         }
        
     }
+    
   
    
 }

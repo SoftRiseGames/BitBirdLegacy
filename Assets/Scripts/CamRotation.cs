@@ -51,8 +51,8 @@ public class CamRotation : MonoBehaviour
             {
                 character.camrotate = true;
                 character.left90 = true;
-                isRight = true;
-                isleft = false;
+                isRight = false;
+                isleft = true;
                 animator.SetBool("triggeractivate", true);
                 StartCoroutine(animtimer());
             }
