@@ -95,15 +95,16 @@ public class inCameraSettings : MonoBehaviour
     {
         character.rb.velocity = new Vector3(0, 0, 0);
         rotationTimer();
-        foreach (GameObject obj in objects)
-        {
-            obj.GetComponent<GravityObjects>().CharacterTurn(acix, aciy);
-        }
+
+        if (character.rotationz == -180)
+            character.rotationz = 180;
+        
         if (character.rotationz > 270)
-        {
             character.rotationz = 0;
-        }
-       
+
+        foreach (GameObject obj in objects)
+            obj.GetComponent<GravityObjects>().CharacterTurn(acix, aciy);
+
         character.transform.rotation = Quaternion.Euler(0, 0, character.rotationz);
         PlayerPrefs.SetFloat("rotationz", character.rotationz);
         Debug.Log(character.rotationz);

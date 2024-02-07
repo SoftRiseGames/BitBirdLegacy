@@ -8,8 +8,8 @@ public class CamRotation : MonoBehaviour
     public CharacterManager character;
     public bool collideDedection;
     [SerializeField] bool isDoubleSide;
-    bool isleft;
-    bool isRight;
+    public bool isleft;
+    public bool isRight;
     void Start()
     {
         animator = GetComponent<Animator>();
