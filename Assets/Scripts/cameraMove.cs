@@ -52,7 +52,7 @@ public class cameraMove : MonoBehaviour
             {
                
                 Debug.Log("0.7071068");
-                virtualCam.transform.rotation = Quaternion.Euler(virtualCam.transform.rotation.x, virtualCam.transform.rotation.y, 270);
+                virtualCam.transform.rotation = Quaternion.Euler(virtualCam.transform.rotation.x, virtualCam.transform.rotation.y, 90);
             }
             else if (savedRotation == 1)
             {
@@ -64,7 +64,7 @@ public class cameraMove : MonoBehaviour
             {
                
                 Debug.Log("rotate");
-                virtualCam.transform.rotation = Quaternion.Euler(virtualCam.transform.rotation.x, virtualCam.transform.rotation.y, 90);
+                virtualCam.transform.rotation = Quaternion.Euler(virtualCam.transform.rotation.x, virtualCam.transform.rotation.y, 270);
             }
 
         }
