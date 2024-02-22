@@ -6,11 +6,11 @@ public class EventListener : MonoBehaviour
 {
     public bool draw;
     public bool eraser;
-    
+    public GameObject tryInstantiate;
+    public int gameobjectIncrease;
     void Start()
     {
-        SoftriseLevelEditor.DrawListener += drawing;
-        SoftriseLevelEditor.EraserListener += erase;
+       
     }
 
     public void drawing()
@@ -24,5 +24,17 @@ public class EventListener : MonoBehaviour
         draw = false;
         eraser = true;
         Debug.Log("erase");
+    }
+    public void instantiator()
+    {
+        Instantiate(tryInstantiate);
+    }
+    public void increaseValue()
+    {
+        gameobjectIncrease = gameobjectIncrease + 1;
+    }
+    public void decreaseValue()
+    {
+        gameobjectIncrease = gameobjectIncrease - 1;
     }
 }
