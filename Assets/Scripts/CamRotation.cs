@@ -59,17 +59,17 @@ public class CamRotation : MonoBehaviour
             else if (collideDedection == true && Input.GetButton("negativeinteractivity") && isRight)
             {
                 character.camrotate = true;
-                character.left180 = true;
+                character.left90 = true;
                 isRight = false;
-                isleft = true;
+                isleft = false;
                 animator.SetBool("triggeractivate", true);
                 StartCoroutine(animtimer());
             }
             else if (collideDedection == true && Input.GetButton("interactivity") && isleft)
             {
                 character.camrotate = true;
-                character.right180 = true;
-                isRight = true;
+                character.right90 = true;
+                isRight = false;
                 isleft = false;
                 animator.SetBool("triggeractivate", true);
                 StartCoroutine(animtimer());

@@ -134,9 +134,8 @@ public class CharacterManager : MonoBehaviour
 
 
     public bool left90;
-    public bool left180;
     public bool right90;
-    public bool right180;
+ 
     void Start()
     {
         trailRenderer = GetComponent<TrailRenderer>();

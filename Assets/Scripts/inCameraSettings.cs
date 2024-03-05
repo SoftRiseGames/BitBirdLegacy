@@ -120,14 +120,6 @@ public class inCameraSettings : MonoBehaviour
             await Task.Delay(500);
             thisCamera.animator.SetBool("90", false);
         }
-        else if (character.right180)
-        {
-            thisCamera.animator.SetBool("180", true);
-            character.rotationz = character.rotationz + 180;
-            character.right180 = false;
-            await Task.Delay(500);
-            thisCamera.animator.SetBool("180", false);
-        }
         else if (character.left90)
         {
             thisCamera.animator.SetBool("-90", true);
@@ -136,14 +128,7 @@ public class inCameraSettings : MonoBehaviour
             await Task.Delay(500);
             thisCamera.animator.SetBool("-90", false);
         }
-        else if (character.left180)
-        {
-            thisCamera.animator.SetBool("-180", true);
-            character.rotationz = character.rotationz + -180;
-            character.left180 = false;
-            await Task.Delay(500);
-            thisCamera.animator.SetBool("-180", false);
-        }
+       
        
     }
     
