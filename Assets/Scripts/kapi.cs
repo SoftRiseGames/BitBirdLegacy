@@ -12,9 +12,8 @@ public class kapi : MonoBehaviour
     [SerializeField] GameObject fullkapi;
     public bool isPass;
     public bool iscollide;
-    //kapalý kapý sistemi
     Vector2 objectStartTransform;
-    public kapi instance;
+    
     private void Awake()
     {
         objectStartTransform = this.gameObject.transform.position;
@@ -22,37 +21,19 @@ public class kapi : MonoBehaviour
         {
             character = GameObject.Find("player").GetComponent<CharacterManager>();
         }
-        if (instance == null)
-        {
-            instance = this;
-        }
+        
 
         if (PlayerPrefs.HasKey(gameObject.transform.name))
         {
-            instance.saverinteger = 1;
+            saverinteger = 1;
         }
         else
         {
-            instance.saverinteger = 0;
+            saverinteger = 0;
         }
 
        
     }
-    void Start()
-    {
-        /*
-        if (instance.saverinteger == 0)
-        {
-            instance.gameObject.transform.position = new Vector2(this.gameObject.transform.position.x, this.gameObject.transform.position.y);
-        }
-        else if (instance.saverinteger == 1)
-        {
-            instance.gameObject.transform.position = new Vector2(dotweengidisPoint.transform.position.x, dotweengidisPoint.transform.position.y);
-        }
-        */
-    }
-
-    // Update is called once per frame
     void Update()
     {
        
@@ -63,47 +44,37 @@ public class kapi : MonoBehaviour
             {
                 character.isFollow = false;
                 character.transform.GetChild(2).GetComponent<KeyScript>().Suicide();
-                instance.gameObject.transform.DOMove(dotweengidisPoint.transform.position, gidis).SetEase(Ease.Linear);
+                gameObject.transform.DOMove(dotweengidisPoint.transform.position, gidis).SetEase(Ease.Linear);
             }
         }
-        if (Vector2.Distance(character.transform.position, gameObject.transform.position) < 3 &&instance.saverinteger == 0)
+        if (Vector2.Distance(character.transform.position, gameObject.transform.position) < 3 &&saverinteger == 0)
         {
-            instance.fullkapi.SetActive(true);
+            fullkapi.SetActive(true);
         }
         else
         {
-            //instance.emptykapi.SetActive(false);
-            instance.fullkapi.SetActive(false);
+            fullkapi.SetActive(false);
         }
     }
     public void isPassControl()
     {
-        instance.gameObject.transform.DOMove(objectStartTransform, gidis).SetEase(Ease.Linear);
-        instance.saverinteger = 1;
-        PlayerPrefs.SetInt(gameObject.transform.name, instance.saverinteger);
+        gameObject.transform.DOMove(objectStartTransform, gidis).SetEase(Ease.Linear);
+        saverinteger = 1;
+        PlayerPrefs.SetInt(gameObject.transform.name, saverinteger);
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "player" &&instance.saverinteger==0)
+        if (collision.gameObject.tag == "player" &&saverinteger==0)
         {
-            instance.iscollide = true;
+            iscollide = true;
         }
        
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "player" && instance.saverinteger == 0)
+        if (collision.gameObject.tag == "player" && saverinteger == 0)
         {
-            instance.iscollide = false;
+            iscollide = false;
         }
     }
-    /*
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if(collision.gameObject.tag == "player")
-        {
-            instance.iscollide = false;
-        }
-    }
-    */
 }
