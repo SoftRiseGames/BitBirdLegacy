@@ -44,8 +44,10 @@ public class CamRotation : MonoBehaviour
                 character.right90 = true;
                 isRight = true;
                 isleft = false;
-                animator.SetBool("triggeractivate", true);
-                StartCoroutine(animtimer());
+                animator.SetBool("sagtrigger", true);
+
+                //animator.SetBool("triggeractivate", true);
+                //StartCoroutine(animtimer());
             }
             else if (collideDedection == true && Input.GetButton("negativeinteractivity") && !isRight && !isleft)
             {
@@ -53,8 +55,9 @@ public class CamRotation : MonoBehaviour
                 character.left90 = true;
                 isRight = false;
                 isleft = true;
-                animator.SetBool("triggeractivate", true);
-                StartCoroutine(animtimer());
+                animator.SetBool("soltrigger", true);
+                //animator.SetBool("triggeractivate", true);
+                //StartCoroutine(animtimer());
             }
             else if (collideDedection == true && Input.GetButton("negativeinteractivity") && isRight)
             {
@@ -62,8 +65,9 @@ public class CamRotation : MonoBehaviour
                 character.left90 = true;
                 isRight = false;
                 isleft = false;
-                animator.SetBool("triggeractivate", true);
-                StartCoroutine(animtimer());
+                animator.SetBool("sagdansolatrigger", true);
+                //animator.SetBool("triggeractivate", true);
+                //StartCoroutine(animtimer());
             }
             else if (collideDedection == true && Input.GetButton("interactivity") && isleft)
             {
@@ -71,8 +75,9 @@ public class CamRotation : MonoBehaviour
                 character.right90 = true;
                 isRight = false;
                 isleft = false;
-                animator.SetBool("triggeractivate", true);
-                StartCoroutine(animtimer());
+                animator.SetBool("soldansagatrigger", true);
+                //animator.SetBool("triggeractivate", true);
+                //StartCoroutine(animtimer());
             }
         }
         else if (!isDoubleSide)
@@ -81,13 +86,23 @@ public class CamRotation : MonoBehaviour
             {
                 character.camrotate = true;
                 character.right90 = true;
-                animator.SetBool("triggeractivate", true);
-                StartCoroutine(animtimer());
+                animator.SetBool("sagtrigger", true);
+                //animator.SetBool("triggeractivate", true);
+                //StartCoroutine(animtimer());
             }
         }
         
     }
- 
+    public void animatorReset()
+    {
+        
+        animator.SetBool("sagtrigger", false);
+        animator.SetBool("sagdansolatrigger", false);
+        animator.SetBool("soldansagatrigger", false);
+        animator.SetBool("soltrigger", false);
+        
+    }
+
     
     IEnumerator animtimer()
     {
