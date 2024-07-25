@@ -80,12 +80,13 @@ public class CamRotation : MonoBehaviour
                 //StartCoroutine(animtimer());
             }
         }
-        else if (!isDoubleSide)
+        else if (!isDoubleSide && isRight == false)
         {
             if (collideDedection == true && Input.GetButton("interactivity") )
             {
                 character.camrotate = true;
                 character.right90 = true;
+                isRight = true;
                 animator.SetBool("sagtrigger", true);
                 //animator.SetBool("triggeractivate", true);
                 //StartCoroutine(animtimer());
