@@ -36,7 +36,7 @@ public class CharacterManager : MonoBehaviour
     [TabGroup("jump")]
     [SerializeField] float lowJumpMultiplier;
     [TabGroup("jump")]
-    [SerializeField] float jumpTimer;
+    float jumpTimer;
     [TabGroup("jump")]
     [SerializeField] float jumpStartTimer;
     [TabGroup("jump")]
@@ -194,8 +194,12 @@ public class CharacterManager : MonoBehaviour
         
         x = Input.GetAxisRaw("Horizontal");
         y = Input.GetAxisRaw("Vertical");
+
+
         xRaw = Input.GetAxisRaw("Horizontal");
         yRaw = Input.GetAxisRaw("Vertical");
+
+      
         movementVeriable = new Vector2(x, y);
 
         anims();
@@ -220,6 +224,7 @@ public class CharacterManager : MonoBehaviour
 
         if (Input.GetButtonDown("jump") && coyoteTimeCounter>0f && canDash && !DashTimerControl && canJump)
         {
+            
             Jump();
             jumpEffect();
         }
@@ -233,10 +238,9 @@ public class CharacterManager : MonoBehaviour
             StartCoroutine(Dash(dashTimer));
             DashEffect();
         }
-            
-    
-        
 
+        Debug.Log(jumpTimer);
+    
     }
 
     void coyoteControl()
@@ -632,6 +636,7 @@ public class CharacterManager : MonoBehaviour
         rb.velocity = Vector2.zero;
         createdust();
         rb.velocity = jumpForce * transform.up;
+       
     }
     public void DoubleJump()
     {
@@ -754,21 +759,17 @@ public class CharacterManager : MonoBehaviour
     {
 
         canWalk = false;
-
         DashTimerControl = true;
         trailRenderer.enabled = true;
         rb.velocity = Vector2.zero;
         rb.gravityScale = 0;
         jumpTimer = 0;
-
         DashSystem();
         yield return new WaitForSeconds(dashTimer);
         rb.velocity = Vector2.zero;
         DashTimerControl = false;
-
         trailRenderer.enabled = false;
         canDash = false;
-
         rb.gravityScale = 1;
         canWalk = true;
     }
@@ -809,8 +810,6 @@ public class CharacterManager : MonoBehaviour
 
         }
         rb.velocity = dir.normalized * dashForce*Time.fixedDeltaTime;
-        
-
     }
 
    
