@@ -625,6 +625,43 @@ public class CharacterManager : MonoBehaviour
             PlayerPrefs.DeleteAll();
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
+
+        if(collision.gameObject.tag == "tramboline")
+        {
+            Debug.Log("tramboline");
+            float force = 1500;
+
+            float forceX = 0;
+            float forceY = 0;
+
+
+            if (collision.gameObject.transform.eulerAngles.z == 0)
+            {
+                forceY = force;
+                Debug.Log("ust");
+            }
+                
+            else if (collision.gameObject.transform.eulerAngles.z == 180)
+            {
+                forceY = -force;
+                Debug.Log("alt");
+            }
+                
+            else if (collision.gameObject.transform.eulerAngles.z == 90)
+            {
+                forceX = -force;
+                Debug.Log("sol");
+            }
+               
+            else if (collision.gameObject.transform.eulerAngles.z == 270)
+            {
+                forceX = force;
+                Debug.Log("sag");
+            }
+                
+
+            rb.velocity = new Vector2(forceX * Time.deltaTime, forceY * Time.deltaTime);
+        }
             
     }
 

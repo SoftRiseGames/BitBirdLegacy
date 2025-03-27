@@ -16,6 +16,7 @@ TagManager:
   - savepoint
   - bosspatternfall
   - bosspatternvertical
+  - tramboline
   layers:
   - Default
   - TransparentFX
