@@ -135,7 +135,13 @@ public class CharacterManager : MonoBehaviour
 
     public bool left90;
     public bool right90;
- 
+
+
+    private BoxCollider2D collider;
+    private Vector2 originalSize;
+    private Vector2 originalOffset;
+
+
     void Start()
     {
         trailRenderer = GetComponent<TrailRenderer>();
@@ -147,8 +153,12 @@ public class CharacterManager : MonoBehaviour
         canDash = true;
         FallTimerControl = true;
 
-       
-       
+        collider = GetComponent<BoxCollider2D>();
+        if (collider != null)
+        {
+            originalSize = collider.size;
+            originalOffset = collider.offset;
+        }
         StartPrefs();
     }
     void StartPrefs()
@@ -238,9 +248,11 @@ public class CharacterManager : MonoBehaviour
             StartCoroutine(Dash(dashTimer));
             DashEffect();
         }
+        Debug.Log(collider.size);
 
-        Debug.Log(jumpTimer);
-    
+
+
+
     }
 
     void coyoteControl()
@@ -356,20 +368,27 @@ public class CharacterManager : MonoBehaviour
   
     public void DashEffect()
     {
+        animator.SetBool("isDash", true);
+        /*
+        // Hedef ölçekler belirliyoruz.
+        Vector2 targetScale = transform.localScale.x >= 0 ? new Vector2(19.2f, 7.2f) : new Vector2(-19.2f, 7.2f);
 
-        if (gameObject.transform.localScale.x >= 0)
-        {
-            transform.DOScale(new Vector2(19.2f, 7.2f), 0.1f).OnComplete(() => transform.DOScale(new Vector2(12f, 12f), 0.1f));
-        }
-        else if (gameObject.transform.localScale.x < 0)
-        {
-            transform.DOScale(new Vector2(-19.2f, 7f), 0.1f).OnComplete(() => transform.DOScale(new Vector2(-12f, 12f), 0.1f));
-        }
+        // Ýlk animasyonu baþlatýyoruz.
+        transform.DOScale(targetScale, 0.1f)
+            .OnUpdate(UpdateColliderSize)
+            .OnComplete(() =>
+            {
+                Vector2 finalScale = targetScale.x > 0 ? new Vector2(12f, 12f) : new Vector2(-12f, 12f);
+                // Ýkinci animasyonu baþlatýyoruz.
+                transform.DOScale(finalScale, 0.1f).OnUpdate(UpdateColliderSize);
+            });
+        */
 
-       
+
+
     }
 
-
+ 
     void anims()
     {
         if (transform.rotation.z == 0 )
@@ -413,7 +432,7 @@ public class CharacterManager : MonoBehaviour
             }
             if ((rb.velocity.y < 0) && !collisionPoint)
             {
-                Debug.Log("a");
+               
                 animator.SetBool("isJump", true);
                 animator.SetBool("isfall", false);
             }
@@ -769,6 +788,7 @@ public class CharacterManager : MonoBehaviour
         rb.velocity = Vector2.zero;
         DashTimerControl = false;
         trailRenderer.enabled = false;
+        animator.SetBool("isDash", false);
         canDash = false;
         rb.gravityScale = 1;
         canWalk = true;
