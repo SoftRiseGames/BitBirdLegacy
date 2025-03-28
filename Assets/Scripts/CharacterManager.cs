@@ -101,7 +101,6 @@ public class CharacterManager : MonoBehaviour
     [TabGroup("Bools")]
     public bool NormalGravity;
 
-
     [TabGroup("ControlBools")]
     public bool doubleJumpControl;
     [TabGroup("ControlBools")]
@@ -137,12 +136,6 @@ public class CharacterManager : MonoBehaviour
     public bool left90;
     public bool right90;
 
-
-    private BoxCollider2D collider;
-    private Vector2 originalSize;
-    private Vector2 originalOffset;
-
-
     void Start()
     {
         trailRenderer = GetComponent<TrailRenderer>();
@@ -153,13 +146,6 @@ public class CharacterManager : MonoBehaviour
         canWalk = true;
         canDash = true;
         FallTimerControl = true;
-
-        collider = GetComponent<BoxCollider2D>();
-        if (collider != null)
-        {
-            originalSize = collider.size;
-            originalOffset = collider.offset;
-        }
         StartPrefs();
     }
     void StartPrefs()
@@ -218,12 +204,12 @@ public class CharacterManager : MonoBehaviour
         GizmoFlipSystem();
        
         GizmoTriggerSystem();
+        GizmoTriggerSystem();
         //Crouch();
         gravity();
         ManageWalk();
         coyoteAndFall();
         coyoteControl();
-       
         if (canWalk)
             Walk(movementVeriable);
         if (NormalGravity)
@@ -249,11 +235,6 @@ public class CharacterManager : MonoBehaviour
             StartCoroutine(Dash(dashTimer));
             DashEffect();
         }
-        Debug.Log(collider.size);
-
-
-
-
     }
 
     void coyoteControl()
@@ -595,7 +576,6 @@ public class CharacterManager : MonoBehaviour
             rb.velocity = Vector2.zero;
             rb.gravityScale = 0;
             canJump = false;
-            
             jumpTimer = 0;
             canWalk = false;
             animator.SetBool("isDeath", true);
@@ -630,18 +610,7 @@ public class CharacterManager : MonoBehaviour
             
     }
 
-    public async void TrambolineAddForce(Transform transform)
-    {
-        canWalk = false;
-        rb.velocity = Vector2.zero;
-        Debug.Log("tramboline");
-        float force = 1500;
-        rb.velocity = transform.up * force*Time.deltaTime;
-        await Task.Delay(100);
-        canWalk = true;
-
-    }
-
+    
 
     void ManageWalk()
     {
@@ -843,7 +812,10 @@ public class CharacterManager : MonoBehaviour
                 dir = new Vector2(yRaw, -xRaw);
 
         }
-        rb.velocity = dir.normalized * dashForce*Time.fixedDeltaTime;
+        rb.velocity = dir.normalized * dashForce * Time.fixedDeltaTime;
+   
+
+
     }
 
    
@@ -866,6 +838,33 @@ public class CharacterManager : MonoBehaviour
             CharacterTurn(-9.8f, 0);
         }
     }
+
+    public async void TrambolineAddForce(Transform transform)
+    {
+        canWalk = false;
+        rb.gravityScale = 1;
+        float force = 1500;
+     
+        if (!DashTimerControl)
+        {
+            rb.velocity = Vector2.zero;
+            rb.velocity = transform.up * force * Time.fixedDeltaTime;
+        }
+           
+      
+        else if (DashTimerControl)
+        {
+            rb.velocity = Vector2.zero;
+            await Task.Delay(70);
+            rb.velocity = transform.up * force * Time.fixedDeltaTime;
+        }
+
+       
+        await Task.Delay(100);
+
+        canWalk = true;
+    }
+
     public void CharacterTurn(float gravityX, float gravityY)
     {
         Physics2D.gravity = new Vector2(gravityX, gravityY);
