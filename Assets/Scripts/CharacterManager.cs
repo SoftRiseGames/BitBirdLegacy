@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
 using Sirenix.OdinInspector;
@@ -626,43 +627,19 @@ public class CharacterManager : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
 
-        if(collision.gameObject.tag == "tramboline")
-        {
-            Debug.Log("tramboline");
-            float force = 1500;
-
-            float forceX = 0;
-            float forceY = 0;
-
-
-            if (collision.gameObject.transform.eulerAngles.z == 0)
-            {
-                forceY = force;
-                Debug.Log("ust");
-            }
-                
-            else if (collision.gameObject.transform.eulerAngles.z == 180)
-            {
-                forceY = -force;
-                Debug.Log("alt");
-            }
-                
-            else if (collision.gameObject.transform.eulerAngles.z == 90)
-            {
-                forceX = -force;
-                Debug.Log("sol");
-            }
-               
-            else if (collision.gameObject.transform.eulerAngles.z == 270)
-            {
-                forceX = force;
-                Debug.Log("sag");
-            }
-                
-
-            rb.velocity = new Vector2(forceX * Time.deltaTime, forceY * Time.deltaTime);
-        }
             
+    }
+
+    public async void TrambolineAddForce(Transform transform)
+    {
+        canWalk = false;
+        rb.velocity = Vector2.zero;
+        Debug.Log("tramboline");
+        float force = 1500;
+        rb.velocity = transform.up * force*Time.deltaTime;
+        await Task.Delay(100);
+        canWalk = true;
+
     }
 
 
