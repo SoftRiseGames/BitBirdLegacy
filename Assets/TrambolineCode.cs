@@ -8,7 +8,7 @@ public class TrambolineCode : MonoBehaviour
     {
         if(collision.gameObject.tag == "player")
         {
-            StartCoroutine(collision.GetComponent<CharacterManager>().TrambolineAddForce(transform,gameObject.transform.eulerAngles.z));
+            collision.GetComponent<CharacterManager>().TrambolineAddForce(transform, gameObject.transform.eulerAngles.z);
             Debug.Log(gameObject.transform.eulerAngles.z);
         }
     }
