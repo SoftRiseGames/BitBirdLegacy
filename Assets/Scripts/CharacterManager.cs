@@ -137,6 +137,7 @@ public class CharacterManager : MonoBehaviour
     public bool right90;
     Coroutine dashCoroutine;
     bool isTramboline;
+    float TrambolineTimer;
 
     private float startingMass;
     void Start()
@@ -201,7 +202,7 @@ public class CharacterManager : MonoBehaviour
         xRaw = Input.GetAxisRaw("Horizontal");
         yRaw = Input.GetAxisRaw("Vertical");
 
-
+        //Debug.Log(TrambolineTimer);
         movementVeriable = new Vector2(x, y);
 
         anims();
@@ -223,7 +224,7 @@ public class CharacterManager : MonoBehaviour
         {
             Walk(movementVeriable);
         }
-
+        Debug.Log(fallMultiplier);
 
 
         if (NormalGravity)
@@ -559,33 +560,28 @@ public class CharacterManager : MonoBehaviour
     }
     public void Walk(Vector2 movementVeriable)
     {
-
-        if (Mathf.Abs(aktifhiz) > 0)
+        if (gameObject.transform.rotation.z == 0)
         {
-            if (gameObject.transform.rotation.z == 0)
-            {
-                rb.velocity = new Vector2(movementVeriable.x * aktifhiz, rb.velocity.y);
+            rb.velocity = new Vector2(movementVeriable.x * aktifhiz, rb.velocity.y);
 
-            }
-            else if (gameObject.transform.rotation.z == 0.7071068f)
-            {
-                rb.velocity = new Vector2(rb.velocity.x, movementVeriable.x * aktifhiz);
-
-            }
-            else if (gameObject.transform.rotation.z == -1)
-            {
-                rb.velocity = new Vector2(movementVeriable.x * -aktifhiz, rb.velocity.y);
-
-            }
-            else if (gameObject.transform.rotation.z == -0.7071068f)
-            {
-                rb.velocity = new Vector2(rb.velocity.x, movementVeriable.x * -aktifhiz);
-            }
         }
-        else
+        else if (gameObject.transform.rotation.z == 0.7071068f)
         {
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y);
+            rb.velocity = new Vector2(rb.velocity.x, movementVeriable.x * aktifhiz);
+
         }
+        else if (gameObject.transform.rotation.z == -1)
+        {
+            rb.velocity = new Vector2(movementVeriable.x * -aktifhiz, rb.velocity.y);
+
+        }
+        else if (gameObject.transform.rotation.z == -0.7071068f)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, movementVeriable.x * -aktifhiz);
+        }
+
+
+        
 
 
 
@@ -755,6 +751,7 @@ public class CharacterManager : MonoBehaviour
 
     void JumpCont()
     {
+        Debug.Log("jumpControl");
         if (jumpTimer < 0 && (transform.rotation.z == 0 || transform.rotation.z == -1))
         {
             rb.velocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
@@ -793,8 +790,8 @@ public class CharacterManager : MonoBehaviour
         rb.mass = 0;
         DashSystem();
         yield return new WaitForSeconds(dashTimer);
-        NormalGravity = true;
         CharacterBaseMode();
+        NormalGravity = true;
     }
 
     void CharacterBaseMode()
@@ -873,32 +870,33 @@ public class CharacterManager : MonoBehaviour
     {
         rb.gravityScale = 1;
         jumpTimer = 0;
-        float force = 1500;
         isTramboline = true;
-        float dashTimer = 1;
+        fallMultiplier = 0;
 
         if (dashCoroutine != null)
             StopCoroutine(dashCoroutine);
 
         CharacterBaseMode();
-
-        dashTimer -= Time.deltaTime;
-
+  
+       
         canWalk = false;
         canJump = false;
         jumpTimer = 0;
-        rb.velocity = transform.up * force * Time.fixedDeltaTime;
 
-        if(rb.velocity.magnitude < .1f)
-        {
-            rb.velocity = Vector2.zero;
-        }
+        TrambolineMechanic(transform);
+
+       
         await Task.Delay(100);
-        jumpTimer -= Time.deltaTime;
+        isTramboline = false;
         canWalk = true;
         canJump = false;
     }
-
+    void TrambolineMechanic(Transform transform)
+    {
+        TrambolineTimer -= Time.deltaTime;
+        float force = 1500;
+        rb.velocity = transform.up * force * Time.fixedDeltaTime;
+    }
     public void CharacterTurn(float gravityX, float gravityY)
     {
         Physics2D.gravity = new Vector2(gravityX, gravityY);
