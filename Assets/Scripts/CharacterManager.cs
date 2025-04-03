@@ -135,7 +135,7 @@ public class CharacterManager : MonoBehaviour
 
     public bool left90;
     public bool right90;
-
+    Coroutine dashCoroutine;
     void Start()
     {
         trailRenderer = GetComponent<TrailRenderer>();
@@ -147,6 +147,8 @@ public class CharacterManager : MonoBehaviour
         canDash = true;
         FallTimerControl = true;
         StartPrefs();
+
+
     }
     void StartPrefs()
     {
@@ -232,7 +234,7 @@ public class CharacterManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && dashControl)
         {
-            StartCoroutine(Dash(dashTimer));
+            dashCoroutine =  StartCoroutine(Dash(dashTimer));
             DashEffect();
         }
     }
@@ -769,6 +771,12 @@ public class CharacterManager : MonoBehaviour
         DashSystem();
         yield return new WaitForSeconds(dashTimer);
         rb.velocity = Vector2.zero;
+        CharacterBaseMode();
+    }
+
+    void CharacterBaseMode()
+    {
+        rb.velocity = Vector2.zero;
         DashTimerControl = false;
         trailRenderer.enabled = false;
         animator.SetBool("isDash", false);
@@ -841,27 +849,17 @@ public class CharacterManager : MonoBehaviour
 
     public async void TrambolineAddForce(Transform transform)
     {
-        canWalk = false;
         rb.gravityScale = 1;
         float force = 1500;
-     
-        if (!DashTimerControl)
-        {
-            rb.velocity = Vector2.zero;
-            rb.velocity = transform.up * force * Time.fixedDeltaTime;
-        }
-           
-      
-        else if (DashTimerControl)
-        {
-            rb.velocity = Vector2.zero;
-            await Task.Delay(70);
-            rb.velocity = transform.up * force * Time.fixedDeltaTime;
-        }
 
-       
+
+        if(dashCoroutine != null)
+            StopCoroutine(dashCoroutine);
+
+        CharacterBaseMode();
+        canWalk = false;
+        rb.velocity = transform.up * force * Time.fixedDeltaTime;
         await Task.Delay(100);
-
         canWalk = true;
     }
 
