@@ -136,13 +136,16 @@ public class CharacterManager : MonoBehaviour
     public bool left90;
     public bool right90;
     Coroutine dashCoroutine;
+    bool isTramboline;
+
+    private float startingMass;
     void Start()
     {
         trailRenderer = GetComponent<TrailRenderer>();
         animator = GetComponent<Animator>();
-        
         trailRenderer.enabled = false;
         rb = GetComponent<Rigidbody2D>();
+        startingMass = rb.mass;
         canWalk = true;
         canDash = true;
         FallTimerControl = true;
@@ -209,15 +212,25 @@ public class CharacterManager : MonoBehaviour
         GizmoTriggerSystem();
         //Crouch();
         gravity();
-        ManageWalk();
+        
         coyoteAndFall();
         coyoteControl();
+
+        if(!isTramboline)
+            ManageWalk();
+        
         if (canWalk)
+        {
             Walk(movementVeriable);
+        }
+           
+
+
         if (NormalGravity)
         {
             JumpGravity();
             JumpCont();
+            rb.mass = startingMass;
         }
             
 
@@ -546,26 +559,35 @@ public class CharacterManager : MonoBehaviour
     }
     public void Walk(Vector2 movementVeriable)
     {
+
+        if(Mathf.Abs(aktifhiz) > 0)
+        {
+            if (gameObject.transform.rotation.z == 0)
+            {
+                rb.velocity = new Vector2(movementVeriable.x * aktifhiz, rb.velocity.y);
+
+            }
+            else if (gameObject.transform.rotation.z == 0.7071068f)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, movementVeriable.x * aktifhiz);
+
+            }
+            else if (gameObject.transform.rotation.z == -1)
+            {
+                rb.velocity = new Vector2(movementVeriable.x * -aktifhiz, rb.velocity.y);
+
+            }
+            else if (gameObject.transform.rotation.z == -0.7071068f)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, movementVeriable.x * -aktifhiz);
+            }
+        }
+        else
+        {
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y);
+        }
  
-        if (gameObject.transform.rotation.z == 0)
-        {
-            rb.velocity = new Vector2(movementVeriable.x * aktifhiz, rb.velocity.y);
-
-        }
-        else if (gameObject.transform.rotation.z == 0.7071068f)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, movementVeriable.x * aktifhiz);
-
-        }
-        else if (gameObject.transform.rotation.z == -1)
-        {
-            rb.velocity = new Vector2(movementVeriable.x * -aktifhiz, rb.velocity.y);
-
-        }
-        else if (gameObject.transform.rotation.z == -0.7071068f)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, movementVeriable.x * -aktifhiz);
-        }
+        
        
     }
 
@@ -647,7 +669,7 @@ public class CharacterManager : MonoBehaviour
         if (secondJump)
         {
             StartCoroutine(DoubleJumpWait());
-            rb.velocity = jumpForce * transform.up;
+            rb.velocity = (jumpForce/2) * transform.up;
             secondJump = false; 
         }
     }
@@ -761,16 +783,17 @@ public class CharacterManager : MonoBehaviour
 
    public IEnumerator Dash(float dashTimer)
     {
-
+        NormalGravity = false;
         canWalk = false;
         DashTimerControl = true;
         trailRenderer.enabled = true;
         rb.velocity = Vector2.zero;
         rb.gravityScale = 0;
         jumpTimer = 0;
+        rb.mass = 0;
         DashSystem();
         yield return new WaitForSeconds(dashTimer);
-        rb.velocity = Vector2.zero;
+        NormalGravity = true;
         CharacterBaseMode();
     }
 
@@ -781,7 +804,6 @@ public class CharacterManager : MonoBehaviour
         trailRenderer.enabled = false;
         animator.SetBool("isDash", false);
         canDash = false;
-        rb.gravityScale = 1;
         canWalk = true;
     }
     void DashSystem()
@@ -847,20 +869,39 @@ public class CharacterManager : MonoBehaviour
         }
     }
 
-    public async void TrambolineAddForce(Transform transform)
+    public IEnumerator TrambolineAddForce(Transform transform, float AxisValue)
     {
-        rb.gravityScale = 1;
-        float force = 1500;
+        NormalGravity = false;
+        rb.gravityScale = 0;
+        isTramboline = true;
+        float force = 1000;
 
-
-        if(dashCoroutine != null)
+        if (dashCoroutine != null)
             StopCoroutine(dashCoroutine);
 
+        rb.velocity = Vector2.zero;
+
         CharacterBaseMode();
-        canWalk = false;
-        rb.velocity = transform.up * force * Time.fixedDeltaTime;
-        await Task.Delay(100);
+
+
+        if (isTramboline)
+        {
+            canWalk = false;
+            rb.velocity = transform.up * force * Time.fixedDeltaTime;
+            aktifhiz = 0;
+        }
+      
+        yield return new WaitForSeconds(.3f);
+        isTramboline = false;
+        rb.velocity = Vector2.zero;
+        JumpCont();
+    
+        NormalGravity = true;
         canWalk = true;
+      
+       
+
+  
     }
 
     public void CharacterTurn(float gravityX, float gravityY)
