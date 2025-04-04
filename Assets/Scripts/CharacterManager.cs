@@ -221,8 +221,9 @@ public class CharacterManager : MonoBehaviour
         coyoteAndFall();
         coyoteControl();
 
-        if(!isTramboline)
-            ManageWalk();
+        ManageWalk();
+       
+           
         
         if (canWalk)
         {
@@ -313,7 +314,7 @@ public class CharacterManager : MonoBehaviour
     {
         
         if (canJump)
-            rb.gravityScale = 1;
+            rb.gravityScale = 1.7f;
         else
             rb.gravityScale =3;
         
@@ -903,8 +904,7 @@ public class CharacterManager : MonoBehaviour
             // Burada lerp yerine doðrudan yavaþlatma yapýyoruz
             if (!DashTimerControl)
                 rb.velocity = initialVelocity * (1 - elapsedTime / duration);
-            
-
+          
             yield return new WaitForFixedUpdate();
         }
 
