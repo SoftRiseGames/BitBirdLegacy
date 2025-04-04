@@ -1,4 +1,4 @@
-ï»¿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
@@ -20,7 +20,7 @@ public class CharacterManager : MonoBehaviour
     public float collisionGroundradius;
     [TabGroup("CollisionSetup")]
     public Vector2 underoffset;
-
+    
     [TabGroup("CollisionSetup")]
     public float underOffsetValue;
     [TabGroup("CollisionSetup")]
@@ -118,7 +118,7 @@ public class CharacterManager : MonoBehaviour
     float begininngPositionX;
     [TabGroup("SavedPosition")]
     float beginningPositionY;
-
+    
     [TabGroup("Other")]
     public Animator animator;
     [TabGroup("Other")]
@@ -136,8 +136,8 @@ public class CharacterManager : MonoBehaviour
     public bool left90;
     public bool right90;
     Coroutine dashCoroutine;
+    Coroutine TrambolineCoroutine;
     bool isTramboline;
-    float TrambolineTimer;
 
     private float startingMass;
     void Start()
@@ -192,9 +192,9 @@ public class CharacterManager : MonoBehaviour
     void Update()
     {
         collisionPoint = Physics2D.OverlapCircle((Vector2)transform.position + underoffset, collisionGroundradius, groundLayerDetect);
-
+     
         sideColliderPoint = Physics2D.OverlapCircle((Vector2)transform.position + sideoffset, collisionSideradius, sideLayerDedect);
-
+        
         x = Input.GetAxisRaw("Horizontal");
         y = Input.GetAxisRaw("Vertical");
 
@@ -202,29 +202,29 @@ public class CharacterManager : MonoBehaviour
         xRaw = Input.GetAxisRaw("Horizontal");
         yRaw = Input.GetAxisRaw("Vertical");
 
-        //Debug.Log(TrambolineTimer);
+      
         movementVeriable = new Vector2(x, y);
 
         anims();
         ScaleControl();
         GizmoFlipSystem();
-
+       
         GizmoTriggerSystem();
         GizmoTriggerSystem();
         //Crouch();
         gravity();
-
+        
         coyoteAndFall();
         coyoteControl();
 
-        if (!isTramboline)
+        if(!isTramboline)
             ManageWalk();
-
+        
         if (canWalk)
         {
             Walk(movementVeriable);
         }
-        Debug.Log(fallMultiplier);
+           
 
 
         if (NormalGravity)
@@ -233,29 +233,29 @@ public class CharacterManager : MonoBehaviour
             JumpCont();
             rb.mass = startingMass;
         }
+            
 
-
-        if (Input.GetButtonDown("jump") && coyoteTimeCounter > 0f && canDash && !DashTimerControl && canJump)
+        if (Input.GetButtonDown("jump") && coyoteTimeCounter>0f && canDash && !DashTimerControl && canJump)
         {
-
+            
             Jump();
             jumpEffect();
         }
+            
 
-
-        if (Input.GetKeyDown(KeyCode.Space) && secondJump && !canJump && canDash && doubleJumpControl)
+        if (Input.GetKeyDown(KeyCode.Space) && secondJump && !canJump && canDash &&doubleJumpControl)
             DoubleJump();
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && dashControl)
         {
-            dashCoroutine = StartCoroutine(Dash(dashTimer));
+            dashCoroutine =  StartCoroutine(Dash(dashTimer));
             DashEffect();
         }
     }
 
     void coyoteControl()
     {
-        if (coyoteTimeCounter > 0f)
+        if(coyoteTimeCounter > 0f)
         {
             canJump = true;
         }
@@ -263,7 +263,7 @@ public class CharacterManager : MonoBehaviour
         {
             canJump = false;
         }
-
+       
     }
     void coyoteAndFall()
     {
@@ -307,12 +307,12 @@ public class CharacterManager : MonoBehaviour
     }
     void JumpGravity()
     {
-
+        
         if (canJump)
             rb.gravityScale = 1;
         else
-            rb.gravityScale = 3;
-
+            rb.gravityScale =3;
+        
     }
     void GizmoTriggerSystem()
     {
@@ -324,37 +324,37 @@ public class CharacterManager : MonoBehaviour
                 if (rb.velocity.x < 0 || rb.velocity.x > 0)
                     Debug.Log("ittirme");
             }
-
+           
             else if (transform.rotation.z == 0.7071068f || transform.rotation.z == -0.7071068f)
             {
                 if (rb.velocity.y < 0 || rb.velocity.y > 0)
                     Debug.Log("ittirme");
             }
-
+           
         }
         ///////////////////////////////////////
 
         //alt temas kontrolu
         if (collisionPoint && !isDead)
-        {
+        {  
             canJump = true;
             if (!DashTimerControl)
             {
                 jumpTimer = jumpStartTimer;
             }
-
+          
             canDash = true;
             canCrouch = true;
             secondJump = true;
 
             if (collisionPoint.gameObject.tag == "platform")
-                this.gameObject.transform.SetParent(collisionPoint.transform, true);
+                this.gameObject.transform.SetParent(collisionPoint.transform,true); 
 
 
         }
         else if (!collisionPoint && !isDead)
         {
-
+       
             canJump = false;
             canCrouch = false;
             this.gameObject.transform.SetParent(null);
@@ -363,21 +363,21 @@ public class CharacterManager : MonoBehaviour
         //////////////////////////////
     }
 
-
+  
     public void DashEffect()
     {
         animator.SetBool("isDash", true);
         /*
-        // Hedef Ã¶lÃ§ekler belirliyoruz.
+        // Hedef ölçekler belirliyoruz.
         Vector2 targetScale = transform.localScale.x >= 0 ? new Vector2(19.2f, 7.2f) : new Vector2(-19.2f, 7.2f);
 
-        // Ãlk animasyonu baÃ¾latÃ½yoruz.
+        // Ýlk animasyonu baþlatýyoruz.
         transform.DOScale(targetScale, 0.1f)
             .OnUpdate(UpdateColliderSize)
             .OnComplete(() =>
             {
                 Vector2 finalScale = targetScale.x > 0 ? new Vector2(12f, 12f) : new Vector2(-12f, 12f);
-                // Ãkinci animasyonu baÃ¾latÃ½yoruz.
+                // Ýkinci animasyonu baþlatýyoruz.
                 transform.DOScale(finalScale, 0.1f).OnUpdate(UpdateColliderSize);
             });
         */
@@ -386,12 +386,12 @@ public class CharacterManager : MonoBehaviour
 
     }
 
-
+ 
     void anims()
     {
-        if (transform.rotation.z == 0)
+        if (transform.rotation.z == 0 )
         {
-            if ((x > 0 || x < 0) && collisionPoint)
+            if((x>0 || x<0) && collisionPoint)
             {
                 animator.SetBool("isWalk", true);
                 //animator.SetBool("isfall", false);
@@ -400,17 +400,17 @@ public class CharacterManager : MonoBehaviour
             {
                 animator.SetBool("isWalk", false);
             }
-            if ((rb.velocity.y < 0) && !collisionPoint)
+            if((rb.velocity.y<0 ) && !collisionPoint)
             {
                 animator.SetBool("isJump", false);
                 animator.SetBool("isfall", true);
             }
-            else if (rb.velocity.y > 0 && !collisionPoint)
+            else if(rb.velocity.y > 0 && !collisionPoint)
             {
                 animator.SetBool("isJump", true);
                 animator.SetBool("isfall", false);
             }
-
+           
             else
             {
                 animator.SetBool("isJump", false);
@@ -430,7 +430,7 @@ public class CharacterManager : MonoBehaviour
             }
             if ((rb.velocity.y < 0) && !collisionPoint)
             {
-
+               
                 animator.SetBool("isJump", true);
                 animator.SetBool("isfall", false);
             }
@@ -449,13 +449,13 @@ public class CharacterManager : MonoBehaviour
 
 
 
-        else if (transform.rotation.z == 0.7071068f)
+        else if (transform.rotation.z == 0.7071068f )
         {
 
             if ((x > 0 || x < 0) && collisionPoint)
             {
                 animator.SetBool("isWalk", true);
-                // animator.SetBool("isfall", false);
+               // animator.SetBool("isfall", false);
             }
 
             else
@@ -468,7 +468,7 @@ public class CharacterManager : MonoBehaviour
                 animator.SetBool("isJump", false);
                 animator.SetBool("isfall", true);
             }
-            else if (rb.velocity.x < 0 && !collisionPoint)
+            else if(rb.velocity.x<0 && !collisionPoint)
             {
                 animator.SetBool("isJump", true);
                 animator.SetBool("isfall", false);
@@ -478,7 +478,7 @@ public class CharacterManager : MonoBehaviour
                 animator.SetBool("isJump", false);
                 animator.SetBool("isfall", false);
             }
-
+            
         }
         else if (transform.rotation.z == -0.7071068f)
         {
@@ -509,11 +509,11 @@ public class CharacterManager : MonoBehaviour
                 animator.SetBool("isfall", false);
             }
         }
-
+        
     }
     void GizmoFlipSystem()
     {
-
+        
         if (transform.rotation.z == 0)
         {
             underoffset = new Vector2(0, underOffsetValue);
@@ -547,17 +547,18 @@ public class CharacterManager : MonoBehaviour
 
     }
 
-
+   
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere((Vector2)transform.position + underoffset, collisionGroundradius);
-
-
-
+       
+      
+       
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere((Vector2)transform.position + sideoffset, collisionSideradius);
     }
+
     public void Walk(Vector2 movementVeriable)
     {
         if (gameObject.transform.rotation.z == 0)
@@ -580,17 +581,12 @@ public class CharacterManager : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, movementVeriable.x * -aktifhiz);
         }
 
-
-        
-
-
-
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-
-        if (collision.gameObject.tag == "killer")
+        
+        if(collision.gameObject.tag == "killer")
         {
             isDead = true;
             rb.velocity = Vector2.zero;
@@ -601,15 +597,15 @@ public class CharacterManager : MonoBehaviour
             animator.SetBool("isDeath", true);
             //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
-
-
+        
+      
 
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "savepoint")
         {
-
+           
             PlayerPrefs.SetFloat("gravityX", beginningGravityX);
             PlayerPrefs.SetFloat("gravityY", beginningGravityy);
             PlayerPrefs.SetFloat("rotation", rotationz);
@@ -620,26 +616,26 @@ public class CharacterManager : MonoBehaviour
             PlayerPrefs.SetFloat("positionX", begininngPositionX);
             PlayerPrefs.SetFloat("positionY", beginningPositionY);
         }
-        //Ogem demo sonrasÃ½ deÃ°iÃ¾ecek,silinecek
+        //Ogem demo sonrasý deðiþecek,silinecek
         if (collision.gameObject.name == "DemoTrigger")
         {
             PlayerPrefs.DeleteAll();
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
 
-
+            
     }
 
-
+    
 
     void ManageWalk()
     {
-        if ((rb.velocity.x > 0 && x > 0) || (rb.velocity.x < 0 && x < 0))
+        if((rb.velocity.x>0 && x> 0) || (rb.velocity.x<0 && x<0))
         {
             aktifhiz = Mathf.Lerp(aktifhiz, walkForce, walkcarpan * Time.deltaTime);
-
+            
         }
-        else if (x != 0)
+        else if(x != 0)
         {
             aktifhiz = Mathf.Lerp(aktifhiz, walkForce, durmacarpan * Time.deltaTime);
 
@@ -648,7 +644,7 @@ public class CharacterManager : MonoBehaviour
         {
             aktifhiz = Mathf.Lerp(aktifhiz, 0, durmacarpan * Time.deltaTime);
         }
-
+        
 
     }
 
@@ -658,19 +654,19 @@ public class CharacterManager : MonoBehaviour
         rb.velocity = Vector2.zero;
         createdust();
         rb.velocity = jumpForce * transform.up;
-
+       
     }
     public void DoubleJump()
     {
         if (secondJump)
         {
             StartCoroutine(DoubleJumpWait());
-            rb.velocity = (jumpForce / 2) * transform.up;
-            secondJump = false;
+            rb.velocity = (jumpForce/2) * transform.up;
+            secondJump = false; 
         }
     }
-
-
+    
+    
 
     private void OnTriggerExit2D(Collider2D collision)
     {
@@ -678,16 +674,16 @@ public class CharacterManager : MonoBehaviour
         {
             cameraShake = null;
         }
-
-
+       
+       
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "camlimit")
+        if(collision.gameObject.tag == "camlimit")
         {
-
+           
             cameraShake = collision.gameObject.transform.GetChild(0).GetComponent<inCameraSettings>();
-
+            
         }
 
     }
@@ -717,10 +713,10 @@ public class CharacterManager : MonoBehaviour
         //cameraShake.shake(ziplamaamplitude, ziplamaduration);
     }
 
-
+  
     IEnumerator DoubleJumpWait()
     {
-
+       
         FallTimerControl = false;
         jumpTimer = jumpStartTimer;
         yield return new WaitForSeconds(.1f);
@@ -745,13 +741,12 @@ public class CharacterManager : MonoBehaviour
             createdust();
             this.gameObject.transform.localScale = new Vector2(this.gameObject.transform.localScale.x * -1, this.gameObject.transform.localScale.y);
         }
-
-
+          
+        
     }
-
+    
     void JumpCont()
     {
-        Debug.Log("jumpControl");
         if (jumpTimer < 0 && (transform.rotation.z == 0 || transform.rotation.z == -1))
         {
             rb.velocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
@@ -774,11 +769,11 @@ public class CharacterManager : MonoBehaviour
 
             rb.velocity += Vector2.right * Physics2D.gravity.x * (lowJumpMultiplier - 1) * Time.deltaTime;
         }
-
+      
 
     }
 
-    public IEnumerator Dash(float dashTimer)
+   public IEnumerator Dash(float dashTimer)
     {
         NormalGravity = false;
         canWalk = false;
@@ -790,8 +785,8 @@ public class CharacterManager : MonoBehaviour
         rb.mass = 0;
         DashSystem();
         yield return new WaitForSeconds(dashTimer);
-        CharacterBaseMode();
         NormalGravity = true;
+        CharacterBaseMode();
     }
 
     void CharacterBaseMode()
@@ -840,13 +835,13 @@ public class CharacterManager : MonoBehaviour
 
         }
         rb.velocity = dir.normalized * dashForce * Time.fixedDeltaTime;
-
+   
 
 
     }
 
-
-    void gravity()
+   
+   void gravity()
     {
         if (gameObject.transform.rotation.z == 0)
         {
@@ -854,7 +849,7 @@ public class CharacterManager : MonoBehaviour
         }
         else if (gameObject.transform.rotation.z == 0.7071068f)
         {
-            CharacterTurn(9.8f, 0);
+            CharacterTurn(9.8f,0);
         }
         else if (gameObject.transform.rotation.z == -1)
         {
@@ -866,37 +861,61 @@ public class CharacterManager : MonoBehaviour
         }
     }
 
-    public async void TrambolineAddForce(Transform transform, float Axisvalue)
+    public IEnumerator TrambolineAddForce(Transform transform, float AxisValue)
     {
-        rb.gravityScale = 1;
-        jumpTimer = 0;
+        NormalGravity = false;
+        rb.gravityScale = 0;
         isTramboline = true;
-        fallMultiplier = 0;
+        float force = 2000;
+        float dampingDuration = 0.3f; 
+        float dampingSpeed = 5f;
 
         if (dashCoroutine != null)
             StopCoroutine(dashCoroutine);
 
+        rb.velocity = Vector2.zero;
+
         CharacterBaseMode();
-  
-       
-        canWalk = false;
-        canJump = false;
-        jumpTimer = 0;
 
-        TrambolineMechanic(transform);
+        if (isTramboline)
+        {
+            canWalk = false;
+            rb.velocity = transform.up * force * Time.fixedDeltaTime;
+            aktifhiz = 0;
+        }
 
-       
-        await Task.Delay(100);
-        isTramboline = false;
-        canWalk = true;
-        canJump = false;
+        // Hýzý kademeli olarak azaltan coroutine baþlatýlýyor
+        yield return StartCoroutine(DampenVelocity(dampingDuration));
     }
-    void TrambolineMechanic(Transform transform)
+
+    private IEnumerator DampenVelocity(float duration)
     {
-        TrambolineTimer -= Time.deltaTime;
-        float force = 1500;
-        rb.velocity = transform.up * force * Time.fixedDeltaTime;
+        float elapsedTime = 0f;
+        Vector2 initialVelocity = rb.velocity;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.fixedDeltaTime;
+
+            // Hýzý kademeli olarak sýfýra indiriyoruz.
+            rb.velocity = Vector2.Lerp(initialVelocity, Vector2.zero, elapsedTime / duration);
+
+            yield return new WaitForFixedUpdate();
+        }
+
+        if (elapsedTime >= duration)
+        {
+            isTramboline = false;
+            NormalGravity = true;
+            canWalk = true;
+        }
+           
+        // Hýzýn tamamen sýfýrlandýðýndan emin oluyoruz.
+       
+
+        
     }
+
     public void CharacterTurn(float gravityX, float gravityY)
     {
         Physics2D.gravity = new Vector2(gravityX, gravityY);
