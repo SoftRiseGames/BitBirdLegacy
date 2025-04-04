@@ -58,6 +58,11 @@ public class CharacterManager : MonoBehaviour
     float x;
     float y;
 
+    [TabGroup("Tramboline")]
+    public float TrambolineSpeed;
+    [TabGroup("Tramboline")]
+    public float TrambolineDuration;
+
     [TabGroup("Dash")]
     [SerializeField] float dashForce;
     [TabGroup("Dash")]
@@ -136,7 +141,6 @@ public class CharacterManager : MonoBehaviour
     public bool left90;
     public bool right90;
     Coroutine dashCoroutine;
-    Coroutine TrambolineCoroutine;
     bool isTramboline;
 
     private float startingMass;
@@ -866,9 +870,8 @@ public class CharacterManager : MonoBehaviour
         NormalGravity = false;
         rb.gravityScale = 0;
         isTramboline = true;
-        float force = 2000;
-        float dampingDuration = 0.3f; 
-        float dampingSpeed = 5f;
+        float force = TrambolineSpeed;
+        float dampingDuration = TrambolineDuration; 
 
         if (dashCoroutine != null)
             StopCoroutine(dashCoroutine);
@@ -897,8 +900,10 @@ public class CharacterManager : MonoBehaviour
         {
             elapsedTime += Time.fixedDeltaTime;
 
-            // Hýzý kademeli olarak sýfýra indiriyoruz.
-            rb.velocity = Vector2.Lerp(initialVelocity, Vector2.zero, elapsedTime / duration);
+            // Burada lerp yerine doðrudan yavaþlatma yapýyoruz
+            if (!DashTimerControl)
+                rb.velocity = initialVelocity * (1 - elapsedTime / duration);
+            
 
             yield return new WaitForFixedUpdate();
         }
@@ -910,12 +915,10 @@ public class CharacterManager : MonoBehaviour
             canWalk = true;
             canDash = true;
         }
-           
-        // Hýzýn tamamen sýfýrlandýðýndan emin oluyoruz.
-       
 
-        
+        // Hýzýn tamamen sýfýrlandýðýndan emin oluyoruz.
     }
+
 
     public void CharacterTurn(float gravityX, float gravityY)
     {
