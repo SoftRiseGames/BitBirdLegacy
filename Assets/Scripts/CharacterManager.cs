@@ -598,6 +598,7 @@ public class CharacterManager : MonoBehaviour
             rb.gravityScale = 0;
             canJump = false;
             jumpTimer = 0;
+            NormalGravity = false;
             canWalk = false;
             animator.SetBool("isDeath", true);
             //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
