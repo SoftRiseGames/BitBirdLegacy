@@ -141,6 +141,7 @@ public class CharacterManager : MonoBehaviour
     public bool left90;
     public bool right90;
     Coroutine dashCoroutine;
+    Coroutine TrambolineCoroutine;
     bool isTramboline;
 
     private float startingMass;
@@ -222,9 +223,11 @@ public class CharacterManager : MonoBehaviour
         coyoteControl();
 
         ManageWalk();
-       
-           
-        
+
+        DashAndTrambolineControlUpdater();
+
+
+
         if (canWalk)
         {
             Walk(movementVeriable);
@@ -779,8 +782,16 @@ public class CharacterManager : MonoBehaviour
 
     }
 
+    void DashAndTrambolineControlUpdater()
+    {
+        if(DashTimerControl && TrambolineCoroutine != null)
+        {
+            StopCoroutine(TrambolineCoroutine);
+        }
+    }
    public IEnumerator Dash(float dashTimer)
     {
+        
         NormalGravity = false;
         canWalk = false;
         DashTimerControl = true;
@@ -797,6 +808,8 @@ public class CharacterManager : MonoBehaviour
 
     void CharacterBaseMode()
     {
+        
+
         rb.velocity = Vector2.zero;
         DashTimerControl = false;
         trailRenderer.enabled = false;
@@ -807,7 +820,7 @@ public class CharacterManager : MonoBehaviour
     void DashSystem()
     {
         Vector2 dir = new Vector2();
-
+        CameraShake.instance.DashShake();
 
         if (gameObject.transform.rotation.z == 0)
         {
@@ -873,7 +886,11 @@ public class CharacterManager : MonoBehaviour
         rb.gravityScale = 0;
         isTramboline = true;
         float force = TrambolineSpeed;
-        float dampingDuration = TrambolineDuration; 
+        float dampingDuration = TrambolineDuration;
+
+
+        CameraShake.instance.TrambolineShake();
+        
 
         if (dashCoroutine != null)
             StopCoroutine(dashCoroutine);
@@ -889,8 +906,12 @@ public class CharacterManager : MonoBehaviour
             aktifhiz = 0;
         }
 
+        TrambolineCoroutine = StartCoroutine(DampenVelocity(dampingDuration));
+
         // Hýzý kademeli olarak azaltan coroutine baþlatýlýyor
-        yield return StartCoroutine(DampenVelocity(dampingDuration));
+        yield return TrambolineCoroutine;
+
+
     }
 
     private IEnumerator DampenVelocity(float duration)
@@ -898,18 +919,28 @@ public class CharacterManager : MonoBehaviour
         float elapsedTime = 0f;
         Vector2 initialVelocity = rb.velocity;
 
-        while (elapsedTime < duration)
+        while (elapsedTime <= duration)
         {
             elapsedTime += Time.fixedDeltaTime;
 
-            // Burada lerp yerine doðrudan yavaþlatma yapýyoruz
             if (!DashTimerControl)
                 rb.velocity = initialVelocity * (1 - elapsedTime / duration);
-          
+
+            if (collisionPoint)
+                canWalk = false;
+            else
+                canWalk = true;
+
+
+            if (DashTimerControl)
+            {
+                rb.velocity = Vector2.zero;
+            }
+
             yield return new WaitForFixedUpdate();
         }
 
-        if (elapsedTime >= duration)
+        if (elapsedTime > duration)
         {
             isTramboline = false;
             NormalGravity = true;
@@ -917,7 +948,7 @@ public class CharacterManager : MonoBehaviour
             canDash = true;
         }
 
-        // Hýzýn tamamen sýfýrlandýðýndan emin oluyoruz.
+
     }
 
 
