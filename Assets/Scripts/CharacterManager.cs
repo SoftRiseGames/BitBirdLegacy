@@ -79,7 +79,7 @@ public class CharacterManager : MonoBehaviour
     [TabGroup("Feels")]
     public float ziplamaduration;
     [TabGroup("Feels")]
-    public inCameraSettings cameraShake;
+    public GameObject InGameCamera;
 
     [TabGroup("Bools")]
     public bool canJump;
@@ -680,7 +680,7 @@ public class CharacterManager : MonoBehaviour
     {
         if (collision.gameObject.tag == "camlimit")
         {
-            cameraShake = null;
+            InGameCamera = null;
         }
        
        
@@ -690,7 +690,7 @@ public class CharacterManager : MonoBehaviour
         if(collision.gameObject.tag == "camlimit")
         {
            
-            cameraShake = collision.gameObject.transform.GetChild(0).GetComponent<inCameraSettings>();
+            InGameCamera = collision.gameObject.transform.GetChild(0).transform.gameObject;
             
         }
 
@@ -925,10 +925,22 @@ public class CharacterManager : MonoBehaviour
             if (!DashTimerControl)
                 rb.velocity = initialVelocity * (1 - elapsedTime / duration);
 
-            if ((collisionPoint) || Mathf.Abs(rb.velocity.x) > Mathf.Abs(rb.velocity.y))
-                canWalk = false;
-            else
-                canWalk = true;
+            
+            if(InGameCamera.transform.eulerAngles.z == 0 || InGameCamera.transform.eulerAngles.z == 180)
+            {
+                if ((collisionPoint) || Mathf.Abs(rb.velocity.x) > Mathf.Abs(rb.velocity.y))
+                    canWalk = false;
+                else
+                    canWalk = true;
+            }
+            else if (InGameCamera.transform.eulerAngles.z == 90 || InGameCamera.transform.eulerAngles.z == 270)
+            {
+                if ((collisionPoint) || Mathf.Abs(rb.velocity.y) > Mathf.Abs(rb.velocity.x))
+                    canWalk = false;
+                else
+                    canWalk = true;
+            }
+
             /*
             if (cameraControl.transform.eulerAngles.z == 0 || cameraControl.transform.eulerAngles.z == 180)
             {
