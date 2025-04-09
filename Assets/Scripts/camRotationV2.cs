@@ -8,6 +8,9 @@ public class camRotationV2 : MonoBehaviour
     public CharacterManager character;
     public bool collideDedection;
 
+
+    [SerializeField] bool isLeft;
+    [SerializeField] bool isRight;
     [SerializeField] bool isReply;
    
     void Start()
@@ -23,10 +26,16 @@ public class camRotationV2 : MonoBehaviour
     }
     void TriggerSystem()
     {
-        if (collideDedection == true )
+        if (collideDedection == true && isRight)
         {
             character.camrotate = true;
             character.right90 = true;
+            animator.SetBool("triggeractivate", true);
+        }
+        else if(collideDedection == true && isLeft)
+        {
+            character.camrotate = true;
+            character.left90 = true;
             animator.SetBool("triggeractivate", true);
         }
         else if(collideDedection == false && isReply)
