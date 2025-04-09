@@ -942,10 +942,14 @@ public class CharacterManager : MonoBehaviour
 
         if (elapsedTime >= duration)
         {
-            isTramboline = false;
-            NormalGravity = true;
-            canWalk = true;
-            canDash = true;
+            if (!DashTimerControl)
+            {
+                isTramboline = false;
+                NormalGravity = true;
+                canWalk = true;
+                canDash = true;
+            }
+            
         }
     }
 
