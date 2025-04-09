@@ -915,6 +915,8 @@ public class CharacterManager : MonoBehaviour
 
     private IEnumerator DampenVelocity(float duration)
     {
+        Debug.Log(InGameCamera.transform.rotation.z);
+        Debug.Log(InGameCamera.transform.eulerAngles.z);
         float elapsedTime = 0f;
         Vector2 initialVelocity = rb.velocity;
 
@@ -926,14 +928,14 @@ public class CharacterManager : MonoBehaviour
                 rb.velocity = initialVelocity * (1 - elapsedTime / duration);
 
             
-            if(InGameCamera.transform.eulerAngles.z == 0 || InGameCamera.transform.eulerAngles.z == 180)
+            if(rotationz ==  0 ||Mathf.Abs(rotationz) == 180)
             {
                 if ((collisionPoint) || Mathf.Abs(rb.velocity.x) > Mathf.Abs(rb.velocity.y))
                     canWalk = false;
                 else
                     canWalk = true;
             }
-            else if (InGameCamera.transform.eulerAngles.z == 90 || InGameCamera.transform.eulerAngles.z == 270)
+            else if (Mathf.Abs(rotationz) == 90 ||Mathf.Abs(rotationz) == 270)
             {
                 if ((collisionPoint) || Mathf.Abs(rb.velocity.y) > Mathf.Abs(rb.velocity.x))
                     canWalk = false;
