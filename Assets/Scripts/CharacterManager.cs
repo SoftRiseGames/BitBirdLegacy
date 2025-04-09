@@ -600,7 +600,6 @@ public class CharacterManager : MonoBehaviour
             rb.velocity = Vector2.zero;
             rb.gravityScale = 0;
             canJump = false;
-            jumpTimer = 0;
             NormalGravity = false;
             canWalk = false;
             animator.SetBool("isDeath", true);
