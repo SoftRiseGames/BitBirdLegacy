@@ -213,12 +213,10 @@ public class CharacterManager : MonoBehaviour
         x = input.x;
         y = input.y;
 
-        xRaw = obj.ReadValue<Vector2>().x;
-        yRaw = obj.ReadValue<Vector2>().y;
-
         movementVeriable = input; // ← Bu satırı ekleyin
 
     }
+
     public void JumpControlVoid(InputAction.CallbackContext obj)
     {
         if (obj.action.IsPressed() && coyoteTimeCounter > 0f && canDash && !DashTimerControl && canJump)
@@ -233,9 +231,19 @@ public class CharacterManager : MonoBehaviour
             DoubleJump();
         }
     }
+    public void DashAxisControlVoid(InputAction.CallbackContext obj)
+    {
+        xRaw = obj.ReadValue<Vector2>().x;
+        yRaw = obj.ReadValue<Vector2>().y;
+
+        // xRaw için 0'dan büyükse 0.5'i geçiyorsa 1, aksi takdirde 0 olacak
+        xRaw = (xRaw > 0) ? (xRaw > 0.5f ? 1 : 0) : (xRaw < -0.5f ? -1 : 0);
+
+        // yRaw için 0'dan büyükse 0.5'i geçiyorsa 1, aksi takdirde 0 olacak
+        yRaw = (yRaw > 0) ? (yRaw > 0.5f ? 1 : 0) : (yRaw < -0.5f ? -1 : 0);
+    }
     public void DashControlVoid(InputAction.CallbackContext obj)
     {
-       
         if (obj.action.IsPressed() && canDash && dashControl)
         {
             dashCoroutine = StartCoroutine(Dash(dashTimer));
