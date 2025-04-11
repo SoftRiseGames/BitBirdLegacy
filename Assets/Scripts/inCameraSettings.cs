@@ -46,11 +46,7 @@ public class inCameraSettings : MonoBehaviour
 
     void Update()
     {
-        
-        if (Input.GetKeyDown(KeyCode.Z))
-            Debug.Log(thisCamera.gameObject.transform.rotation.z);
         GravityAndCamControl();
-        
     }
 
     void GravityAndCamControl()

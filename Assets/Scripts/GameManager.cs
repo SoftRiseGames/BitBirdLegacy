@@ -17,11 +17,13 @@ public class GameManager : MonoBehaviour
     //demodan sonra silinecek
     private void Update()
     {
+        /*
         if (Input.GetButton("reset"))
         {
             PlayerPrefs.DeleteAll();
             SceneManager.LoadScene(0);
         }
+        */
         /*
         if (SceneManager.GetActiveScene().buildIndex == 2)
         {

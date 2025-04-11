@@ -1,10 +1,11 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
 using Sirenix.OdinInspector;
+using UnityEngine.InputSystem;
 public class CharacterManager : MonoBehaviour
 {
     [TabGroup("Layers")]
@@ -20,7 +21,7 @@ public class CharacterManager : MonoBehaviour
     public float collisionGroundradius;
     [TabGroup("CollisionSetup")]
     public Vector2 underoffset;
-    
+
     [TabGroup("CollisionSetup")]
     public float underOffsetValue;
     [TabGroup("CollisionSetup")]
@@ -123,7 +124,7 @@ public class CharacterManager : MonoBehaviour
     float begininngPositionX;
     [TabGroup("SavedPosition")]
     float beginningPositionY;
-    
+
     [TabGroup("Other")]
     public Animator animator;
     [TabGroup("Other")]
@@ -145,6 +146,11 @@ public class CharacterManager : MonoBehaviour
     bool isTramboline;
 
     private float startingMass;
+
+    public InputAction inputActions;
+
+    bool jumpControlBool;
+ 
     void Start()
     {
         trailRenderer = GetComponent<TrailRenderer>();
@@ -156,8 +162,14 @@ public class CharacterManager : MonoBehaviour
         canDash = true;
         FallTimerControl = true;
         StartPrefs();
-
-
+    }
+    private void OnEnable()
+    {
+        inputActions.Enable();
+    }
+    private void OnDisable()
+    {
+        inputActions.Disable();
     }
     void StartPrefs()
     {
@@ -193,32 +205,62 @@ public class CharacterManager : MonoBehaviour
             this.gameObject.transform.position = new Vector2(this.gameObject.transform.position.x, this.gameObject.transform.position.y);
         }
     }
+    public void WalkVoidControl(InputAction.CallbackContext obj)
+    {
+
+        Vector2 input = obj.ReadValue<Vector2>();
+
+        x = input.x;
+        y = input.y;
+
+        xRaw = input.x;
+        yRaw = input.y;
+
+        movementVeriable = input; // â† Bu satÄ±rÄ± ekleyin
+
+    }
+    public void JumpControlVoid(InputAction.CallbackContext obj)
+    {
+        if (obj.action.IsPressed() && coyoteTimeCounter > 0f && canDash && !DashTimerControl && canJump)
+        {
+            jumpControlBool = obj.action.triggered;
+            Jump();
+            jumpEffect();
+        }
+
+        if (obj.action.IsPressed() && secondJump && !canJump && canDash && doubleJumpControl)
+        {
+            DoubleJump();
+        }
+    }
+    public void DashControlVoid(InputAction.CallbackContext obj)
+    {
+        if (obj.action.IsPressed() && canDash && dashControl)
+        {
+            dashCoroutine = StartCoroutine(Dash(dashTimer));
+            DashEffect();
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
         collisionPoint = Physics2D.OverlapCircle((Vector2)transform.position + underoffset, collisionGroundradius, groundLayerDetect);
-     
+
         sideColliderPoint = Physics2D.OverlapCircle((Vector2)transform.position + sideoffset, collisionSideradius, sideLayerDedect);
-        
-        x = Input.GetAxisRaw("Horizontal");
-        y = Input.GetAxisRaw("Vertical");
 
 
-        xRaw = Input.GetAxisRaw("Horizontal");
-        yRaw = Input.GetAxisRaw("Vertical");
-
-      
         movementVeriable = new Vector2(x, y);
 
         anims();
         ScaleControl();
         GizmoFlipSystem();
-       
+
         GizmoTriggerSystem();
         GizmoTriggerSystem();
         //Crouch();
         gravity();
-        
+
         coyoteAndFall();
         coyoteControl();
 
@@ -227,43 +269,42 @@ public class CharacterManager : MonoBehaviour
         DashAndTrambolineControlUpdater();
 
 
-
-        if (canWalk)
-        {
-            Walk(movementVeriable);
-        }
-           
-
-
         if (NormalGravity)
         {
             JumpGravity();
             JumpCont();
             rb.mass = startingMass;
         }
-            
 
-        if (Input.GetButtonDown("jump") && coyoteTimeCounter>0f && canDash && !DashTimerControl && canJump)
+        if (canWalk)
         {
-            
-            Jump();
-            jumpEffect();
+            Walk(movementVeriable);
         }
-            
+        /*
+        if (Input.GetButtonDown("jump") && coyoteTimeCounter > 0f && canDash && !DashTimerControl && canJump)
+        {
 
-        if (Input.GetKeyDown(KeyCode.Space) && secondJump && !canJump && canDash &&doubleJumpControl)
+           
+        }
+        */
+
+        /*
+        if (Input.GetKeyDown(KeyCode.Space) && secondJump && !canJump && canDash && doubleJumpControl)
             DoubleJump();
-
+        */
+        /*
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && dashControl)
         {
-            dashCoroutine =  StartCoroutine(Dash(dashTimer));
+            dashCoroutine = StartCoroutine(Dash(dashTimer));
             DashEffect();
         }
+        */
     }
 
+   
     void coyoteControl()
     {
-        if(coyoteTimeCounter > 0f)
+        if (coyoteTimeCounter > 0f)
         {
             canJump = true;
         }
@@ -271,7 +312,7 @@ public class CharacterManager : MonoBehaviour
         {
             canJump = false;
         }
-       
+
     }
     void coyoteAndFall()
     {
@@ -294,6 +335,7 @@ public class CharacterManager : MonoBehaviour
     }
     void Crouch()
     {
+        /*
         if (canCrouch)
         {
             if (Input.GetKey(KeyCode.S))
@@ -312,15 +354,16 @@ public class CharacterManager : MonoBehaviour
                 canDash = true;
             }
         }
+        */
     }
     void JumpGravity()
     {
-        
+
         if (canJump)
             rb.gravityScale = 1.7f;
         else
-            rb.gravityScale =3;
-        
+            rb.gravityScale = 3;
+
     }
     void GizmoTriggerSystem()
     {
@@ -332,37 +375,37 @@ public class CharacterManager : MonoBehaviour
                 if (rb.velocity.x < 0 || rb.velocity.x > 0)
                     Debug.Log("ittirme");
             }
-           
+
             else if (transform.rotation.z == 0.7071068f || transform.rotation.z == -0.7071068f)
             {
                 if (rb.velocity.y < 0 || rb.velocity.y > 0)
                     Debug.Log("ittirme");
             }
-           
+
         }
         ///////////////////////////////////////
 
         //alt temas kontrolu
         if (collisionPoint && !isDead)
-        {  
+        {
             canJump = true;
             if (!DashTimerControl)
             {
                 jumpTimer = jumpStartTimer;
             }
-          
+
             canDash = true;
             canCrouch = true;
             secondJump = true;
 
             if (collisionPoint.gameObject.tag == "platform")
-                this.gameObject.transform.SetParent(collisionPoint.transform,true); 
+                this.gameObject.transform.SetParent(collisionPoint.transform, true);
 
 
         }
         else if (!collisionPoint && !isDead)
         {
-       
+
             canJump = false;
             canCrouch = false;
             this.gameObject.transform.SetParent(null);
@@ -371,21 +414,21 @@ public class CharacterManager : MonoBehaviour
         //////////////////////////////
     }
 
-  
+
     public void DashEffect()
     {
         animator.SetBool("isDash", true);
         /*
-        // Hedef ölçekler belirliyoruz.
+        // Hedef ï¿½lï¿½ekler belirliyoruz.
         Vector2 targetScale = transform.localScale.x >= 0 ? new Vector2(19.2f, 7.2f) : new Vector2(-19.2f, 7.2f);
 
-        // Ýlk animasyonu baþlatýyoruz.
+        // ï¿½lk animasyonu baï¿½latï¿½yoruz.
         transform.DOScale(targetScale, 0.1f)
             .OnUpdate(UpdateColliderSize)
             .OnComplete(() =>
             {
                 Vector2 finalScale = targetScale.x > 0 ? new Vector2(12f, 12f) : new Vector2(-12f, 12f);
-                // Ýkinci animasyonu baþlatýyoruz.
+                // ï¿½kinci animasyonu baï¿½latï¿½yoruz.
                 transform.DOScale(finalScale, 0.1f).OnUpdate(UpdateColliderSize);
             });
         */
@@ -394,12 +437,12 @@ public class CharacterManager : MonoBehaviour
 
     }
 
- 
+
     void anims()
     {
-        if (transform.rotation.z == 0 )
+        if (transform.rotation.z == 0)
         {
-            if((x>0 || x<0) && collisionPoint)
+            if ((x > 0 || x < 0) && collisionPoint)
             {
                 animator.SetBool("isWalk", true);
                 //animator.SetBool("isfall", false);
@@ -408,17 +451,17 @@ public class CharacterManager : MonoBehaviour
             {
                 animator.SetBool("isWalk", false);
             }
-            if((rb.velocity.y<0 ) && !collisionPoint)
+            if ((rb.velocity.y < 0) && !collisionPoint)
             {
                 animator.SetBool("isJump", false);
                 animator.SetBool("isfall", true);
             }
-            else if(rb.velocity.y > 0 && !collisionPoint)
+            else if (rb.velocity.y > 0 && !collisionPoint)
             {
                 animator.SetBool("isJump", true);
                 animator.SetBool("isfall", false);
             }
-           
+
             else
             {
                 animator.SetBool("isJump", false);
@@ -438,7 +481,7 @@ public class CharacterManager : MonoBehaviour
             }
             if ((rb.velocity.y < 0) && !collisionPoint)
             {
-               
+
                 animator.SetBool("isJump", true);
                 animator.SetBool("isfall", false);
             }
@@ -457,13 +500,13 @@ public class CharacterManager : MonoBehaviour
 
 
 
-        else if (transform.rotation.z == 0.7071068f )
+        else if (transform.rotation.z == 0.7071068f)
         {
 
             if ((x > 0 || x < 0) && collisionPoint)
             {
                 animator.SetBool("isWalk", true);
-               // animator.SetBool("isfall", false);
+                // animator.SetBool("isfall", false);
             }
 
             else
@@ -476,7 +519,7 @@ public class CharacterManager : MonoBehaviour
                 animator.SetBool("isJump", false);
                 animator.SetBool("isfall", true);
             }
-            else if(rb.velocity.x<0 && !collisionPoint)
+            else if (rb.velocity.x < 0 && !collisionPoint)
             {
                 animator.SetBool("isJump", true);
                 animator.SetBool("isfall", false);
@@ -486,7 +529,7 @@ public class CharacterManager : MonoBehaviour
                 animator.SetBool("isJump", false);
                 animator.SetBool("isfall", false);
             }
-            
+
         }
         else if (transform.rotation.z == -0.7071068f)
         {
@@ -517,11 +560,11 @@ public class CharacterManager : MonoBehaviour
                 animator.SetBool("isfall", false);
             }
         }
-        
+
     }
     void GizmoFlipSystem()
     {
-        
+
         if (transform.rotation.z == 0)
         {
             underoffset = new Vector2(0, underOffsetValue);
@@ -555,14 +598,14 @@ public class CharacterManager : MonoBehaviour
 
     }
 
-   
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere((Vector2)transform.position + underoffset, collisionGroundradius);
-       
-      
-       
+
+
+
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere((Vector2)transform.position + sideoffset, collisionSideradius);
     }
@@ -593,8 +636,8 @@ public class CharacterManager : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        
-        if(collision.gameObject.tag == "killer")
+
+        if (collision.gameObject.tag == "killer")
         {
             isDead = true;
             rb.velocity = Vector2.zero;
@@ -605,15 +648,15 @@ public class CharacterManager : MonoBehaviour
             animator.SetBool("isDeath", true);
             //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
-        
-      
+
+
 
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "savepoint")
         {
-           
+
             PlayerPrefs.SetFloat("gravityX", beginningGravityX);
             PlayerPrefs.SetFloat("gravityY", beginningGravityy);
             PlayerPrefs.SetFloat("rotation", rotationz);
@@ -624,26 +667,26 @@ public class CharacterManager : MonoBehaviour
             PlayerPrefs.SetFloat("positionX", begininngPositionX);
             PlayerPrefs.SetFloat("positionY", beginningPositionY);
         }
-        //Ogem demo sonrasý deðiþecek,silinecek
+        //Ogem demo sonrasï¿½ deï¿½iï¿½ecek,silinecek
         if (collision.gameObject.name == "DemoTrigger")
         {
             PlayerPrefs.DeleteAll();
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
 
-            
+
     }
 
-    
+
 
     void ManageWalk()
     {
-        if((rb.velocity.x>0 && x> 0) || (rb.velocity.x<0 && x<0))
+        if ((rb.velocity.x > 0 && x > 0) || (rb.velocity.x < 0 && x < 0))
         {
             aktifhiz = Mathf.Lerp(aktifhiz, walkForce, walkcarpan * Time.deltaTime);
-            
+
         }
-        else if(x != 0)
+        else if (x != 0)
         {
             aktifhiz = Mathf.Lerp(aktifhiz, walkForce, durmacarpan * Time.deltaTime);
 
@@ -652,7 +695,7 @@ public class CharacterManager : MonoBehaviour
         {
             aktifhiz = Mathf.Lerp(aktifhiz, 0, durmacarpan * Time.deltaTime);
         }
-        
+
 
     }
 
@@ -662,19 +705,19 @@ public class CharacterManager : MonoBehaviour
         rb.velocity = Vector2.zero;
         createdust();
         rb.velocity = jumpForce * transform.up;
-       
+
     }
     public void DoubleJump()
     {
         if (secondJump)
         {
             StartCoroutine(DoubleJumpWait());
-            rb.velocity = (jumpForce/2) * transform.up;
-            secondJump = false; 
+            rb.velocity = (jumpForce / 2) * transform.up;
+            secondJump = false;
         }
     }
-    
-    
+
+
 
     private void OnTriggerExit2D(Collider2D collision)
     {
@@ -682,16 +725,16 @@ public class CharacterManager : MonoBehaviour
         {
             InGameCamera = null;
         }
-       
-       
+
+
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "camlimit")
+        if (collision.gameObject.tag == "camlimit")
         {
-           
+
             InGameCamera = collision.gameObject.transform.GetChild(0).transform.gameObject;
-            
+
         }
 
     }
@@ -721,10 +764,10 @@ public class CharacterManager : MonoBehaviour
         //cameraShake.shake(ziplamaamplitude, ziplamaduration);
     }
 
-  
+
     IEnumerator DoubleJumpWait()
     {
-       
+
         FallTimerControl = false;
         jumpTimer = jumpStartTimer;
         yield return new WaitForSeconds(.1f);
@@ -749,10 +792,10 @@ public class CharacterManager : MonoBehaviour
             createdust();
             this.gameObject.transform.localScale = new Vector2(this.gameObject.transform.localScale.x * -1, this.gameObject.transform.localScale.y);
         }
-          
-        
+
+
     }
-    
+
     void JumpCont()
     {
         if (jumpTimer < 0 && (transform.rotation.z == 0 || transform.rotation.z == -1))
@@ -766,31 +809,31 @@ public class CharacterManager : MonoBehaviour
         }
 
 
-        if (jumpTimer > 0 && !Input.GetButton("jump") && (transform.rotation.z == 0 || transform.rotation.z == -1))
+        if (jumpTimer > 0 && !jumpControlBool && (transform.rotation.z == 0 || transform.rotation.z == -1))
         {
             rb.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
         }
 
 
-        else if (jumpTimer > 0 && !Input.GetButton("jump") && (transform.rotation.z == 0.7071068f || transform.rotation.z == -0.7071068f))
+        else if (jumpTimer > 0 && !jumpControlBool && (transform.rotation.z == 0.7071068f || transform.rotation.z == -0.7071068f))
         {
 
             rb.velocity += Vector2.right * Physics2D.gravity.x * (lowJumpMultiplier - 1) * Time.deltaTime;
         }
-      
+
 
     }
 
     void DashAndTrambolineControlUpdater()
     {
-        if(DashTimerControl && TrambolineCoroutine != null)
+        if (DashTimerControl && TrambolineCoroutine != null)
         {
             StopCoroutine(TrambolineCoroutine);
         }
     }
-   public IEnumerator Dash(float dashTimer)
+    public IEnumerator Dash(float dashTimer)
     {
-        
+
         NormalGravity = false;
         canWalk = false;
         DashTimerControl = true;
@@ -807,7 +850,7 @@ public class CharacterManager : MonoBehaviour
 
     void CharacterBaseMode()
     {
-        
+
 
         rb.velocity = Vector2.zero;
         DashTimerControl = false;
@@ -853,13 +896,13 @@ public class CharacterManager : MonoBehaviour
 
         }
         rb.velocity = dir.normalized * dashForce * Time.fixedDeltaTime;
-   
+
 
 
     }
 
-   
-   void gravity()
+
+    void gravity()
     {
         if (gameObject.transform.rotation.z == 0)
         {
@@ -867,7 +910,7 @@ public class CharacterManager : MonoBehaviour
         }
         else if (gameObject.transform.rotation.z == 0.7071068f)
         {
-            CharacterTurn(9.8f,0);
+            CharacterTurn(9.8f, 0);
         }
         else if (gameObject.transform.rotation.z == -1)
         {
@@ -888,7 +931,7 @@ public class CharacterManager : MonoBehaviour
         float dampingDuration = TrambolineDuration;
 
         CameraShake.instance.TrambolineShake();
-        
+
 
         if (dashCoroutine != null)
             StopCoroutine(dashCoroutine);
@@ -906,7 +949,7 @@ public class CharacterManager : MonoBehaviour
 
         TrambolineCoroutine = StartCoroutine(DampenVelocity(dampingDuration));
 
-        // Hýzý kademeli olarak azaltan coroutine baþlatýlýyor
+        // Hï¿½zï¿½ kademeli olarak azaltan coroutine baï¿½latï¿½lï¿½yor
         yield return TrambolineCoroutine;
 
 
@@ -927,15 +970,15 @@ public class CharacterManager : MonoBehaviour
             if (!DashTimerControl)
                 rb.velocity = initialVelocity * (1 - elapsedTime / duration);
 
-            
-            if(rotationz ==  0 ||Mathf.Abs(rotationz) == 180)
+
+            if (rotationz == 0 || Mathf.Abs(rotationz) == 180)
             {
                 if ((collisionPoint) || Mathf.Abs(rb.velocity.x) > Mathf.Abs(rb.velocity.y))
                     canWalk = false;
                 else
                     canWalk = true;
             }
-            else if (Mathf.Abs(rotationz) == 90 ||Mathf.Abs(rotationz) == 270)
+            else if (Mathf.Abs(rotationz) == 90 || Mathf.Abs(rotationz) == 270)
             {
                 if ((collisionPoint) || Mathf.Abs(rb.velocity.y) > Mathf.Abs(rb.velocity.x))
                     canWalk = false;
@@ -954,7 +997,7 @@ public class CharacterManager : MonoBehaviour
                 canWalk = true;
                 canDash = true;
             }
-            
+
         }
     }
 
