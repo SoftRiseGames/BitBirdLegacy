@@ -213,8 +213,8 @@ public class CharacterManager : MonoBehaviour
         x = input.x;
         y = input.y;
 
-        xRaw = input.x;
-        yRaw = input.y;
+        xRaw = obj.ReadValue<Vector2>().x;
+        yRaw = obj.ReadValue<Vector2>().y;
 
         movementVeriable = input; // ← Bu satırı ekleyin
 
@@ -235,6 +235,7 @@ public class CharacterManager : MonoBehaviour
     }
     public void DashControlVoid(InputAction.CallbackContext obj)
     {
+       
         if (obj.action.IsPressed() && canDash && dashControl)
         {
             dashCoroutine = StartCoroutine(Dash(dashTimer));
