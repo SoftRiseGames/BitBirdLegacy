@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.InputSystem;
 public class kapi : MonoBehaviour
 {
     [SerializeField] GameObject dotweengidisPoint;
@@ -13,6 +14,8 @@ public class kapi : MonoBehaviour
     public bool isPass;
     public bool iscollide;
     Vector2 objectStartTransform;
+
+    public PlayerInput PlayerInput;
     
     private void Awake()
     {
@@ -40,7 +43,7 @@ public class kapi : MonoBehaviour
         if (iscollide && saverinteger == 0)
         {
           
-            if (character.isFollow && Input.GetButton("interactivity"))
+            if (character.isFollow && PlayerInput.actions["Interactivity"].IsPressed())
             {
                 character.isFollow = false;
                 character.transform.GetChild(2).GetComponent<KeyScript>().Suicide();

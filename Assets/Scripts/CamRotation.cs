@@ -10,11 +10,13 @@ public class CamRotation : MonoBehaviour
     [SerializeField] bool isDoubleSide;
     public bool isleft;
     public bool isRight;
-
+    public PlayerInput playerInput;
+   
     void Start()
     {
         animator = GetComponent<Animator>();
         character = GameObject.Find("player").GetComponent<CharacterManager>();
+       
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -33,13 +35,13 @@ public class CamRotation : MonoBehaviour
     }
     private void Update()
     {
-        //TriggerSystem();
+        TriggerSystem();
     }
-    void TriggerSystem(InputAction.CallbackContext obj)
+    void TriggerSystem()
     {
         if (isDoubleSide)
         {
-            if (collideDedection == true && obj.action.IsPressed() && !isRight && !isleft)
+            if (collideDedection == true && playerInput.actions["Interactivity"].inProgress && !isRight && !isleft)
             {
                 character.camrotate = true;
                 character.right90 = true;
@@ -50,6 +52,7 @@ public class CamRotation : MonoBehaviour
                 //animator.SetBool("triggeractivate", true);
                 //StartCoroutine(animtimer());
             }
+            /*
             else if (collideDedection == true && Input.GetButton("negativeinteractivity") && !isRight && !isleft)
             {
                 character.camrotate = true;
@@ -70,7 +73,8 @@ public class CamRotation : MonoBehaviour
                 //animator.SetBool("triggeractivate", true);
                 //StartCoroutine(animtimer());
             }
-            else if (collideDedection == true && Input.GetButton("interactivity") && isleft)
+            */
+            else if (collideDedection == true && playerInput.actions["Interactivity"].IsPressed() && isleft)
             {
                 character.camrotate = true;
                 character.right90 = true;
@@ -83,7 +87,7 @@ public class CamRotation : MonoBehaviour
         }
         else if (!isDoubleSide && isRight == false)
         {
-            if (collideDedection == true && Input.GetButton("interactivity") )
+            if (collideDedection == true && playerInput.actions["Interactivity"].IsPressed())
             {
                 character.camrotate = true;
                 character.right90 = true;

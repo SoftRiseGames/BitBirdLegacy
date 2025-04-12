@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class TriggerWallSystem : MonoBehaviour
 {
     [SerializeField] GameObject floor;
     [SerializeField] Animator animator;
+    public PlayerInput playerInput;
 
     private void Start()
     {
@@ -15,7 +17,7 @@ public class TriggerWallSystem : MonoBehaviour
     {
         if(collision.gameObject.tag == "player")
         {
-            if (Input.GetButton("interactivity"))
+            if (playerInput.actions["Interactivity"].IsPressed())
             {
                 animator.SetBool("isBreak",true);
                 floor.GetComponent<Animator>().SetBool("isBreak", true);

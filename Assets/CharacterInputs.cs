@@ -73,9 +73,9 @@ public partial class @CharacterInputs : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Interaction"",
+                    ""name"": ""Interactivity"",
                     ""type"": ""Button"",
-                    ""id"": ""7e5e72b3-3eb5-4d16-8916-c7e2b7dd6ef0"",
+                    ""id"": ""35ca914e-c30c-4dc3-bb3b-a27a030c231f"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -330,7 +330,7 @@ public partial class @CharacterInputs : IInputActionCollection2, IDisposable
                     ""id"": ""75f23691-1e16-4518-ab1f-a9af8371f9ed"",
                     ""path"": ""2DVector(mode=2)"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""NormalizeVector2"",
                     ""groups"": """",
                     ""action"": ""DashAxis"",
                     ""isComposite"": true,
@@ -393,12 +393,12 @@ public partial class @CharacterInputs : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""1c15de58-bfe2-44af-a529-d49a3fc1f0c3"",
+                    ""id"": ""147b4567-eda6-4b37-a73f-cb82ccb45e00"",
                     ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Interaction"",
+                    ""action"": ""Interactivity"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -991,7 +991,7 @@ public partial class @CharacterInputs : IInputActionCollection2, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_DashAxis = m_Player.FindAction("DashAxis", throwIfNotFound: true);
-        m_Player_Interaction = m_Player.FindAction("Interaction", throwIfNotFound: true);
+        m_Player_Interactivity = m_Player.FindAction("Interactivity", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1068,7 +1068,7 @@ public partial class @CharacterInputs : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_DashAxis;
-    private readonly InputAction m_Player_Interaction;
+    private readonly InputAction m_Player_Interactivity;
     public struct PlayerActions
     {
         private @CharacterInputs m_Wrapper;
@@ -1078,7 +1078,7 @@ public partial class @CharacterInputs : IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
         public InputAction @DashAxis => m_Wrapper.m_Player_DashAxis;
-        public InputAction @Interaction => m_Wrapper.m_Player_Interaction;
+        public InputAction @Interactivity => m_Wrapper.m_Player_Interactivity;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1103,9 +1103,9 @@ public partial class @CharacterInputs : IInputActionCollection2, IDisposable
                 @DashAxis.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDashAxis;
                 @DashAxis.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDashAxis;
                 @DashAxis.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDashAxis;
-                @Interaction.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteraction;
-                @Interaction.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteraction;
-                @Interaction.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteraction;
+                @Interactivity.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteractivity;
+                @Interactivity.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteractivity;
+                @Interactivity.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteractivity;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1125,9 +1125,9 @@ public partial class @CharacterInputs : IInputActionCollection2, IDisposable
                 @DashAxis.started += instance.OnDashAxis;
                 @DashAxis.performed += instance.OnDashAxis;
                 @DashAxis.canceled += instance.OnDashAxis;
-                @Interaction.started += instance.OnInteraction;
-                @Interaction.performed += instance.OnInteraction;
-                @Interaction.canceled += instance.OnInteraction;
+                @Interactivity.started += instance.OnInteractivity;
+                @Interactivity.performed += instance.OnInteractivity;
+                @Interactivity.canceled += instance.OnInteractivity;
             }
         }
     }
@@ -1289,7 +1289,7 @@ public partial class @CharacterInputs : IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
         void OnDashAxis(InputAction.CallbackContext context);
-        void OnInteraction(InputAction.CallbackContext context);
+        void OnInteractivity(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

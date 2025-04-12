@@ -51,9 +51,9 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Interaction",
+                    "name": "Interactivity",
                     "type": "Button",
-                    "id": "7e5e72b3-3eb5-4d16-8916-c7e2b7dd6ef0",
+                    "id": "35ca914e-c30c-4dc3-bb3b-a27a030c231f",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -308,7 +308,7 @@
                     "id": "75f23691-1e16-4518-ab1f-a9af8371f9ed",
                     "path": "2DVector(mode=2)",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "NormalizeVector2",
                     "groups": "",
                     "action": "DashAxis",
                     "isComposite": true,
@@ -371,12 +371,12 @@
                 },
                 {
                     "name": "",
-                    "id": "1c15de58-bfe2-44af-a529-d49a3fc1f0c3",
+                    "id": "147b4567-eda6-4b37-a73f-cb82ccb45e00",
                     "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Interaction",
+                    "action": "Interactivity",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

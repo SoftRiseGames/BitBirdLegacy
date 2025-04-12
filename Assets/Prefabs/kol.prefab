@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 5008695693624039741}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.1498, y: -7.6426, z: 0}
-  m_LocalScale: {x: 11.09225, y: 11.09225, z: 11.092251}
+  m_LocalScale: {x: 11.09225, y: 11.09225, z: 11.09225}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -102,9 +102,19 @@ MonoBehaviour:
   animator: {fileID: 0}
   character: {fileID: 0}
   collideDedection: 0
-  isDoubleSide: 0
+  isDoubleSide: 1
   isleft: 0
   isRight: 0
+  playerInput: {fileID: 0}
+  ActivationButton:
+    m_Name: Activation Button
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: fdbc5835-1005-4508-a57f-0df3615165b2
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
 --- !u!61 &5008695693624039878
 BoxCollider2D:
   m_ObjectHideFlags: 0
