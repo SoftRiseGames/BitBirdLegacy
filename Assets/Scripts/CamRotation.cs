@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.InputSystem;
 public class CamRotation : MonoBehaviour
 {
     public Animator animator;
@@ -10,6 +10,7 @@ public class CamRotation : MonoBehaviour
     [SerializeField] bool isDoubleSide;
     public bool isleft;
     public bool isRight;
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -32,13 +33,13 @@ public class CamRotation : MonoBehaviour
     }
     private void Update()
     {
-        TriggerSystem();
+        //TriggerSystem();
     }
-    void TriggerSystem()
+    void TriggerSystem(InputAction.CallbackContext obj)
     {
         if (isDoubleSide)
         {
-            if (collideDedection == true && Input.GetButton("interactivity") && !isRight && !isleft)
+            if (collideDedection == true && obj.action.IsPressed() && !isRight && !isleft)
             {
                 character.camrotate = true;
                 character.right90 = true;

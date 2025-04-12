@@ -163,14 +163,7 @@ public class CharacterManager : MonoBehaviour
         FallTimerControl = true;
         StartPrefs();
     }
-    private void OnEnable()
-    {
-        inputActions.Enable();
-    }
-    private void OnDisable()
-    {
-        inputActions.Disable();
-    }
+    
     void StartPrefs()
     {
         if (PlayerPrefs.HasKey("gravityX") && PlayerPrefs.HasKey("gravityY"))
@@ -236,10 +229,10 @@ public class CharacterManager : MonoBehaviour
         xRaw = obj.ReadValue<Vector2>().x;
         yRaw = obj.ReadValue<Vector2>().y;
 
-        // xRaw için 0'dan büyükse 0.5'i geçiyorsa 1, aksi takdirde 0 olacak
+       
         xRaw = (xRaw > 0) ? (xRaw > 0.5f ? 1 : 0) : (xRaw < -0.5f ? -1 : 0);
 
-        // yRaw için 0'dan büyükse 0.5'i geçiyorsa 1, aksi takdirde 0 olacak
+        
         yRaw = (yRaw > 0) ? (yRaw > 0.5f ? 1 : 0) : (yRaw < -0.5f ? -1 : 0);
     }
     public void DashControlVoid(InputAction.CallbackContext obj)
