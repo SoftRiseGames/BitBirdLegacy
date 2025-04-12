@@ -648,18 +648,21 @@ public class CharacterManager : MonoBehaviour
 
         if (collision.gameObject.tag == "killer")
         {
-            isDead = true;
-            rb.velocity = Vector2.zero;
-            rb.gravityScale = 0;
-            canJump = false;
-            NormalGravity = false;
-            canWalk = false;
             animator.SetBool("isDeath", true);
             //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
 
 
+    }
+    public void DeathSquence()
+    {
+        isDead = true;
+        rb.gravityScale = 0;
+        canJump = false;
+        NormalGravity = false;
+        canWalk = false;
+        rb.velocity = Vector2.zero;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -972,7 +975,7 @@ public class CharacterManager : MonoBehaviour
         Vector2 initialVelocity = rb.velocity;
         canDash = true;
 
-        while (elapsedTime < duration)
+        while (elapsedTime < duration && !isDead)
         {
             elapsedTime += Time.fixedDeltaTime;
 
@@ -997,7 +1000,7 @@ public class CharacterManager : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
 
-        if (elapsedTime >= duration)
+        if ((elapsedTime >= duration) && !isDead)
         {
             if (!DashTimerControl)
             {
