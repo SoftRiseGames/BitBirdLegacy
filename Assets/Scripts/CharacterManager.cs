@@ -146,11 +146,7 @@ public class CharacterManager : MonoBehaviour
     bool isTramboline;
 
     private float startingMass;
-
-    public InputAction inputActions;
-
-    bool jumpControlBool;
- 
+    public PlayerInput playerInput;
     void Start()
     {
         trailRenderer = GetComponent<TrailRenderer>();
@@ -162,14 +158,8 @@ public class CharacterManager : MonoBehaviour
         canDash = true;
         FallTimerControl = true;
         StartPrefs();
-    }
-    private void OnEnable()
-    {
-        inputActions.Enable();
-    }
-    private void OnDisable()
-    {
-        inputActions.Disable();
+
+
     }
     void StartPrefs()
     {
@@ -205,58 +195,19 @@ public class CharacterManager : MonoBehaviour
             this.gameObject.transform.position = new Vector2(this.gameObject.transform.position.x, this.gameObject.transform.position.y);
         }
     }
-    public void WalkVoidControl(InputAction.CallbackContext obj)
-    {
-
-        Vector2 input = obj.ReadValue<Vector2>();
-
-        x = input.x;
-        y = input.y;
-
-        movementVeriable = input; // ← Bu satırı ekleyin
-
-    }
-
-    public void JumpControlVoid(InputAction.CallbackContext obj)
-    {
-        if (obj.action.IsPressed() && coyoteTimeCounter > 0f && canDash && !DashTimerControl && canJump)
-        {
-            jumpControlBool = obj.action.triggered;
-            Jump();
-            jumpEffect();
-        }
-
-        if (obj.action.IsPressed() && secondJump && !canJump && canDash && doubleJumpControl)
-        {
-            DoubleJump();
-        }
-    }
-    public void DashAxisControlVoid(InputAction.CallbackContext obj)
-    {
-        xRaw = obj.ReadValue<Vector2>().x;
-        yRaw = obj.ReadValue<Vector2>().y;
-
-        // xRaw için 0'dan büyükse 0.5'i geçiyorsa 1, aksi takdirde 0 olacak
-        xRaw = (xRaw > 0) ? (xRaw > 0.5f ? 1 : 0) : (xRaw < -0.5f ? -1 : 0);
-
-        // yRaw için 0'dan büyükse 0.5'i geçiyorsa 1, aksi takdirde 0 olacak
-        yRaw = (yRaw > 0) ? (yRaw > 0.5f ? 1 : 0) : (yRaw < -0.5f ? -1 : 0);
-    }
-    public void DashControlVoid(InputAction.CallbackContext obj)
-    {
-        if (obj.action.IsPressed() && canDash && dashControl)
-        {
-            dashCoroutine = StartCoroutine(Dash(dashTimer));
-            DashEffect();
-        }
-    }
-
     // Update is called once per frame
     void Update()
     {
         collisionPoint = Physics2D.OverlapCircle((Vector2)transform.position + underoffset, collisionGroundradius, groundLayerDetect);
 
         sideColliderPoint = Physics2D.OverlapCircle((Vector2)transform.position + sideoffset, collisionSideradius, sideLayerDedect);
+
+        x = Input.GetAxisRaw("Horizontal");
+        y = Input.GetAxisRaw("Vertical");
+
+
+        xRaw = Input.GetAxisRaw("Horizontal");
+        yRaw = Input.GetAxisRaw("Vertical");
 
 
         movementVeriable = new Vector2(x, y);
@@ -278,6 +229,14 @@ public class CharacterManager : MonoBehaviour
         DashAndTrambolineControlUpdater();
 
 
+
+        if (canWalk)
+        {
+            Walk(movementVeriable);
+        }
+
+
+
         if (NormalGravity)
         {
             JumpGravity();
@@ -285,32 +244,25 @@ public class CharacterManager : MonoBehaviour
             rb.mass = startingMass;
         }
 
-        if (canWalk)
-        {
-            Walk(movementVeriable);
-        }
-        /*
-        if (Input.GetButtonDown("jump") && coyoteTimeCounter > 0f && canDash && !DashTimerControl && canJump)
+
+        if (playerInput.actions["Jump"].WasPressedThisFrame() && coyoteTimeCounter > 0f && canDash && !DashTimerControl && canJump)
         {
 
-           
+            Jump();
+            jumpEffect();
         }
-        */
 
-        /*
-        if (Input.GetKeyDown(KeyCode.Space) && secondJump && !canJump && canDash && doubleJumpControl)
+
+        if (playerInput.actions["Jump"].WasPressedThisFrame() && secondJump && !canJump && canDash && doubleJumpControl)
             DoubleJump();
-        */
-        /*
+
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && dashControl)
         {
             dashCoroutine = StartCoroutine(Dash(dashTimer));
             DashEffect();
         }
-        */
     }
 
-   
     void coyoteControl()
     {
         if (coyoteTimeCounter > 0f)
@@ -344,7 +296,6 @@ public class CharacterManager : MonoBehaviour
     }
     void Crouch()
     {
-        /*
         if (canCrouch)
         {
             if (Input.GetKey(KeyCode.S))
@@ -363,7 +314,6 @@ public class CharacterManager : MonoBehaviour
                 canDash = true;
             }
         }
-        */
     }
     void JumpGravity()
     {
@@ -648,21 +598,18 @@ public class CharacterManager : MonoBehaviour
 
         if (collision.gameObject.tag == "killer")
         {
+            isDead = true;
+            rb.velocity = Vector2.zero;
+            rb.gravityScale = 0;
+            canJump = false;
+            NormalGravity = false;
+            canWalk = false;
             animator.SetBool("isDeath", true);
             //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
 
 
-    }
-    public void DeathSquence()
-    {
-        isDead = true;
-        rb.gravityScale = 0;
-        canJump = false;
-        NormalGravity = false;
-        canWalk = false;
-        rb.velocity = Vector2.zero;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -714,7 +661,6 @@ public class CharacterManager : MonoBehaviour
 
     public void Jump()
     {
-        rb.velocity = Vector2.zero;
         createdust();
         rb.velocity = jumpForce * transform.up;
 
@@ -821,13 +767,13 @@ public class CharacterManager : MonoBehaviour
         }
 
 
-        if (jumpTimer > 0 && !jumpControlBool && (transform.rotation.z == 0 || transform.rotation.z == -1))
+        if (jumpTimer > 0 && !playerInput.actions["Jump"].IsPressed() && (transform.rotation.z == 0 || transform.rotation.z == -1))
         {
             rb.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
         }
 
 
-        else if (jumpTimer > 0 && !jumpControlBool && (transform.rotation.z == 0.7071068f || transform.rotation.z == -0.7071068f))
+        else if (jumpTimer > 0 && !playerInput.actions["Jump"].IsPressed() && (transform.rotation.z == 0.7071068f || transform.rotation.z == -0.7071068f))
         {
 
             rb.velocity += Vector2.right * Physics2D.gravity.x * (lowJumpMultiplier - 1) * Time.deltaTime;
@@ -942,6 +888,7 @@ public class CharacterManager : MonoBehaviour
         float force = TrambolineSpeed;
         float dampingDuration = TrambolineDuration;
 
+
         CameraShake.instance.TrambolineShake();
 
 
@@ -973,9 +920,8 @@ public class CharacterManager : MonoBehaviour
         Debug.Log(InGameCamera.transform.eulerAngles.z);
         float elapsedTime = 0f;
         Vector2 initialVelocity = rb.velocity;
-        canDash = true;
 
-        while (elapsedTime < duration && !isDead)
+        while (elapsedTime < duration)
         {
             elapsedTime += Time.fixedDeltaTime;
 
@@ -997,10 +943,18 @@ public class CharacterManager : MonoBehaviour
                 else
                     canWalk = true;
             }
+
+            /*
+            if (cameraControl.transform.eulerAngles.z == 0 || cameraControl.transform.eulerAngles.z == 180)
+            {
+
+              
+            }
+            */
             yield return new WaitForFixedUpdate();
         }
 
-        if ((elapsedTime >= duration) && !isDead)
+        if (elapsedTime >= duration)
         {
             if (!DashTimerControl)
             {
