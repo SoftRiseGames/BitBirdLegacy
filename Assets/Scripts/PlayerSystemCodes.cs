@@ -5,12 +5,7 @@ using UnityEngine;
 public class PlayerSystemCodes : MonoBehaviour
 {
     public CharacterManager player;
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
+   
     void Update()
     {
       
