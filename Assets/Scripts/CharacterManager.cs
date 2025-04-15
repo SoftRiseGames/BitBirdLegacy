@@ -967,7 +967,6 @@ public class CharacterManager : MonoBehaviour
                 isTramboline = false;
                 NormalGravity = true;
                 canWalk = true;
-                canDash = true;
             }
 
         }
