@@ -147,6 +147,7 @@ public class CharacterManager : MonoBehaviour
 
     private float startingMass;
     public PlayerInput playerInput;
+
     void Start()
     {
         trailRenderer = GetComponent<TrailRenderer>();
@@ -625,6 +626,7 @@ public class CharacterManager : MonoBehaviour
 
             PlayerPrefs.SetFloat("positionX", begininngPositionX);
             PlayerPrefs.SetFloat("positionY", beginningPositionY);
+
         }
         //Ogem demo sonras� de�i�ecek,silinecek
         if (collision.gameObject.name == "DemoTrigger")
@@ -780,6 +782,15 @@ public class CharacterManager : MonoBehaviour
         }
 
 
+    }
+    public void DeathSquence()
+    {
+        isDead = true;
+        rb.gravityScale = 0;
+        canJump = false;
+        NormalGravity = false;
+        canWalk = false;
+        rb.velocity = Vector2.zero;
     }
 
     void DashAndTrambolineControlUpdater()
@@ -944,13 +955,6 @@ public class CharacterManager : MonoBehaviour
                     canWalk = true;
             }
 
-            /*
-            if (cameraControl.transform.eulerAngles.z == 0 || cameraControl.transform.eulerAngles.z == 180)
-            {
-
-              
-            }
-            */
             yield return new WaitForFixedUpdate();
         }
 

@@ -157,7 +157,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
-    functionName: DeathSequence
+    functionName: DeathSquence
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

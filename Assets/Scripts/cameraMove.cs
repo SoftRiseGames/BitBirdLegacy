@@ -16,10 +16,11 @@ public class cameraMove : MonoBehaviour
     public bool istourEnd;
     private void Start()
     {
-        if(thiscollider == null)
+        if (thiscollider == null)
         {
             thiscollider = this;
         }
+        
 
         characterManagerCode = GameObject.Find("player").GetComponent<CharacterManager>();
         /*
@@ -34,32 +35,8 @@ public class cameraMove : MonoBehaviour
             virtualCam.gameObject.transform.rotation = Quaternion.Euler(virtualCam.gameObject.transform.rotation.x, virtualCam.gameObject.transform.rotation.y, virtualCam.gameObject.transform.rotation.z);
         }
         */
-
         playerPrefsKey = "virtualrecord_" + virtualCam.name;
-        
-        // PlayerPrefs'te rotasyon değeri varsa, kameranın rotasyonu bu değerle ayarlanır
-        if (PlayerPrefs.HasKey(playerPrefsKey))
-        {
-            savedRotation = PlayerPrefs.GetFloat(playerPrefsKey);
-            Debug.Log(savedRotation);
-            if(savedRotation == 0)
-            {
-                virtualCam.transform.rotation = Quaternion.Euler(virtualCam.transform.rotation.x, virtualCam.transform.rotation.y, 0);
-            }
-            else if((savedRotation >= 0.7071060f  || savedRotation <= 0.70710670f) && !istourEnd )
-            {
-                virtualCam.transform.rotation = Quaternion.Euler(virtualCam.transform.rotation.x, virtualCam.transform.rotation.y, 270);
-            }
-            else if (savedRotation == 1)
-            {
-                virtualCam.transform.rotation = Quaternion.Euler(virtualCam.transform.rotation.x, virtualCam.transform.rotation.y, 180);
-            }
-            else if ((savedRotation >= 0.7071060f || savedRotation <= 0.70710670f) && istourEnd)
-            {
-                virtualCam.transform.rotation = Quaternion.Euler(virtualCam.transform.rotation.x, virtualCam.transform.rotation.y, 90);
-            }
 
-        }
 
     }
     private void Update()
@@ -75,21 +52,24 @@ public class cameraMove : MonoBehaviour
         }
         */
     }
-
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.name == "player")
+        if (collision.gameObject.name == "player")
         {
+            virtualCam.transform.position = characterManagerCode.gameObject.transform.position;
             virtualCam.gameObject.SetActive(true);
-            StartCoroutine(cameraWait());
+
+            virtualCam.transform.rotation = Quaternion.Euler(virtualCam.transform.rotation.x, virtualCam.transform.rotation.y, characterManagerCode.rotationz);
+
         }
-        
-        if(collision.gameObject.tag == "gravitycontroller")
+
+        if (collision.gameObject.tag == "gravitycontroller")
         {
             virtualCam.GetComponent<inCameraSettings>().objects.Add(collision.gameObject);
         }
-       
-        
+
+
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -103,18 +83,7 @@ public class cameraMove : MonoBehaviour
         }
     }
 
-   
 
-    IEnumerator cameraWait()
-    {
-        characterManagerCode.rb.velocity = Vector2.zero;
-        characterManagerCode.canJump = false;
-        characterManagerCode.canWalk = false;
-        yield return new WaitForSeconds(.5f);
-        characterManagerCode.canJump = true;
-        characterManagerCode.canWalk = true;
-    }
 
-  
 
 }
