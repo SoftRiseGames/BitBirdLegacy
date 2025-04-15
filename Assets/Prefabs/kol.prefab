@@ -104,17 +104,8 @@ MonoBehaviour:
   collideDedection: 0
   isDoubleSide: 1
   isleft: 0
-  isRight: 0
+  isRight: 1
   playerInput: {fileID: 0}
-  ActivationButton:
-    m_Name: Activation Button
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: fdbc5835-1005-4508-a57f-0df3615165b2
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
 --- !u!61 &5008695693624039878
 BoxCollider2D:
   m_ObjectHideFlags: 0
