@@ -898,6 +898,7 @@ public class CharacterManager : MonoBehaviour
         isTramboline = true;
         float force = TrambolineSpeed;
         float dampingDuration = TrambolineDuration;
+      
 
 
         CameraShake.instance.TrambolineShake();
@@ -931,6 +932,7 @@ public class CharacterManager : MonoBehaviour
         Debug.Log(InGameCamera.transform.eulerAngles.z);
         float elapsedTime = 0f;
         Vector2 initialVelocity = rb.velocity;
+        canDash = true;
 
         while (elapsedTime < duration)
         {
