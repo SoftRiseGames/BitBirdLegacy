@@ -43,6 +43,7 @@ public class CamRotation : MonoBehaviour
         {
             if (collideDedection == true && playerInput.actions["Interactivity"].inProgress && !isRight && !isleft)
             {
+                Debug.Log("eeee");
                 character.camrotate = true;
                 character.right90 = true;
                 isRight = true;
@@ -76,6 +77,7 @@ public class CamRotation : MonoBehaviour
             */
             else if (collideDedection == true && playerInput.actions["Interactivity"].IsPressed() && isleft)
             {
+                Debug.Log("eeee");
                 character.camrotate = true;
                 character.right90 = true;
                 isRight = false;
@@ -89,6 +91,7 @@ public class CamRotation : MonoBehaviour
         {
             if (collideDedection == true && playerInput.actions["Interactivity"].IsPressed())
             {
+                Debug.Log("eeee");
                 character.camrotate = true;
                 character.right90 = true;
                 isRight = true;

@@ -7,6 +7,7 @@ public class MoveableDeathObjectCode : MonoBehaviour
     [SerializeField] GameObject dotweengidisPoint;
     [SerializeField] float gidis;
     [SerializeField] float gelis;
+    [SerializeField] float StoppingAmount;
 
     void Start()
     {
@@ -14,10 +15,10 @@ public class MoveableDeathObjectCode : MonoBehaviour
 
         seq.Append(this.gameObject.transform.DOMove(dotweengidisPoint.transform.position, gidis)
                 .SetEase(Ease.Linear))
-           .AppendInterval(0.5f) 
+           .AppendInterval(StoppingAmount) 
            .Append(this.gameObject.transform.DOMove(this.transform.position, gidis)
                 .SetEase(Ease.Linear))
-           .AppendInterval(0.5f)
+           .AppendInterval(StoppingAmount)
            .SetLoops(-1); 
     }
 
