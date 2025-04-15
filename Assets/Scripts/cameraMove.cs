@@ -35,16 +35,8 @@ public class cameraMove : MonoBehaviour
             virtualCam.gameObject.transform.rotation = Quaternion.Euler(virtualCam.gameObject.transform.rotation.x, virtualCam.gameObject.transform.rotation.y, virtualCam.gameObject.transform.rotation.z);
         }
         */
-
         playerPrefsKey = "virtualrecord_" + virtualCam.name;
 
-        virtualCam.transform.rotation = Quaternion.Euler(virtualCam.transform.rotation.x, virtualCam.transform.rotation.y, characterManagerCode.rotationz);
-
-        if (PlayerPrefs.HasKey(playerPrefsKey))
-        {
-              
-
-        }
 
     }
     private void Update()
@@ -65,7 +57,11 @@ public class cameraMove : MonoBehaviour
     {
         if (collision.gameObject.name == "player")
         {
+            virtualCam.transform.position = characterManagerCode.gameObject.transform.position;
             virtualCam.gameObject.SetActive(true);
+
+            virtualCam.transform.rotation = Quaternion.Euler(virtualCam.transform.rotation.x, virtualCam.transform.rotation.y, characterManagerCode.rotationz);
+
         }
 
         if (collision.gameObject.tag == "gravitycontroller")
