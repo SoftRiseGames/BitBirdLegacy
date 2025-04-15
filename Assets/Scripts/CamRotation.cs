@@ -11,12 +11,12 @@ public class CamRotation : MonoBehaviour
     public bool isleft;
     public bool isRight;
     public PlayerInput playerInput;
-   
+
     void Start()
     {
         animator = GetComponent<Animator>();
         character = GameObject.Find("player").GetComponent<CharacterManager>();
-       
+
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -97,24 +97,24 @@ public class CamRotation : MonoBehaviour
                 //StartCoroutine(animtimer());
             }
         }
-        
+
     }
     public void animatorReset()
     {
-        
+
         animator.SetBool("sagtrigger", false);
         animator.SetBool("sagdansolatrigger", false);
         animator.SetBool("soldansagatrigger", false);
         animator.SetBool("soltrigger", false);
-        
+
     }
 
-    
+
     IEnumerator animtimer()
     {
         yield return new WaitForSeconds(1f);
         animator.SetBool("triggeractivate", false);
     }
-    
-  
+
+
 }
