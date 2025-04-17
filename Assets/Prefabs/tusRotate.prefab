@@ -103,11 +103,7 @@ MonoBehaviour:
   character: {fileID: 0}
   collideDedection: 0
   isLeft: 0
-<<<<<<< Updated upstream:Assets/Prefabs/tusRotate.prefab
   isRight: 0
-=======
-  isRight: 1
->>>>>>> Stashed changes:Assets/tusRotate.prefab
   isReply: 0
 --- !u!95 &6575975240940501000
 Animator:
@@ -142,11 +138,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-<<<<<<< Updated upstream:Assets/Prefabs/tusRotate.prefab
   m_Offset: {x: 0.00045839697, y: -0.00045834482}
-=======
-  m_Offset: {x: 0.0006190315, y: -0.018100668}
->>>>>>> Stashed changes:Assets/tusRotate.prefab
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -157,9 +149,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-<<<<<<< Updated upstream:Assets/Prefabs/tusRotate.prefab
   m_Size: {x: 0.07935792, y: 0.07648635}
-=======
-  m_Size: {x: 0.078123346, y: 0.19262543}
->>>>>>> Stashed changes:Assets/tusRotate.prefab
   m_EdgeRadius: 0

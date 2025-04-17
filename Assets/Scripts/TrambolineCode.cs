@@ -25,7 +25,6 @@ public class TrambolineCode : MonoBehaviour
     public void TrambolineIdleSet()
     {
         animator.SetBool("isTramboline", false);
-
     }
    
 }
