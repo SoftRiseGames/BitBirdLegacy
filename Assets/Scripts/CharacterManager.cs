@@ -578,6 +578,10 @@ public class CharacterManager : MonoBehaviour
 
     public void Walk(Vector2 movementVeriable)
     {
+        if (movementVeriable.x > 0)
+            movementVeriable.x = 1;
+        else if (movementVeriable.x < 0)
+            movementVeriable.x = -1;
         if (gameObject.transform.rotation.z == 0)
         {
             rb.velocity = new Vector2(movementVeriable.x * aktifhiz, rb.velocity.y);
