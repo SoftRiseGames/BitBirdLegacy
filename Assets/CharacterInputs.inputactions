@@ -239,11 +239,11 @@
                 },
                 {
                     "name": "",
-                    "id": "a56a133d-7f53-4dd9-88ef-d02cbd9f4bc7",
+                    "id": "309b7a2b-daa8-4d0c-829e-0853cb854d56",
                     "path": "<DualShockGamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Gamepad",
                     "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -376,6 +376,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
+                    "action": "Interactivity",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f72f5713-fd73-4ace-a239-8099e61bd67c",
+                    "path": "<DualShockGamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
                     "action": "Interactivity",
                     "isComposite": false,
                     "isPartOfComposite": false

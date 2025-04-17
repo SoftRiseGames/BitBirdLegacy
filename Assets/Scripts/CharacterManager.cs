@@ -203,12 +203,10 @@ public class CharacterManager : MonoBehaviour
 
         sideColliderPoint = Physics2D.OverlapCircle((Vector2)transform.position + sideoffset, collisionSideradius, sideLayerDedect);
 
-        x = Input.GetAxisRaw("Horizontal");
-        y = Input.GetAxisRaw("Vertical");
+       
 
-
-        xRaw = Input.GetAxisRaw("Horizontal");
-        yRaw = Input.GetAxisRaw("Vertical");
+        x = playerInput.actions["Move"].ReadValue<Vector2>().x;
+        y = playerInput.actions["Move"].ReadValue<Vector2>().y;
 
 
         movementVeriable = new Vector2(x, y);
@@ -257,8 +255,16 @@ public class CharacterManager : MonoBehaviour
         if (playerInput.actions["Jump"].WasPressedThisFrame() && secondJump && !canJump && canDash && doubleJumpControl)
             DoubleJump();
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && dashControl)
+        if (playerInput.actions["Dash"].WasPerformedThisFrame() && canDash && dashControl)
         {
+            xRaw = playerInput.actions["DashAxis"].ReadValue<Vector2>().x;
+            yRaw = playerInput.actions["DashAxis"].ReadValue<Vector2>().y;
+
+           
+            xRaw = (xRaw > 0) ? (xRaw > 0.5f ? 1 : 0) : (xRaw < -0.5f ? -1 : 0);
+            yRaw = (yRaw > 0) ? (yRaw > 0.5f ? 1 : 0) : (yRaw < -0.5f ? -1 : 0);
+
+
             dashCoroutine = StartCoroutine(Dash(dashTimer));
             DashEffect();
         }
