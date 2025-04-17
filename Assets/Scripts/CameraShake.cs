@@ -33,6 +33,7 @@ public class CameraShake : MonoBehaviour
     }
     public void DashShake()
     {
+        Debug.Log("CameraShake");
         cameraShakeManager.m_ImpulseDefinition.m_AmplitudeGain = DashAmplitudeGain;
         cameraShakeManager.m_ImpulseDefinition.m_FrequencyGain = DashFrequencyGain;
         cameraShakeManager.m_ImpulseDefinition.m_TimeEnvelope.m_SustainTime = DashCamShakeTimer;
