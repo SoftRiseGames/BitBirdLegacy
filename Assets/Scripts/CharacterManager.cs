@@ -128,7 +128,9 @@ public class CharacterManager : MonoBehaviour
     [TabGroup("Other")]
     public Animator animator;
     [TabGroup("Other")]
-    public ParticleSystem dust;
+    public ParticleSystem DustParticle;
+    public ParticleSystem DashParticle;
+
     [TabGroup("Other")]
     public Rigidbody2D rb;
     [TabGroup("Other")]
@@ -367,6 +369,8 @@ public class CharacterManager : MonoBehaviour
             if (collisionPoint.gameObject.tag == "platform")
                 this.gameObject.transform.SetParent(collisionPoint.transform, true);
 
+            if (collisionPoint.gameObject.tag == "Breakable")
+                collisionPoint.GetComponent<GoundAnimated>().AnimatorStarted();
 
         }
         else if (!collisionPoint && !isDead)
@@ -817,6 +821,7 @@ public class CharacterManager : MonoBehaviour
         canWalk = false;
         DashTimerControl = true;
         trailRenderer.enabled = true;
+        CreateDashParticle();
         rb.velocity = Vector2.zero;
         rb.gravityScale = 0;
         jumpTimer = 0;
@@ -829,8 +834,6 @@ public class CharacterManager : MonoBehaviour
 
     void CharacterBaseMode()
     {
-
-
         rb.velocity = Vector2.zero;
         DashTimerControl = false;
         trailRenderer.enabled = false;
@@ -991,7 +994,15 @@ public class CharacterManager : MonoBehaviour
     {
         if (!isDead)
         {
-            dust.Play();
+            DustParticle.Play();
+        }
+    }
+
+    void CreateDashParticle()
+    {
+        if (!isDead)
+        {
+            DashParticle.Play();
         }
     }
 

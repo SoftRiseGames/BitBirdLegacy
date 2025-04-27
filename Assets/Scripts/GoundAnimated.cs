@@ -12,13 +12,21 @@ public class GoundAnimated : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        /*
         if(collision.gameObject.tag == "player")
         {
             animator.SetBool("animatedground", true);
             StartCoroutine(groundTimer());
         }
+        */
     }
-    IEnumerator groundTimer()
+
+    public void AnimatorStarted()
+    {
+        animator.SetBool("animatedground", true);
+        StartCoroutine(groundTimer());
+    }
+    public IEnumerator groundTimer()
     {
         yield return new WaitForSeconds(1f);
         animator.SetBool("animatedground", false);
