@@ -6,6 +6,7 @@ using DG.Tweening;
 using UnityEngine.SceneManagement;
 using Sirenix.OdinInspector;
 using UnityEngine.InputSystem;
+using System;
 public class CharacterManager : MonoBehaviour
 {
     [TabGroup("Layers")]
@@ -149,6 +150,9 @@ public class CharacterManager : MonoBehaviour
 
     private float startingMass;
     public PlayerInput playerInput;
+
+    public static Action isGround;
+    
 
     void Start()
     {
@@ -371,6 +375,13 @@ public class CharacterManager : MonoBehaviour
 
             if (collisionPoint.gameObject.tag == "Breakable")
                 collisionPoint.GetComponent<GoundAnimated>().AnimatorStarted();
+
+           if(collisionPoint.gameObject.tag != "Breakable")
+            {
+                Debug.Log("anayin ami");
+                isGround.Invoke();
+
+            }
 
         }
         else if (!collisionPoint && !isDead)
