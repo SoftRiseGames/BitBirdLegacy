@@ -5,23 +5,57 @@ using UnityEngine;
 public class GoundAnimated : MonoBehaviour
 {
     public Animator animator;
+    bool isRevive;
+    bool isStartedBreak;
     void Start()
     {
         animator = GetComponent<Animator>();
     }
-
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnEnable()
     {
-        if(collision.gameObject.tag == "player")
-        {
-            animator.SetBool("animatedground", true);
-            StartCoroutine(groundTimer());
-        }
+        CharacterManager.isGround += isReviveCheck;
     }
-    IEnumerator groundTimer()
+    private void OnDisable()
     {
-        yield return new WaitForSeconds(1f);
+        CharacterManager.isGround -= isReviveCheck;
+    }
+
+    private void Update()
+    {
+        GroundRevive();
+        Debug.Log(isStartedBreak);
+    }
+    void isReviveCheck() 
+    {
+        if (isStartedBreak)
+            isRevive = true;
+        else
+            isRevive = false;
+    }
+
+    public void isBreakStartCheck() 
+    {
+        isStartedBreak = true;
+    } 
+
+    public void AnimatorStarted()
+    {
+        animator.SetBool("animatedground", true);
+    }
+
+    public void isBreakStopCheck() => isStartedBreak = false;
+
+
+    void GroundRevive()
+    {
+        if(isRevive)
+            animator.SetBool("isReactivate", true);
+    }
+
+    
+    public void GroundZeroAnimation()
+    {
+        animator.SetBool("isReactivate", false);
         animator.SetBool("animatedground", false);
     }
-
 }

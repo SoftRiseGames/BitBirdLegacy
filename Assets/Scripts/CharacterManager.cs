@@ -6,6 +6,7 @@ using DG.Tweening;
 using UnityEngine.SceneManagement;
 using Sirenix.OdinInspector;
 using UnityEngine.InputSystem;
+using System;
 public class CharacterManager : MonoBehaviour
 {
     [TabGroup("Layers")]
@@ -128,7 +129,9 @@ public class CharacterManager : MonoBehaviour
     [TabGroup("Other")]
     public Animator animator;
     [TabGroup("Other")]
-    public ParticleSystem dust;
+    public ParticleSystem DustParticle;
+    public ParticleSystem DashParticle;
+
     [TabGroup("Other")]
     public Rigidbody2D rb;
     [TabGroup("Other")]
@@ -147,6 +150,9 @@ public class CharacterManager : MonoBehaviour
 
     private float startingMass;
     public PlayerInput playerInput;
+
+    public static Action isGround;
+    
 
     void Start()
     {
@@ -367,6 +373,15 @@ public class CharacterManager : MonoBehaviour
             if (collisionPoint.gameObject.tag == "platform")
                 this.gameObject.transform.SetParent(collisionPoint.transform, true);
 
+            if (collisionPoint.gameObject.tag == "Breakable")
+                collisionPoint.GetComponent<GoundAnimated>().AnimatorStarted();
+
+           if(collisionPoint.gameObject.tag != "Breakable")
+            {
+                Debug.Log("anayin ami");
+                isGround.Invoke();
+
+            }
 
         }
         else if (!collisionPoint && !isDead)
@@ -609,8 +624,14 @@ public class CharacterManager : MonoBehaviour
 
         if (collision.gameObject.tag == "killer")
         {
-            isDead = true;
+            if (dashCoroutine != null)
+                StopCoroutine(dashCoroutine);
             rb.velocity = Vector2.zero;
+
+            dashTimer = 0;
+            canDash = false;
+            isDead = true;
+            VoiceManager.instance.SFXSoundPlay("Death");
             rb.gravityScale = 0;
             canJump = false;
             NormalGravity = false;
@@ -817,6 +838,7 @@ public class CharacterManager : MonoBehaviour
         canWalk = false;
         DashTimerControl = true;
         trailRenderer.enabled = true;
+        CreateDashParticle();
         rb.velocity = Vector2.zero;
         rb.gravityScale = 0;
         jumpTimer = 0;
@@ -829,8 +851,6 @@ public class CharacterManager : MonoBehaviour
 
     void CharacterBaseMode()
     {
-
-
         rb.velocity = Vector2.zero;
         DashTimerControl = false;
         trailRenderer.enabled = false;
@@ -991,7 +1011,15 @@ public class CharacterManager : MonoBehaviour
     {
         if (!isDead)
         {
-            dust.Play();
+            DustParticle.Play();
+        }
+    }
+
+    void CreateDashParticle()
+    {
+        if (!isDead)
+        {
+            DashParticle.Play();
         }
     }
 

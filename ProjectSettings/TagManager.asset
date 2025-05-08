@@ -17,6 +17,7 @@ TagManager:
   - bosspatternfall
   - bosspatternvertical
   - tramboline
+  - Breakable
   layers:
   - Default
   - TransparentFX

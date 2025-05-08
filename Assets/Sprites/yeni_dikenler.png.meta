@@ -152,12 +152,12 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape:
-      - - {x: -4, y: 4}
-        - {x: -4, y: -3}
-        - {x: 1, y: -3}
-        - {x: 1, y: -1}
-        - {x: 1, y: 3}
-        - {x: 1, y: 4}
+      - - {x: -4, y: 2.5}
+        - {x: -4, y: -2.5}
+        - {x: 2, y: -2.5}
+        - {x: 2, y: -0.5}
+        - {x: 2, y: 2.5}
+        - {x: 0, y: 2.5}
       tessellationDetail: 0
       bones: []
       spriteID: 779cbd911ec39cf4a852f4dfc9ca3107
@@ -179,12 +179,12 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape:
-      - - {x: -3, y: 4}
-        - {x: -3, y: -1}
-        - {x: -1, y: -1}
-        - {x: 3, y: -1}
-        - {x: 4, y: -1}
-        - {x: 4, y: 4}
+      - - {x: -2.5, y: 4}
+        - {x: -2.5, y: -2}
+        - {x: -0.5, y: -2}
+        - {x: 2.5, y: -2}
+        - {x: 2.5, y: -1}
+        - {x: 2.5, y: 4}
       tessellationDetail: 0
       bones: []
       spriteID: d1b500605d0d9a246a47b97cafecd77e
@@ -206,12 +206,12 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape:
-      - - {x: -2, y: 1}
-        - {x: -4, y: 1}
-        - {x: -4, y: -4}
-        - {x: 3, y: -4}
-        - {x: 3, y: 1}
-        - {x: 2, y: 1}
+      - - {x: -2.5, y: 2}
+        - {x: -2.5, y: 1}
+        - {x: -2.5, y: -4}
+        - {x: 2.5, y: -4}
+        - {x: 2.5, y: 2}
+        - {x: 1.5, y: 2}
       tessellationDetail: 0
       bones: []
       spriteID: f4427e409f9645044bbcdbc9fc777487
@@ -233,12 +233,12 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape:
-      - - {x: -1, y: 3}
-        - {x: -1, y: 1}
-        - {x: -1, y: -2}
-        - {x: -1, y: -4}
-        - {x: 4, y: -4}
-        - {x: 4, y: 3}
+      - - {x: -2, y: 2.5}
+        - {x: -2, y: 0.5}
+        - {x: -2, y: -2.5}
+        - {x: 0, y: -2.5}
+        - {x: 4, y: -2.5}
+        - {x: 4, y: 2.5}
       tessellationDetail: 0
       bones: []
       spriteID: db09df04cba4e964080adb41ba80a13b
