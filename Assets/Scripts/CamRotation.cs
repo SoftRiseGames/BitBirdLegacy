@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-public class CamRotation : MonoBehaviour
+public class CamRotation : MonoBehaviour,IRotate
 {
     public Animator animator;
     public CharacterManager character;
@@ -12,10 +12,17 @@ public class CamRotation : MonoBehaviour
     public bool isRight;
     public PlayerInput playerInput;
 
+    public int ÝsRotateObjectAgain { get; set; }
+
     void Start()
     {
         animator = GetComponent<Animator>();
         character = GameObject.Find("player").GetComponent<CharacterManager>();
+
+        if (PlayerPrefs.HasKey(gameObject.name + "_canReply"))
+            ÝsRotateObjectAgain = 0;
+        else
+            ÝsRotateObjectAgain = 1;
 
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -35,11 +42,29 @@ public class CamRotation : MonoBehaviour
     }
     private void Update()
     {
-        TriggerSystem();
+        RotateObject();
     }
-    void TriggerSystem()
+   
+    public void animatorReset()
     {
-        if (isDoubleSide)
+
+        animator.SetBool("sagtrigger", false);
+        animator.SetBool("sagdansolatrigger", false);
+        animator.SetBool("soldansagatrigger", false);
+        animator.SetBool("soltrigger", false);
+
+    }
+
+
+    IEnumerator animtimer()
+    {
+        yield return new WaitForSeconds(1f);
+        animator.SetBool("triggeractivate", false);
+    }
+
+    public void RotateObject()
+    {
+        if (isDoubleSide && ÝsRotateObjectAgain == 1)
         {
             if (collideDedection == true && playerInput.actions["Interactivity"].inProgress && !isRight && !isleft)
             {
@@ -74,7 +99,7 @@ public class CamRotation : MonoBehaviour
                 //StartCoroutine(animtimer());
             }
             */
-            else if (collideDedection == true && playerInput.actions["Interactivity"].IsPressed() && isleft)
+            else if (collideDedection == true && playerInput.actions["Interactivity"].IsPressed() && isleft )
             {
                 character.camrotate = true;
                 character.right90 = true;
@@ -87,7 +112,7 @@ public class CamRotation : MonoBehaviour
         }
         else if (!isDoubleSide && isRight == false)
         {
-            if (collideDedection == true && playerInput.actions["Interactivity"].IsPressed())
+            if (collideDedection == true && playerInput.actions["Interactivity"].IsPressed() )
             {
                 character.camrotate = true;
                 character.right90 = true;
@@ -97,24 +122,11 @@ public class CamRotation : MonoBehaviour
                 //StartCoroutine(animtimer());
             }
         }
-
     }
-    public void animatorReset()
+
+    public void IfStartOff()
     {
-
-        animator.SetBool("sagtrigger", false);
-        animator.SetBool("sagdansolatrigger", false);
-        animator.SetBool("soldansagatrigger", false);
-        animator.SetBool("soltrigger", false);
-
+        ÝsRotateObjectAgain = 0;
+        animator.SetBool("sagtrigger", true);
     }
-
-
-    IEnumerator animtimer()
-    {
-        yield return new WaitForSeconds(1f);
-        animator.SetBool("triggeractivate", false);
-    }
-
-
 }

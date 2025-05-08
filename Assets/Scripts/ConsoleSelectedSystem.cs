@@ -15,6 +15,7 @@ public class ConsoleSelectedSystem : MonoBehaviour
     private CinemachineVirtualCamera selectedSpecialCamera;
     [SerializeField] GameObject FirstSelectedButton;
     [SerializeField] List<Canvas> AllCanvas;
+    
     private void Start()
     {
         StandardCamera = GameObject.Find("StandardCamera").GetComponent<CinemachineVirtualCamera>();

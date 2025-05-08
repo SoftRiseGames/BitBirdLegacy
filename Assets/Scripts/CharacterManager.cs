@@ -658,6 +658,8 @@ public class CharacterManager : MonoBehaviour
             PlayerPrefs.SetFloat("positionX", begininngPositionX);
             PlayerPrefs.SetFloat("positionY", beginningPositionY);
 
+            //collision.GetComponent<>
+
         }
         //Ogem demo sonras� de�i�ecek,silinecek
         if (collision.gameObject.name == "DemoTrigger")
