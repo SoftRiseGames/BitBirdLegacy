@@ -31,8 +31,7 @@ public class VoiceManager : MonoBehaviour
 
                 audioSource.Play();
             }
-            else
-                return;
+            
         }
        
     }
