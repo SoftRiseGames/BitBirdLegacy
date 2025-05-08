@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8516738826086004692}
   - component: {fileID: 8516738826086004695}
   - component: {fileID: 1386327912343124577}
+  - component: {fileID: 2120945145816581713}
   m_Layer: 0
   m_Name: Tramboline
   m_TagString: tramboline
@@ -145,3 +146,15 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2120945145816581713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8516738826086004694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a67d3e4229d1da41a9cda8488429255, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
