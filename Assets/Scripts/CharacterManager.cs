@@ -694,6 +694,7 @@ public class CharacterManager : MonoBehaviour
 
     public void Jump()
     {
+        VoiceManager.instance.SFXSoundPlay("Jump");
         createdust();
         rb.velocity = jumpForce * transform.up;
 
