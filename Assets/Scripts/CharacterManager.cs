@@ -624,10 +624,15 @@ public class CharacterManager : MonoBehaviour
 
         if (collision.gameObject.tag == "killer")
         {
-            isDead = true;
-            VoiceManager.instance.SFXSoundPlay("Death");
+            if (dashCoroutine != null)
+                StopCoroutine(dashCoroutine);
             rb.velocity = Vector2.zero;
+
+            dashTimer = 0;
+            canDash = false;
+            isDead = true;
             rb.gravityScale = 0;
+            VoiceManager.instance.SFXSoundPlay("Death");
             canJump = false;
             NormalGravity = false;
             canWalk = false;
