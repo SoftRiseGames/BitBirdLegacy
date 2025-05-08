@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Dash
   m_EditorClassIdentifier: 
   audioClip: {fileID: 0}
-  SFX_Name: 
+  SFX_Name: Dash
   pitch: 1
   Volume: 0

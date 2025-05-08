@@ -632,7 +632,6 @@ public class CharacterManager : MonoBehaviour
             canDash = false;
             isDead = true;
             rb.gravityScale = 0;
-            VoiceManager.instance.SFXSoundPlay("Death");
             canJump = false;
             NormalGravity = false;
             canWalk = false;
