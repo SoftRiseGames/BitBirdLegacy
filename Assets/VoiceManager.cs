@@ -28,10 +28,12 @@ public class VoiceManager : MonoBehaviour
                 audioSource.clip = i.audioClip;
                 audioSource.pitch = i.pitch;
                 audioSource.volume = i.Volume;
+
+                audioSource.Play();
             }
             else
                 return;
         }
-        audioSource.Play();
+       
     }
 }
