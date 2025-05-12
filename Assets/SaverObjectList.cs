@@ -19,6 +19,7 @@ public class SaverObjectList : MonoBehaviour
     {
         if (isTouched == 1)
         {
+           
             foreach (GameObject i in RotationObjects)
             {
                 i.GetComponent<IRotate>().IfStartOff();
@@ -31,6 +32,7 @@ public class SaverObjectList : MonoBehaviour
     public void isTouchVoid()
     {
         isTouched = 1;
+        Debug.Log("Saved");
         PlayerPrefs.SetInt(gameObject.name + "_isSave", isTouched);
     }
    

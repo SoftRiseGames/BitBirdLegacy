@@ -378,9 +378,7 @@ public class CharacterManager : MonoBehaviour
 
            if(collisionPoint.gameObject.tag != "Breakable")
             {
-                Debug.Log("anayin ami");
                 isGround.Invoke();
-
             }
 
         }
@@ -658,7 +656,7 @@ public class CharacterManager : MonoBehaviour
             PlayerPrefs.SetFloat("positionX", begininngPositionX);
             PlayerPrefs.SetFloat("positionY", beginningPositionY);
 
-            //collision.GetComponent<>
+            collision.GetComponent<SaverObjectList>().isTouchVoid();
 
         }
         //Ogem demo sonras� de�i�ecek,silinecek

@@ -18,12 +18,6 @@ public class CamRotation : MonoBehaviour,IRotate
     {
         animator = GetComponent<Animator>();
         character = GameObject.Find("player").GetComponent<CharacterManager>();
-
-        if (PlayerPrefs.HasKey(gameObject.name + "_canReply"))
-            ÝsRotateObjectAgain = 0;
-        else
-            ÝsRotateObjectAgain = 1;
-
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

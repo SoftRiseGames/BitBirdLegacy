@@ -16,17 +16,15 @@ public class camRotationV2 : MonoBehaviour,IRotate
 
     //int isReply;
 
-
+    private void Awake()
+    {
+        ÝsRotateObjectAgain = 1;
+    }
 
     void Start()
     {
         animator =GetComponent<Animator>();
         character = GameObject.Find("player").GetComponent<CharacterManager>();
-
-        if (PlayerPrefs.HasKey(gameObject.name + "_canReply"))
-            ÝsRotateObjectAgain = 0;
-        else
-            ÝsRotateObjectAgain = 1;
     }
     
 
@@ -44,7 +42,6 @@ public class camRotationV2 : MonoBehaviour,IRotate
         if (collision.gameObject.name == "player" && ÝsRotateObjectAgain == 1)
         {
             collideDedection = true;
-            ÝsRotateObjectAgain = 0;
           
         }
     }
@@ -59,15 +56,17 @@ public class camRotationV2 : MonoBehaviour,IRotate
 
     public void RotateObject()
     {
-        if (collideDedection == true && isRight)
+        if (collideDedection == true && isRight && ÝsRotateObjectAgain == 1)
         {
             character.camrotate = true;
+            ÝsRotateObjectAgain = 0;
             character.right90 = true;
             animator.SetBool("triggeractivate", true);
         }
-        else if (collideDedection == true && isLeft)
+        else if (collideDedection == true && isLeft && ÝsRotateObjectAgain == 1)
         {
             character.camrotate = true;
+            ÝsRotateObjectAgain = 0;
             character.left90 = true;
             animator.SetBool("triggeractivate", true);
         }
@@ -79,6 +78,7 @@ public class camRotationV2 : MonoBehaviour,IRotate
 
     public void IfStartOff()
     {
+        Debug.Log("deactivate");
         ÝsRotateObjectAgain = 0;
         animator.SetBool("triggeractivate", true);
     }
