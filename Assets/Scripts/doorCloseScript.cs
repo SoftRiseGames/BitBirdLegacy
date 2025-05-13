@@ -7,6 +7,10 @@ public class doorCloseScript : MonoBehaviour
     public kapi kapi;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        kapi.isPassControl();
+        if(kapi.saverinteger == 0)
+        {
+            kapi.isPassControl();
+        }
+        
     }
 }

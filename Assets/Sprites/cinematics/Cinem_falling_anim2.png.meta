@@ -145,10 +145,10 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 11
-        height: 9
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 10
+        height: 11
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -164,12 +164,12 @@ TextureImporter:
       name: Cinem_falling_anim2_1
       rect:
         serializedVersion: 2
-        x: 15
+        x: 16
         y: 0
-        width: 11
-        height: 9
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 10
+        height: 11
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -185,12 +185,12 @@ TextureImporter:
       name: Cinem_falling_anim2_2
       rect:
         serializedVersion: 2
-        x: 31
+        x: 32
         y: 0
-        width: 11
-        height: 9
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 10
+        height: 11
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

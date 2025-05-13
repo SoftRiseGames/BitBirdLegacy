@@ -168,6 +168,16 @@ public class CharacterManager : MonoBehaviour
 
 
     }
+    private void OnEnable()
+    {
+        kapi.isMove += isCharacterMove;
+        kapi.isNonMove += isCharacterNonMove;
+    }
+    private void OnDisable()
+    {
+        kapi.isMove -= isCharacterMove;
+        kapi.isNonMove -= isCharacterNonMove;
+    }
     void StartPrefs()
     {
         if (PlayerPrefs.HasKey("gravityX") && PlayerPrefs.HasKey("gravityY"))
@@ -276,6 +286,20 @@ public class CharacterManager : MonoBehaviour
         }
     }
 
+    void isCharacterMove()
+    {
+        
+        canWalk = true;
+        canJump = true;
+        canDash = true;
+    }
+    void isCharacterNonMove()
+    {
+        rb.velocity = Vector2.zero;
+        canWalk = false;
+        canJump = false;
+        canDash = false;
+    }
     void coyoteControl()
     {
         if (coyoteTimeCounter > 0f)

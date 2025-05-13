@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.InputSystem;
+using System;
 public class kapi : MonoBehaviour
 {
     [SerializeField] GameObject dotweengidisPoint;
@@ -16,7 +17,8 @@ public class kapi : MonoBehaviour
     Vector2 objectStartTransform;
 
     public PlayerInput PlayerInput;
-    
+    public static Action isNonMove;
+    public static Action isMove;
     private void Awake()
     {
         objectStartTransform = this.gameObject.transform.position;
@@ -45,9 +47,11 @@ public class kapi : MonoBehaviour
           
             if (character.isFollow && PlayerInput.actions["Interactivity"].IsPressed())
             {
+               
+                isNonMove.Invoke();
                 character.isFollow = false;
                 character.transform.GetChild(4).GetComponent<KeyScript>().Suicide();
-                gameObject.transform.DOMove(dotweengidisPoint.transform.position, gidis).SetEase(Ease.Linear);
+                gameObject.transform.DOMove(dotweengidisPoint.transform.position, gidis).SetEase(Ease.Linear).OnComplete(() => isMove.Invoke());
             }
         }
         if (Vector2.Distance(character.transform.position, gameObject.transform.position) < 3 &&saverinteger == 0)
@@ -61,7 +65,8 @@ public class kapi : MonoBehaviour
     }
     public void isPassControl()
     {
-        gameObject.transform.DOMove(objectStartTransform, gidis).SetEase(Ease.Linear);
+        isNonMove.Invoke();
+        gameObject.transform.DOMove(objectStartTransform, gidis).SetEase(Ease.Linear).OnComplete(() => isMove.Invoke());
         saverinteger = 1;
         PlayerPrefs.SetInt(gameObject.transform.name, saverinteger);
     }

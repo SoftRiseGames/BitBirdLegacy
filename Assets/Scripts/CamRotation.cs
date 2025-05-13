@@ -14,9 +14,15 @@ public class CamRotation : MonoBehaviour,IRotate
 
     public int ÝsRotateObjectAgain { get; set; }
 
+    private void Awake()
+    {
+        ÝsRotateObjectAgain = 1;
+        animator = GetComponent<Animator>();
+    }
+
     void Start()
     {
-        animator = GetComponent<Animator>();
+        
         character = GameObject.Find("player").GetComponent<CharacterManager>();
     }
     private void OnTriggerEnter2D(Collider2D collision)
