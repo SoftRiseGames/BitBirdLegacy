@@ -11,6 +11,10 @@ public class VoiceManager : MonoBehaviour
     public List<_SOSfx> Sfx;
     [TabGroup("Music Sounds")]
     public List<AudioClip> Voice;
+    [TabGroup("Music Settings")]
+    public float MUsicVolumeSettings;
+    [TabGroup("SFX Settings")]
+    public float SFXVolumeSettings;
     void Start()
     {
         audioSource = GetComponent<AudioSource>();

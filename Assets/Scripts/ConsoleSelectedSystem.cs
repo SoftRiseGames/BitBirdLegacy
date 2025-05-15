@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using Cinemachine;
 using UnityEngine.InputSystem;
+using Sirenix.OdinInspector;
 
 public class ConsoleSelectedSystem : MonoBehaviour
 {
@@ -15,10 +16,23 @@ public class ConsoleSelectedSystem : MonoBehaviour
     private CinemachineVirtualCamera selectedSpecialCamera;
     [SerializeField] GameObject FirstSelectedButton;
     [SerializeField] List<Canvas> AllCanvas;
-    
+    [SerializeField] GameObject PauseMenu;
+    public List<GameObject> OptionsButtons;
+    public List<GameObject> OptionsSelectionButtons;
+    [SerializeField] GameObject MainCamera;
+    float defaultblend;
+    [TabGroup("OptionFirstSelectionButton")]
+    [SerializeField] GameObject PauseMenuFirstObject;
+    [TabGroup("OptionFirstSelectionButton")]
+    [SerializeField] GameObject KeyMappingFirstObject;
+    [TabGroup("OptionFirstSelectionButton")]
+    [SerializeField] GameObject OptionsMenuFirstObject;
+
+
     private void Start()
     {
         StandardCamera = GameObject.Find("StandardCamera").GetComponent<CinemachineVirtualCamera>();
+        defaultblend = MainCamera.GetComponent<CinemachineBrain>().m_DefaultBlend.m_Time;
     }
     
     void ConsoleOff()
@@ -46,6 +60,7 @@ public class ConsoleSelectedSystem : MonoBehaviour
     }
     public void DoActionForFirstConsoleSelect()
     {
+        Debug.Log("firstconsole");
         selectedSpecialCamera = ConnectedCamera[0];
         ConsoleOff();
         EventSystem.current.SetSelectedGameObject(null);
@@ -80,8 +95,45 @@ public class ConsoleSelectedSystem : MonoBehaviour
         selectedSpecialCamera.gameObject.SetActive(false);
         StandardCamera.gameObject.SetActive(true);
     }
-    
-
-
-
+    public void OptionsMenuOpen()
+    {
+        OptionsButtons[0].gameObject.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(OptionsMenuFirstObject);
+    }
+    public void KeyMappingMenuOpen()
+    {
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(KeyMappingFirstObject);
+        OptionsButtons[1].gameObject.SetActive(true);
+    }
+    public void GoToPauseScreen()
+    {
+        foreach(CinemachineVirtualCamera i in ConnectedCamera)
+        {
+            i.gameObject.SetActive(false);
+        }
+        MainCamera.GetComponent<CinemachineBrain>().m_DefaultBlend.m_Time = 0;
+        StandardCamera.gameObject.SetActive(true);
+        PauseMenu.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(PauseMenuFirstObject);
+    }
+    public void GoToConsoleSelectionScreen()
+    {
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(FirstSelectedButton);
+        MainCamera.GetComponent<CinemachineBrain>().m_DefaultBlend.m_Time = defaultblend;
+        PauseMenu.SetActive(false);
+    }
+    public void GoToOptionsMenu()
+    {
+        foreach(GameObject i in OptionsButtons)
+        {
+            i.SetActive(false);
+        }
+        ConsoleOn();
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(PauseMenuFirstObject);
+    }
 }
