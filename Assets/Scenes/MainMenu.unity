@@ -3761,6 +3761,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 959dc0000f79df943bbd32a0b96f0b1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isMusicSlider: 1
+  isSFXSlider: 0
 --- !u!1 &1027239151
 GameObject:
   m_ObjectHideFlags: 0
@@ -7460,6 +7462,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 959dc0000f79df943bbd32a0b96f0b1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isMusicSlider: 0
+  isSFXSlider: 1
 --- !u!1 &2006260421
 GameObject:
   m_ObjectHideFlags: 0
@@ -7745,7 +7749,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Sfx: []
   Voice: []
-  MUsicVolumeSettings: 0
+  MusicVolumeSettings: 0
   SFXVolumeSettings: 0
 --- !u!4 &2032829284
 Transform:

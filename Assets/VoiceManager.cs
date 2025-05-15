@@ -12,7 +12,7 @@ public class VoiceManager : MonoBehaviour
     [TabGroup("Music Sounds")]
     public List<AudioClip> Voice;
     [TabGroup("Music Settings")]
-    public float MUsicVolumeSettings;
+    public float MusicVolumeSettings;
     [TabGroup("SFX Settings")]
     public float SFXVolumeSettings;
     void Start()
