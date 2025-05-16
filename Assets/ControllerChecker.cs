@@ -2,17 +2,21 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.DualShock;
 using UnityEngine.InputSystem.XInput;
-
+using System;
 
 public class ControllerChecker : MonoBehaviour
 {
     private string currentControlScheme = "None";
+    public static Action isPS;
+    public static Action isXbox;
+    public static Action isKB;
 
     void Start()
     {
         // Baðlantý deðiþimlerini dinle
         InputSystem.onDeviceChange += OnDeviceChange;
         DetectCurrentControlScheme();
+        DetectInputActivity();
     }
 
     void Update()
@@ -41,11 +45,13 @@ public class ControllerChecker : MonoBehaviour
 
             if (firstGamepad is XInputController)
             {
+                isXbox.Invoke();
                 currentControlScheme = "Gamepad";
                 Debug.Log("Xbox");
             }
             else if ((firstGamepad is DualSenseGamepadHID) || (firstGamepad is DualShockGamepad))
             {
+                isPS.Invoke();
                 currentControlScheme = "Gamepad";
                 Debug.Log("PS");
             }
@@ -53,6 +59,7 @@ public class ControllerChecker : MonoBehaviour
         }
         else if (Keyboard.current != null)
         {
+            isKB.Invoke();
             currentControlScheme = "Keyboard";
             Debug.Log("Sadece klavye baðlý.");
         }
@@ -60,6 +67,7 @@ public class ControllerChecker : MonoBehaviour
         {
             currentControlScheme = "None";
             Debug.Log("Hiçbir cihaz baðlý deðil.");
+            return;
         }
     }
 
