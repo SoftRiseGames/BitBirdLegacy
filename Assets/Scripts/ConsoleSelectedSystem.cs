@@ -121,8 +121,10 @@ public class ConsoleSelectedSystem : MonoBehaviour
     }
     public void GoToConsoleSelectionScreen()
     {
+       
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(FirstSelectedButton);
+        ConsoleOn();
         MainCamera.GetComponent<CinemachineBrain>().m_DefaultBlend.m_Time = defaultblend;
         PauseMenu.SetActive(false);
     }
@@ -132,7 +134,6 @@ public class ConsoleSelectedSystem : MonoBehaviour
         {
             i.SetActive(false);
         }
-        ConsoleOn();
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(PauseMenuFirstObject);
     }
