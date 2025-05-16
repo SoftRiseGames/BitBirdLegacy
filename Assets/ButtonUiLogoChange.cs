@@ -12,16 +12,21 @@ public class ButtonUiLogoChange : MonoBehaviour,IControllerDedection
     
     private void OnEnable()
     {
-        ControllerChecker.isKB += isKB;
-        ControllerChecker.isPS += isPS;
-        ControllerChecker.isXbox += isXbox;
+     
     }
     private void OnDisable()
     {
-        ControllerChecker.isKB -= isKB;
-        ControllerChecker.isPS -= isPS;
-        ControllerChecker.isXbox -= isXbox;
     }
+    private void Update()
+    {
+        if (ControllerChecker.isKB)
+            isKB();
+        else if (ControllerChecker.isPS)
+            isPS();
+        else
+            isXbox();
+    }
+
 
     public void isKB()
     {

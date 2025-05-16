@@ -108,6 +108,16 @@ AnimationClip:
       value: {fileID: 1483577465, guid: 0110fde772a99a1499fda0e4fb03d32b, type: 3}
     - time: 5.016667
       value: {fileID: 1483577465, guid: 0110fde772a99a1499fda0e4fb03d32b, type: 3}
+    - time: 5.2166667
+      value: {fileID: -495315926, guid: 63e5f7c1899fc914ebb5604de81995e8, type: 3}
+    - time: 5.616667
+      value: {fileID: -466628511, guid: 63e5f7c1899fc914ebb5604de81995e8, type: 3}
+    - time: 5.9666667
+      value: {fileID: -1834373015, guid: 63e5f7c1899fc914ebb5604de81995e8, type: 3}
+    - time: 6.366667
+      value: {fileID: 559754911, guid: 63e5f7c1899fc914ebb5604de81995e8, type: 3}
+    - time: 6.766667
+      value: {fileID: 628520710, guid: 63e5f7c1899fc914ebb5604de81995e8, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -160,12 +170,17 @@ AnimationClip:
     - {fileID: 1483577465, guid: 0110fde772a99a1499fda0e4fb03d32b, type: 3}
     - {fileID: 1483577465, guid: 0110fde772a99a1499fda0e4fb03d32b, type: 3}
     - {fileID: 1483577465, guid: 0110fde772a99a1499fda0e4fb03d32b, type: 3}
+    - {fileID: -495315926, guid: 63e5f7c1899fc914ebb5604de81995e8, type: 3}
+    - {fileID: -466628511, guid: 63e5f7c1899fc914ebb5604de81995e8, type: 3}
+    - {fileID: -1834373015, guid: 63e5f7c1899fc914ebb5604de81995e8, type: 3}
+    - {fileID: 559754911, guid: 63e5f7c1899fc914ebb5604de81995e8, type: 3}
+    - {fileID: 628520710, guid: 63e5f7c1899fc914ebb5604de81995e8, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 5.033334
+    m_StopTime: 6.783334
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -268,7 +283,14 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 1
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 6.7833333
+    functionName: SceneSkip
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
 --- !u!114 &-4318478380972546042
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -422,7 +444,7 @@ MonoBehaviour:
     m_Start: 0
     m_ClipIn: 0
     m_Asset: {fileID: 6268094087068244765}
-    m_Duration: 5.033333333333333
+    m_Duration: 6.783333333333333
     m_TimeScale: 1
     m_ParentTrack: {fileID: 1391186477089755643}
     m_EaseInDuration: 0
@@ -554,7 +576,7 @@ MonoBehaviour:
     m_Start: 1.55
     m_ClipIn: 0
     m_Asset: {fileID: -8481272960050060367}
-    m_Duration: 3.45
+    m_Duration: 5.233333333333333
     m_TimeScale: 1
     m_ParentTrack: {fileID: 8317070905577268350}
     m_EaseInDuration: 0

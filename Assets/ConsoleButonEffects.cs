@@ -14,11 +14,11 @@ public class ConsoleButonEffects : MonoBehaviour
     {
         if (EventSystem.current.currentSelectedGameObject == this.gameObject)
         {
-            BirdImage.gameObject.SetActive(true);
+            BirdImage.gameObject.GetComponent<Image>().color = new Color(255, 255, 255, 255);
         }
         else
         {
-            BirdImage.gameObject.SetActive(false);
+            BirdImage.gameObject.GetComponent<Image>().color = new Color(255, 255, 255, 0);
         }
     }
 }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a250dd723e00662409d3f7de830fe96d, type: 3}
   m_Name: Tramboline
   m_EditorClassIdentifier: 
-  audioClip: {fileID: 8300000, guid: b93fdd5b2908f4147945cda1e96e338f, type: 3}
+  audioClip: {fileID: 0}
   SFX_Name: Tramboline
   pitch: 1
   Volume: 1

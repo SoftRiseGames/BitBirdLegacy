@@ -5,7 +5,15 @@ using DG.Tweening;
 using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
-  public void Scenemanagement()
+    private void Start()
+    {
+        if(SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+    }
+    public void SceneSkip()
     {
         Debug.Log("scene");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);

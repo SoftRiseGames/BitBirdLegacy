@@ -152,7 +152,7 @@ public class CharacterManager : MonoBehaviour
     public PlayerInput playerInput;
 
     public static Action isGround;
-    
+    bool isBreakableGround;
 
     void Start()
     {
@@ -398,10 +398,15 @@ public class CharacterManager : MonoBehaviour
                 this.gameObject.transform.SetParent(collisionPoint.transform, true);
 
             if (collisionPoint.gameObject.tag == "Breakable")
-                collisionPoint.GetComponent<GoundAnimated>().AnimatorStarted();
-
-           if(collisionPoint.gameObject.tag != "Breakable")
             {
+                collisionPoint.GetComponent<GoundAnimated>().AnimatorStarted();
+                isBreakableGround = true;
+            }
+               
+
+           if(collisionPoint.gameObject.tag != "Breakable" && isBreakableGround == true)
+            {
+                isBreakableGround = false;
                 isGround.Invoke();
             }
 

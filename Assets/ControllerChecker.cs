@@ -7,16 +7,21 @@ using System;
 public class ControllerChecker : MonoBehaviour
 {
     private string currentControlScheme = "None";
-    public static Action isPS;
-    public static Action isXbox;
-    public static Action isKB;
+    public static bool isPS;
+    public static bool isXbox;
+    public static bool isKB;
 
+    bool isKBActive;
+    bool isGamepadActive;
     void Start()
     {
+      
         // Baðlantý deðiþimlerini dinle
         InputSystem.onDeviceChange += OnDeviceChange;
         DetectCurrentControlScheme();
         DetectInputActivity();
+        
+       
     }
 
     void Update()
@@ -36,30 +41,32 @@ public class ControllerChecker : MonoBehaviour
     {
         var gamepads = Gamepad.all;
        
-      
-
-        
         if (gamepads.Count > 0)
         {
             var firstGamepad = gamepads[gamepads.Count-1];
 
             if (firstGamepad is XInputController)
             {
-                isXbox.Invoke();
+                isXbox = true;
+                isPS = false;
+                isKB = false;
                 currentControlScheme = "Gamepad";
                 Debug.Log("Xbox");
             }
             else if ((firstGamepad is DualSenseGamepadHID) || (firstGamepad is DualShockGamepad))
             {
-                isPS.Invoke();
+                isXbox = false;
+                isPS = true;
+                isKB = false;
                 currentControlScheme = "Gamepad";
                 Debug.Log("PS");
             }
-
         }
         else if (Keyboard.current != null)
         {
-            isKB.Invoke();
+            isXbox = false;
+            isPS = false;
+            isKB = true;
             currentControlScheme = "Keyboard";
             Debug.Log("Sadece klavye baðlý.");
         }
@@ -77,6 +84,9 @@ public class ControllerChecker : MonoBehaviour
         {
             if (currentControlScheme != "Keyboard")
             {
+                isXbox = false;
+                isPS = false;
+                isKB = true;
                 currentControlScheme = "Keyboard";
                 Debug.Log("Klavye kullanýlmaya baþlandý.");
             }
@@ -84,10 +94,27 @@ public class ControllerChecker : MonoBehaviour
 
         if (Gamepad.current != null && Gamepad.current.wasUpdatedThisFrame)
         {
-            if (currentControlScheme != "Gamepad")
+            var gamepads = Gamepad.all;
+            if (gamepads.Count > 0)
             {
-                currentControlScheme = "Gamepad";
-                Debug.Log("Gamepad kullanýlmaya baþlandý.");
+                var firstGamepad = gamepads[gamepads.Count - 1];
+
+                if (firstGamepad is XInputController)
+                {
+                    isXbox = true;
+                    isPS = false;
+                    isKB = false;
+                    currentControlScheme = "Gamepad";
+                    Debug.Log("Xbox kullanýlmaya baþlandý");
+                }
+                else if ((firstGamepad is DualSenseGamepadHID) || (firstGamepad is DualShockGamepad))
+                {
+                    isXbox = false;
+                    isPS = true;
+                    isKB = false;
+                    currentControlScheme = "Gamepad";
+                    Debug.Log("PS kullanýlmaya baþlandý");
+                }
             }
         }
     }
