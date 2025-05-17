@@ -95,6 +95,10 @@ public class ConsoleSelectedSystem : MonoBehaviour
         selectedSpecialCamera.gameObject.SetActive(false);
         StandardCamera.gameObject.SetActive(true);
     }
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
     public void OptionsMenuOpen()
     {
         OptionsButtons[0].gameObject.SetActive(true);
