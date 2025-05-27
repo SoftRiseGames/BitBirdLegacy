@@ -18,6 +18,7 @@ TagManager:
   - bosspatternvertical
   - tramboline
   - Breakable
+  - DashUnlock
   layers:
   - Default
   - TransparentFX

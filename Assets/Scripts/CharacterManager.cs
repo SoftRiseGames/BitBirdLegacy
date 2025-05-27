@@ -155,6 +155,16 @@ public class CharacterManager : MonoBehaviour
     public static Action isDeathEvent;
     bool isBreakableGround;
 
+    [SerializeField] GameObject DashButtonTutorial;
+
+    int dashUnlockInteger;
+    private void Awake()
+    {
+        if (PlayerPrefs.HasKey("DashUnlocked"))
+            dashUnlockInteger = 1;
+        else
+            dashUnlockInteger = 0;
+    }
     void Start()
     {
         trailRenderer = GetComponent<TrailRenderer>();
@@ -166,6 +176,12 @@ public class CharacterManager : MonoBehaviour
         canDash = true;
         FallTimerControl = true;
         StartPrefs();
+
+        if (dashUnlockInteger == 1)
+            dashControl = true;
+        else
+            dashControl = false;
+
 
 
     }
@@ -689,7 +705,13 @@ public class CharacterManager : MonoBehaviour
             collision.GetComponent<SaverObjectList>().isTouchVoid();
 
         }
-        //Ogem demo sonras� de�i�ecek,silinecek
+        if(collision.gameObject.tag == "DashUnlock")
+        {
+            dashControl = true;
+            dashUnlockInteger = 1;
+            PlayerPrefs.SetInt("DashUnlocked", dashUnlockInteger);
+            DashButtonTutorial.SetActive(true);
+        }
         if (collision.gameObject.name == "DemoTrigger")
         {
             PlayerPrefs.DeleteAll();
@@ -698,6 +720,8 @@ public class CharacterManager : MonoBehaviour
 
 
     }
+    
+   
 
 
 
@@ -746,6 +770,10 @@ public class CharacterManager : MonoBehaviour
         if (collision.gameObject.tag == "camlimit")
         {
             InGameCamera = null;
+        }
+        if (collision.gameObject.tag == "DashUnlock")
+        {
+            DashButtonTutorial.SetActive(false);
         }
 
 
