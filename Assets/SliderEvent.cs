@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class SliderEvent : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class SliderEvent : MonoBehaviour
     float SFXVolume;
     [SerializeField] bool isMusicSlider;
     [SerializeField] bool isSFXSlider;
+    [SerializeField] List<GameObject> SliderValue;
+    [SerializeField] Image BarBG;
 
     private void Start()
     {
@@ -41,6 +44,9 @@ public class SliderEvent : MonoBehaviour
     {
         VoiceManager.instance.MusicVolumeSettings = MusicVolume;
         VoiceManager.instance.SFXVolumeSettings = SFXVolume;
+
+        valueChange();
+        ColorChange();
     }
 
 
@@ -53,5 +59,31 @@ public class SliderEvent : MonoBehaviour
     {
         SFXVolume = gameObject.GetComponent<Slider>().value;
         PlayerPrefs.SetFloat("SFXVolume", SFXVolume);
+    }
+
+    void ColorChange()
+    {
+        if(EventSystem.current.currentSelectedGameObject == gameObject)
+        {
+            BarBG.color = Color.red;
+        }
+        else
+        {
+            BarBG.color = Color.white;
+        }
+    }
+    void valueChange()
+    {
+        for(int i = 0; i<=9; i++)
+        {
+            if(i< gameObject.GetComponent<Slider>().value)
+            {
+                SliderValue[i].SetActive(true);
+            }
+            else
+            {
+                SliderValue[i].SetActive(false);
+            }
+        }
     }
 }
