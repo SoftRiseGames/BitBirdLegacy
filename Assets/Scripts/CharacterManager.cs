@@ -152,6 +152,7 @@ public class CharacterManager : MonoBehaviour
     public PlayerInput playerInput;
 
     public static Action isGround;
+    public static Action isDeathEvent;
     bool isBreakableGround;
 
     void Start()
@@ -930,6 +931,10 @@ public class CharacterManager : MonoBehaviour
 
     }
 
+    public void Restart()
+    {
+        isDeathEvent.Invoke();
+    }
 
     void gravity()
     {

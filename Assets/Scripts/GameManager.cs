@@ -18,10 +18,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("scene");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
-    public void restart()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
+    
     //demodan sonra silinecek
     private void Update()
     {

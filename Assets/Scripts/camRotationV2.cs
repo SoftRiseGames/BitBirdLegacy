@@ -42,7 +42,6 @@ public class camRotationV2 : MonoBehaviour,IRotate
         if (collision.gameObject.name == "player" && ÝsRotateObjectAgain == 1)
         {
             collideDedection = true;
-          
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -70,10 +69,7 @@ public class camRotationV2 : MonoBehaviour,IRotate
             character.left90 = true;
             animator.SetBool("triggeractivate", true);
         }
-        else if (collideDedection == false && ÝsRotateObjectAgain == 0)
-        {
-            animator.SetBool("triggeractivate", false);
-        }
+        
     }
 
     public void IfStartOff()
