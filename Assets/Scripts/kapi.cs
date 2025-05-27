@@ -50,7 +50,7 @@ public class kapi : MonoBehaviour
                
                 isNonMove.Invoke();
                 character.isFollow = false;
-                character.transform.GetChild(4).GetComponent<KeyScript>().Suicide();
+                character.transform.GetChild(5).GetComponent<KeyScript>().Suicide();
                 gameObject.transform.DOMove(dotweengidisPoint.transform.position, gidis).SetEase(Ease.Linear).OnComplete(() => isMove.Invoke());
             }
         }

@@ -14,16 +14,30 @@ public class MoveableDeathObjectCode : MonoBehaviour
 
     void Start()
     {
-        startPos = transform.position;
+        Vector3 startPos = transform.position;
+        bool isFlipped = false;
 
         Sequence seq = DOTween.Sequence();
 
         seq.Append(transform.DOMove(dotweengidisPoint.transform.position, gidis)
-                .SetEase(Ease.InOutSine)) // ivmelenerek baþlar ve yavaþlayarak biter
+                .SetEase(Ease.InOutSine))
+           .AppendCallback(() =>
+           {
+       // 180 derece döndür
+       //transform.rotation = Quaternion.Euler(0, 0, 180f);
+               isFlipped = true;
+           })
            .AppendInterval(StoppingAmount)
            .Append(transform.DOMove(startPos, gidis)
                 .SetEase(Ease.InOutSine))
+           .AppendCallback(() =>
+           {
+       // Orijinal yöne geri döndür
+       //transform.rotation = Quaternion.Euler(0, 0f, 0);
+               isFlipped = false;
+           })
            .AppendInterval(StoppingAmount)
            .SetLoops(-1);
+
     }
 }
