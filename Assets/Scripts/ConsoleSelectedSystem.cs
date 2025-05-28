@@ -28,12 +28,12 @@ public class ConsoleSelectedSystem : MonoBehaviour
     [TabGroup("OptionFirstSelectionButton")]
     [SerializeField] GameObject OptionsMenuFirstObject;
 
-
-    private void Start()
+    private void Awake()
     {
         StandardCamera = GameObject.Find("StandardCamera").GetComponent<CinemachineVirtualCamera>();
         defaultblend = MainCamera.GetComponent<CinemachineBrain>().m_DefaultBlend.m_Time;
     }
+ 
     
     void ConsoleOff()
     {

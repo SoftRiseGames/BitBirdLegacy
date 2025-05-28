@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using System.Threading.Tasks;
-
+using UnityEngine.InputSystem;
 
 public class PauseModeManager : MonoBehaviour
 {
@@ -13,6 +13,19 @@ public class PauseModeManager : MonoBehaviour
     [SerializeField] GameObject KeyMappingFirstSelect;
     [SerializeField] List<GameObject> Canvases;
     [SerializeField] GameObject PauseScene;
+    public PlayerInput playerInput;
+    private void Awake()
+    {
+        PauseScene.SetActive(false);
+    }
+    void Update()
+    {
+        if (playerInput.actions["MainMenu"].IsPressed())
+        {
+            PauseScene.SetActive(true);
+            Time.timeScale = 0;
+        }
+    }
 
     public void OptionsButtonEvent()
     {
@@ -48,6 +61,10 @@ public class PauseModeManager : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+    public void GoToMainMenu()
+    {
+        SceneManager.LoadScene(0);
     }
    
 

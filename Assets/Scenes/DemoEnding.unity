@@ -7363,6 +7363,7 @@ MonoBehaviour:
   left90: 0
   right90: 0
   playerInput: {fileID: 471359095}
+  DashButtonTutorial: {fileID: 0}
 --- !u!114 &624771873
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21493,6 +21494,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 470905575, guid: df66a9b170b0e9b43bf04338bfd657f7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 470905575, guid: df66a9b170b0e9b43bf04338bfd657f7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 470905575, guid: df66a9b170b0e9b43bf04338bfd657f7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1281660874}
+    - target: {fileID: 470905575, guid: df66a9b170b0e9b43bf04338bfd657f7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 470905575, guid: df66a9b170b0e9b43bf04338bfd657f7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: GoToMainMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 470905575, guid: df66a9b170b0e9b43bf04338bfd657f7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PauseModeManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 470905575, guid: df66a9b170b0e9b43bf04338bfd657f7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 1803633311010475054, guid: df66a9b170b0e9b43bf04338bfd657f7, type: 3}
       propertyPath: m_RootOrder
       value: 15
@@ -21541,97 +21570,25 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1281660874}
-    - target: {fileID: 2833099881766939228, guid: df66a9b170b0e9b43bf04338bfd657f7, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OptionsButtonEvent
-      objectReference: {fileID: 0}
-    - target: {fileID: 2833099881766939228, guid: df66a9b170b0e9b43bf04338bfd657f7, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: PauseModeManager, Assembly-CSharp
-      objectReference: {fileID: 0}
     - target: {fileID: 2833099881944818725, guid: df66a9b170b0e9b43bf04338bfd657f7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1281660874}
-    - target: {fileID: 2833099881944818725, guid: df66a9b170b0e9b43bf04338bfd657f7, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: QuitToMain
-      objectReference: {fileID: 0}
-    - target: {fileID: 2833099881944818725, guid: df66a9b170b0e9b43bf04338bfd657f7, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: PauseModeManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 2833099882471975008, guid: df66a9b170b0e9b43bf04338bfd657f7, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2833099882471975020, guid: df66a9b170b0e9b43bf04338bfd657f7, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2833099882471975020, guid: df66a9b170b0e9b43bf04338bfd657f7, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2833099882471975020, guid: df66a9b170b0e9b43bf04338bfd657f7, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2833099882471975020, guid: df66a9b170b0e9b43bf04338bfd657f7, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2833099882471975020, guid: df66a9b170b0e9b43bf04338bfd657f7, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2833099882471975020, guid: df66a9b170b0e9b43bf04338bfd657f7, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2833099882587474621, guid: df66a9b170b0e9b43bf04338bfd657f7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1281660874}
-    - target: {fileID: 2833099882587474621, guid: df66a9b170b0e9b43bf04338bfd657f7, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: QuitToMain
-      objectReference: {fileID: 0}
-    - target: {fileID: 2833099882587474621, guid: df66a9b170b0e9b43bf04338bfd657f7, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: PauseModeManager, Assembly-CSharp
-      objectReference: {fileID: 0}
     - target: {fileID: 2833099882800081746, guid: df66a9b170b0e9b43bf04338bfd657f7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1281660874}
-    - target: {fileID: 2833099882800081746, guid: df66a9b170b0e9b43bf04338bfd657f7, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: QuitGame
-      objectReference: {fileID: 0}
-    - target: {fileID: 2833099882800081746, guid: df66a9b170b0e9b43bf04338bfd657f7, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: PauseModeManager, Assembly-CSharp
-      objectReference: {fileID: 0}
     - target: {fileID: 2833099883513556539, guid: df66a9b170b0e9b43bf04338bfd657f7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1281660874}
-    - target: {fileID: 2833099883513556539, guid: df66a9b170b0e9b43bf04338bfd657f7, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: KeyMappingButtonEvent
-      objectReference: {fileID: 0}
-    - target: {fileID: 2833099883513556539, guid: df66a9b170b0e9b43bf04338bfd657f7, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: PauseModeManager, Assembly-CSharp
-      objectReference: {fileID: 0}
     - target: {fileID: 8391690022681695320, guid: df66a9b170b0e9b43bf04338bfd657f7, type: 3}
       propertyPath: m_Name
       value: Menu
-      objectReference: {fileID: 0}
-    - target: {fileID: 8391690022681695320, guid: df66a9b170b0e9b43bf04338bfd657f7, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df66a9b170b0e9b43bf04338bfd657f7, type: 3}
@@ -22303,7 +22260,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1044885318
 RectTransform:
   m_ObjectHideFlags: 0
@@ -22337,7 +22294,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonSprites:
-  - sprite: {fileID: 21300000, guid: 3fa543f41df5ae945966d0a4579ddaa1, type: 3}
+  - sprite: {fileID: 21300000, guid: 4b4a176334b473e4b851ac22150bf5d1, type: 3}
     size: {x: 54, y: 54}
   - sprite: {fileID: 1163873051, guid: 4fec1bc03029f7247bad6af2fa4e4ac9, type: 3}
     size: {x: 47, y: 47}
@@ -22966,6 +22923,7 @@ MonoBehaviour:
   - {fileID: 911880610}
   - {fileID: 911880611}
   PauseScene: {fileID: 867557443}
+  playerInput: {fileID: 471359095}
 --- !u!4 &1281660875
 Transform:
   m_ObjectHideFlags: 0

@@ -7,18 +7,13 @@ public class MainMenuOpener : MonoBehaviour
 {
     public PlayerInput playerInput;
     [SerializeField] GameObject MainMenu;
-    void Start()
-    {
-        
-    }
 
-    
     void Update()
     {
         if (playerInput.actions["MainMenu"].IsPressed())
         {
-            Time.timeScale = 0;
             MainMenu.SetActive(true);
+            //Time.timeScale = 0;
         }
     }
 
