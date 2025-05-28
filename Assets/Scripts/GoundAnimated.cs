@@ -22,7 +22,7 @@ public class GoundAnimated : MonoBehaviour
 
     private void Update()
     {
-        GroundRevive();
+       
         Debug.Log(isStartedBreak);
     }
     void isReviveCheck() 
@@ -31,6 +31,8 @@ public class GoundAnimated : MonoBehaviour
             isRevive = true;
         else
             isRevive = false;
+
+        GroundRevive();
     }
 
     public void isBreakStartCheck() 
@@ -48,8 +50,11 @@ public class GoundAnimated : MonoBehaviour
 
     void GroundRevive()
     {
-        if(isRevive)
+        if (isRevive)
+        {
             animator.SetBool("isReactivate", true);
+        }
+            
     }
 
     
