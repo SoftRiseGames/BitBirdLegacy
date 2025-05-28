@@ -73,7 +73,7 @@ public class CamRotation : MonoBehaviour,IRotate
                 isRight = true;
                 isleft = false;
                 animator.SetBool("sagtrigger", true);
-
+                RotationVoiceManager.instance.SFXSoundPlay(0);
                 //animator.SetBool("triggeractivate", true);
                 //StartCoroutine(animtimer());
             }
@@ -106,6 +106,7 @@ public class CamRotation : MonoBehaviour,IRotate
                 isRight = false;
                 isleft = false;
                 animator.SetBool("soldansagatrigger", true);
+                RotationVoiceManager.instance.SFXSoundPlay(0);
                 //animator.SetBool("triggeractivate", true);
                 //StartCoroutine(animtimer());
             }
@@ -118,6 +119,7 @@ public class CamRotation : MonoBehaviour,IRotate
                 character.right90 = true;
                 isRight = true;
                 animator.SetBool("sagtrigger", true);
+                RotationVoiceManager.instance.SFXSoundPlay(0);
                 //animator.SetBool("triggeractivate", true);
                 //StartCoroutine(animtimer());
             }

@@ -31,20 +31,6 @@ public class VoiceManager : MonoBehaviour
         audioSource.pitch = Sfx[i].pitch;
         audioSource.volume = Sfx[i].Volume;
         audioSource.Play();
-        /*
-        foreach(_SOSfx i in Sfx)
-        {
-            if (i.name == SfxName)
-            {
-                audioSource.clip = i.audioClip;
-                audioSource.pitch = i.pitch;
-                audioSource.volume = i.Volume;
-
-                audioSource.Play();
-            }
-            
-        }
-        */
-       
+        
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class VoiceAnimationEffectVoid : MonoBehaviour
 {
+
     public void DashPlay()
     {
         VoiceManager.instance.SFXSoundPlay(1);
@@ -22,6 +23,10 @@ public class VoiceAnimationEffectVoid : MonoBehaviour
     }
     public void TrambolinePlay()
     {
-        VoiceManager.instance.SFXSoundPlay(4);
+        TrambolineVoiceManager.instance.SFXSoundPlay(0);
+    }
+    public void RotationPlay()
+    {
+        
     }
 }

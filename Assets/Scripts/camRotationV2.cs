@@ -42,6 +42,7 @@ public class camRotationV2 : MonoBehaviour,IRotate
         if (collision.gameObject.name == "player" && ÝsRotateObjectAgain == 1)
         {
             collideDedection = true;
+
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -50,6 +51,8 @@ public class camRotationV2 : MonoBehaviour,IRotate
         {
             collideDedection = false;
             character.camrotate = false;
+          
+
         }
     }
 
@@ -61,6 +64,7 @@ public class camRotationV2 : MonoBehaviour,IRotate
             ÝsRotateObjectAgain = 0;
             character.right90 = true;
             animator.SetBool("triggeractivate", true);
+            RotationVoiceManager.instance.SFXSoundPlay(0);
         }
         else if (collideDedection == true && isLeft && ÝsRotateObjectAgain == 1)
         {
@@ -68,6 +72,7 @@ public class camRotationV2 : MonoBehaviour,IRotate
             ÝsRotateObjectAgain = 0;
             character.left90 = true;
             animator.SetBool("triggeractivate", true);
+            RotationVoiceManager.instance.SFXSoundPlay(0);
         }
         
     }

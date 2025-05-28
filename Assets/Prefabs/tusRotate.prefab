@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3647121093370491668}
   - component: {fileID: 6575975240940501000}
   - component: {fileID: 9213246331321513541}
+  - component: {fileID: 5434517033846336356}
   m_Layer: 0
   m_Name: tusRotate
   m_TagString: Untagged
@@ -104,7 +105,6 @@ MonoBehaviour:
   collideDedection: 0
   isLeft: 0
   isRight: 0
-  isReply: 0
 --- !u!95 &6575975240940501000
 Animator:
   serializedVersion: 4
@@ -151,3 +151,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.07935792, y: 0.07648635}
   m_EdgeRadius: 0
+--- !u!114 &5434517033846336356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6575975240940501003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a67d3e4229d1da41a9cda8488429255, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

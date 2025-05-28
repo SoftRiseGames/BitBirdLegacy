@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1412684222059620126}
   - component: {fileID: 1412684222059620127}
   - component: {fileID: 1412684222059620120}
+  - component: {fileID: 45387439094426920}
   m_Layer: 0
   m_Name: kol
   m_TagString: camrotate
@@ -105,6 +106,7 @@ MonoBehaviour:
   isDoubleSide: 0
   isleft: 0
   isRight: 0
+  playerInput: {fileID: 0}
 --- !u!61 &1412684222059620127
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -151,6 +153,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &45387439094426920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1412684222059620324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a67d3e4229d1da41a9cda8488429255, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6919803666051434484
 GameObject:
   m_ObjectHideFlags: 0
