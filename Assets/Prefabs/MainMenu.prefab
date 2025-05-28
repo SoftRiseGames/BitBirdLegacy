@@ -90,7 +90,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonSprites:
-  - sprite: {fileID: 21300000, guid: 3fa543f41df5ae945966d0a4579ddaa1, type: 3}
+  - sprite: {fileID: 21300000, guid: 4b4a176334b473e4b851ac22150bf5d1, type: 3}
     size: {x: 54, y: 54}
   - sprite: {fileID: 1163873051, guid: 4fec1bc03029f7247bad6af2fa4e4ac9, type: 3}
     size: {x: 47, y: 47}

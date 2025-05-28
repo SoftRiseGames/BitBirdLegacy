@@ -7,7 +7,7 @@ public class SaverObjectList : MonoBehaviour
 {
     public List<GameObject> RotationObjects;
 
-    int isTouched = 0;
+    public int isTouched = 0;
     private void Awake()
     {
         if (PlayerPrefs.HasKey(gameObject.name + "_isSave"))

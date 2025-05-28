@@ -691,19 +691,21 @@ public class CharacterManager : MonoBehaviour
     {
         if (collision.gameObject.tag == "savepoint")
         {
+            if(collision.GetComponent<SaverObjectList>().isTouched == 0)
+            {
+                PlayerPrefs.SetFloat("gravityX", beginningGravityX);
+                PlayerPrefs.SetFloat("gravityY", beginningGravityy);
+                PlayerPrefs.SetFloat("rotation", rotationz);
 
-            PlayerPrefs.SetFloat("gravityX", beginningGravityX);
-            PlayerPrefs.SetFloat("gravityY", beginningGravityy);
-            PlayerPrefs.SetFloat("rotation", rotationz);
+                begininngPositionX = collision.gameObject.transform.position.x;
+                beginningPositionY = collision.gameObject.transform.position.y;
 
-            begininngPositionX = collision.gameObject.transform.position.x;
-            beginningPositionY = collision.gameObject.transform.position.y;
+                PlayerPrefs.SetFloat("positionX", begininngPositionX);
+                PlayerPrefs.SetFloat("positionY", beginningPositionY);
 
-            PlayerPrefs.SetFloat("positionX", begininngPositionX);
-            PlayerPrefs.SetFloat("positionY", beginningPositionY);
+                collision.GetComponent<SaverObjectList>().isTouchVoid();
 
-            collision.GetComponent<SaverObjectList>().isTouchVoid();
-
+            }
         }
         if(collision.gameObject.tag == "DashUnlock")
         {
