@@ -17,6 +17,7 @@ public class PauseModeManager : MonoBehaviour
     private void Awake()
     {
         PauseScene.SetActive(false);
+       
     }
     void Update()
     {
@@ -25,6 +26,7 @@ public class PauseModeManager : MonoBehaviour
             PauseScene.SetActive(true);
             Time.timeScale = 0;
         }
+    
     }
 
     public void OptionsButtonEvent()
@@ -47,11 +49,15 @@ public class PauseModeManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(PauseMenuFirstSelectedButton);
     }
-    public void BackTheGame()
+    public async void BackTheGame()
     {
         PauseScene.gameObject.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(PauseMenuFirstSelectedButton);
+        await Task.Delay(100);
         if (Time.timeScale == 0)
             Time.timeScale = 1;
+
     }
     public void BackToConsoleScreen()
     {

@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 using Sirenix.OdinInspector;
 using UnityEngine.InputSystem;
 using System;
+using UnityEngine.EventSystems;
 public class CharacterManager : MonoBehaviour
 {
     [TabGroup("Layers")]
@@ -182,8 +183,6 @@ public class CharacterManager : MonoBehaviour
         else
             dashControl = false;
 
-
-
     }
     private void OnEnable()
     {
@@ -249,7 +248,6 @@ public class CharacterManager : MonoBehaviour
         GizmoFlipSystem();
 
         GizmoTriggerSystem();
-        GizmoTriggerSystem();
         //Crouch();
         gravity();
 
@@ -277,11 +275,17 @@ public class CharacterManager : MonoBehaviour
         }
 
 
-        if (playerInput.actions["Jump"].WasPressedThisFrame() && coyoteTimeCounter > 0f && canDash && !DashTimerControl && canJump)
+        if (playerInput.actions["Jump"].WasPressedThisFrame() && coyoteTimeCounter > 0f && canDash && !DashTimerControl && canJump )
         {
-
-            Jump();
-            jumpEffect();
+            if (Time.timeScale > 0)
+            {
+                Jump();
+                jumpEffect();
+            }
+            else
+                return;
+          
+         
         }
 
 
