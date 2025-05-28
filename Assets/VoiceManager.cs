@@ -5,7 +5,7 @@ using Sirenix.OdinInspector;
 public class VoiceManager : MonoBehaviour
 {
     public static VoiceManager instance;
-    private  AudioSource audioSource;
+    public AudioSource audioSource;
 
     [TabGroup("SFX Sounds")]
     public List<_SOSfx> Sfx;
@@ -23,8 +23,14 @@ public class VoiceManager : MonoBehaviour
             instance = this;
     }
 
-    public void SFXSoundPlay(string SfxName)
+    public void SFXSoundPlay(int i)
     {
+        audioSource.clip = null;
+        audioSource.clip = Sfx[i].audioClip;
+        audioSource.pitch = Sfx[i].pitch;
+        audioSource.volume = Sfx[i].Volume;
+        audioSource.Play();
+        /*
         foreach(_SOSfx i in Sfx)
         {
             if (i.name == SfxName)
@@ -37,6 +43,7 @@ public class VoiceManager : MonoBehaviour
             }
             
         }
+        */
        
     }
 }

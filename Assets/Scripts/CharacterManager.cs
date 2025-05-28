@@ -157,6 +157,7 @@ public class CharacterManager : MonoBehaviour
     bool isBreakableGround;
 
     [SerializeField] GameObject DashButtonTutorial;
+    [SerializeField] VoiceManager Voices;
 
     int dashUnlockInteger;
     private void Awake()
@@ -679,7 +680,6 @@ public class CharacterManager : MonoBehaviour
             dashTimer = 0;
             canDash = false;
             isDead = true;
-            VoiceManager.instance.SFXSoundPlay("Death");
             rb.gravityScale = 0;
             canJump = false;
             NormalGravity = false;
@@ -754,10 +754,9 @@ public class CharacterManager : MonoBehaviour
 
     public void Jump()
     {
-        VoiceManager.instance.SFXSoundPlay("Jump");
         createdust();
         rb.velocity = jumpForce * transform.up;
-
+        Voices.SFXSoundPlay(2);
     }
     public void DoubleJump()
     {

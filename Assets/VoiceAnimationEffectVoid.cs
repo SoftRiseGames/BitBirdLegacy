@@ -6,22 +6,22 @@ public class VoiceAnimationEffectVoid : MonoBehaviour
 {
     public void DashPlay()
     {
-        VoiceManager.instance.SFXSoundPlay("Dash");
+        VoiceManager.instance.SFXSoundPlay(1);
     }
     public void WalkPlay()
     {
-        VoiceManager.instance.SFXSoundPlay("Walk");
+        //VoiceManager.instance.SFXSoundPlay(3);
     }
     public void DeathPlay()
     {
-        VoiceManager.instance.SFXSoundPlay("Death");
+        VoiceManager.instance.SFXSoundPlay(0);
     }
     public void JumpPlay()
     {
-        VoiceManager.instance.SFXSoundPlay("Jump");
+        VoiceManager.instance.SFXSoundPlay(2);
     }
     public void TrambolinePlay()
     {
-        VoiceManager.instance.SFXSoundPlay("Tramboline");
+        VoiceManager.instance.SFXSoundPlay(4);
     }
 }
