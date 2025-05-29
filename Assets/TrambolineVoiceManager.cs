@@ -24,7 +24,7 @@ public class TrambolineVoiceManager : MonoBehaviour
             audioSource.clip = null;
         audioSource.clip = Sfx[i].audioClip;
         audioSource.pitch = Sfx[i].pitch;
-        audioSource.volume = Sfx[i].Volume;
+        audioSource.volume = Sfx[i].Volume* (PlayerPrefs.GetFloat("SFXVolume")/10);
         audioSource.Play();
         /*
         foreach(_SOSfx i in Sfx)

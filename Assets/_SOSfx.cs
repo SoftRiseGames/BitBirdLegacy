@@ -1,5 +1,5 @@
 using UnityEngine;
-[CreateAssetMenu(fileName = "SFXX", menuName ="SFX")]
+[CreateAssetMenu(fileName = "SFX", menuName ="SFX")]
 public class _SOSfx : ScriptableObject
 {
     public AudioClip audioClip;

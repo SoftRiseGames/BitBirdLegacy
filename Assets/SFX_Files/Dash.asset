@@ -15,4 +15,4 @@ MonoBehaviour:
   audioClip: {fileID: 8300000, guid: 95538bf639a83614ba77c65a510006f1, type: 3}
   SFX_Name: Dash
   pitch: 1
-  Volume: 1
+  Volume: 0.4

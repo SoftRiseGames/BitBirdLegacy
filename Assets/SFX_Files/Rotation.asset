@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a250dd723e00662409d3f7de830fe96d, type: 3}
   m_Name: Rotation
   m_EditorClassIdentifier: 
-  audioClip: {fileID: 8300000, guid: 8194f2ff548f36c42b3fd2b0c6af1ae9, type: 3}
+  audioClip: {fileID: 8300000, guid: babeff9c57aa7a44d9765021634b3437, type: 3}
   SFX_Name: 
   pitch: 1
-  Volume: 1
+  Volume: 0.3

@@ -15,4 +15,4 @@ MonoBehaviour:
   audioClip: {fileID: 0}
   SFX_Name: Walk
   pitch: 1
-  Volume: 0
+  Volume: 0.3

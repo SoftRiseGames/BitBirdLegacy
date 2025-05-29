@@ -25,11 +25,10 @@ public class VoiceManager : MonoBehaviour
 
     public void SFXSoundPlay(int i)
     {
-       if(audioSource.isPlaying)
         audioSource.clip = null;
         audioSource.clip = Sfx[i].audioClip;
         audioSource.pitch = Sfx[i].pitch;
-        audioSource.volume = Sfx[i].Volume;
+        audioSource.volume = Sfx[i].Volume*(PlayerPrefs.GetFloat("SFXVolume")/10);
         audioSource.Play();
         
     }

@@ -15,4 +15,4 @@ MonoBehaviour:
   audioClip: {fileID: 8300000, guid: 8490063f84c6f7e4ea6391506bd07896, type: 3}
   SFX_Name: Death
   pitch: 1
-  Volume: 1
+  Volume: 0.3
