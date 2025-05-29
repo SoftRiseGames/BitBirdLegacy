@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 public class TransitionEvent : MonoBehaviour
 {
     public Animator animator;
+    [SerializeField] GameObject Music;
     private void Start()
     {
         animator = GetComponent<Animator>();

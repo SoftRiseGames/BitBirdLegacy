@@ -310,7 +310,7 @@ public class CharacterManager : MonoBehaviour
 
     void isCharacterMove()
     {
-        
+        animator.SetBool("isNonMove", false);
         canWalk = true;
         canJump = true;
         canDash = true;
@@ -318,6 +318,7 @@ public class CharacterManager : MonoBehaviour
     void isCharacterNonMove()
     {
         rb.velocity = Vector2.zero;
+        animator.SetBool("isNonMove", true);
         canWalk = false;
         canJump = false;
         canDash = false;
