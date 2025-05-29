@@ -718,13 +718,7 @@ public class CharacterManager : MonoBehaviour
             PlayerPrefs.SetInt("DashUnlocked", dashUnlockInteger);
             DashButtonTutorial.SetActive(true);
         }
-        if (collision.gameObject.name == "DemoTrigger")
-        {
-            PlayerPrefs.DeleteAll();
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        }
-
-
+        
     }
     
    

@@ -17,12 +17,14 @@ public class SliderEvent : MonoBehaviour
     {
         if (PlayerPrefs.HasKey("MusicVolume") && isMusicSlider == true)
         {
+
             MusicVolume = PlayerPrefs.GetFloat("MusicVolume");
             gameObject.GetComponent<Slider>().value = MusicVolume;
+            
         }
         else if(isMusicSlider == true)
         {
-            MusicVolume = 100;
+            MusicVolume = 10;
             gameObject.GetComponent<Slider>().value = MusicVolume;
         }
 
@@ -33,7 +35,7 @@ public class SliderEvent : MonoBehaviour
         }
         else if (isSFXSlider == true)
         {
-            SFXVolume = 100;
+            SFXVolume = 10;
             gameObject.GetComponent<Slider>().value = SFXVolume;
         }
         else
@@ -44,7 +46,7 @@ public class SliderEvent : MonoBehaviour
     {
         VoiceManager.instance.MusicVolumeSettings = MusicVolume;
         VoiceManager.instance.SFXVolumeSettings = SFXVolume;
-
+        Debug.Log(PlayerPrefs.GetFloat("MusicVolume"));
         valueChange();
         ColorChange();
     }
