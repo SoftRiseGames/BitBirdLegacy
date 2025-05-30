@@ -49,6 +49,7 @@ public class kapi : MonoBehaviour
             {
                
                 isNonMove.Invoke();
+                DoorVoiceManager.instance.SFXSoundPlay(1);
                 character.isFollow = false;
                 character.transform.GetChild(6).GetComponent<KeyScript>().Suicide();
                 gameObject.transform.DOMove(dotweengidisPoint.transform.position, gidis).SetEase(Ease.Linear).OnComplete(() => isMove.Invoke());
@@ -66,7 +67,8 @@ public class kapi : MonoBehaviour
     public void isPassControl()
     {
         isNonMove.Invoke();
-        gameObject.transform.DOMove(objectStartTransform, gidis).SetEase(Ease.Linear).OnComplete(() => isMove.Invoke());
+        DoorVoiceManager.instance.SFXSoundPlay(1);
+        gameObject.transform.DOMove(objectStartTransform, gidis).SetEase(Ease.Linear).OnComplete(() => { isMove.Invoke(); });
         saverinteger = 1;
         PlayerPrefs.SetInt(gameObject.transform.name, saverinteger);
     }

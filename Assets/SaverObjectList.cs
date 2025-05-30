@@ -6,7 +6,7 @@ using UnityEngine;
 public class SaverObjectList : MonoBehaviour
 {
     public List<GameObject> RotationObjects;
-
+    public List<GameObject> KeyList;
     public int isTouched = 0;
     private void Awake()
     {
@@ -24,6 +24,15 @@ public class SaverObjectList : MonoBehaviour
             {
                 i.GetComponent<IRotate>().IfStartOff();
             }
+            if(KeyList != null)
+            {
+                foreach (GameObject i in KeyList)
+                {
+                    i.SetActive(false);
+                    
+                }
+            }
+           
         }
         else
             return;

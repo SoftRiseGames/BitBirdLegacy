@@ -342,9 +342,9 @@ MonoBehaviour:
   buttonSprites:
   - sprite: {fileID: -860715003, guid: 4fec1bc03029f7247bad6af2fa4e4ac9, type: 3}
     size: {x: 168, y: 48}
-  - sprite: {fileID: -442970910, guid: 4fec1bc03029f7247bad6af2fa4e4ac9, type: 3}
+  - sprite: {fileID: 1163873051, guid: 4fec1bc03029f7247bad6af2fa4e4ac9, type: 3}
     size: {x: 47, y: 47}
-  - sprite: {fileID: 1267646553, guid: 4fec1bc03029f7247bad6af2fa4e4ac9, type: 3}
+  - sprite: {fileID: -1805118464, guid: 4fec1bc03029f7247bad6af2fa4e4ac9, type: 3}
     size: {x: 47, y: 47}
 --- !u!1 &106643141
 GameObject:
@@ -3525,9 +3525,9 @@ MonoBehaviour:
   buttonSprites:
   - sprite: {fileID: -860715003, guid: 4fec1bc03029f7247bad6af2fa4e4ac9, type: 3}
     size: {x: 168, y: 48}
-  - sprite: {fileID: -442970910, guid: 4fec1bc03029f7247bad6af2fa4e4ac9, type: 3}
+  - sprite: {fileID: 1163873051, guid: 4fec1bc03029f7247bad6af2fa4e4ac9, type: 3}
     size: {x: 47, y: 47}
-  - sprite: {fileID: 1267646553, guid: 4fec1bc03029f7247bad6af2fa4e4ac9, type: 3}
+  - sprite: {fileID: -1805118464, guid: 4fec1bc03029f7247bad6af2fa4e4ac9, type: 3}
     size: {x: 47, y: 47}
 --- !u!1 &1223682983
 GameObject:
@@ -5234,7 +5234,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!223 &2006260424
 Canvas:
   m_ObjectHideFlags: 0
@@ -5533,9 +5533,9 @@ MonoBehaviour:
   buttonSprites:
   - sprite: {fileID: -860715003, guid: 4fec1bc03029f7247bad6af2fa4e4ac9, type: 3}
     size: {x: 168, y: 48}
-  - sprite: {fileID: -442970910, guid: 4fec1bc03029f7247bad6af2fa4e4ac9, type: 3}
+  - sprite: {fileID: 1163873051, guid: 4fec1bc03029f7247bad6af2fa4e4ac9, type: 3}
     size: {x: 47, y: 47}
-  - sprite: {fileID: 1267646553, guid: 4fec1bc03029f7247bad6af2fa4e4ac9, type: 3}
+  - sprite: {fileID: -1805118464, guid: 4fec1bc03029f7247bad6af2fa4e4ac9, type: 3}
     size: {x: 47, y: 47}
 --- !u!1 &2087423754
 GameObject:
@@ -5603,6 +5603,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MusicFiles:
   - {fileID: 11400000, guid: 6e2062ed353cb18479881d87062c641a, type: 2}
+  isGamePlay: 0
 --- !u!82 &2108006733
 AudioSource:
   m_ObjectHideFlags: 0

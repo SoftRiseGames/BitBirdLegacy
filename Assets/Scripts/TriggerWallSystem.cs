@@ -19,6 +19,7 @@ public class TriggerWallSystem : MonoBehaviour
         {
             if (playerInput.actions["Interactivity"].IsPressed())
             {
+                DoorVoiceManager.instance.SFXSoundPlay(2);
                 animator.SetBool("isBreak",true);
                 floor.GetComponent<Animator>().SetBool("isBreak", true);
             }
